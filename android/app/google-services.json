@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "111511852499",
+    "project_id": "get-pass-e77e5",
+    "storage_bucket": "get-pass-e77e5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111511852499:android:4f51b30fc66927eb4f8b26",
+        "android_client_info": {
+          "package_name": "com.getpass.getpass"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCL-4eewuwjLCYzZbSCpJ16aJ3aopxlpa0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
