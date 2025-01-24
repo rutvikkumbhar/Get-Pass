@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class About extends StatelessWidget {
-  final Uri uri = Uri.parse('https://www.google.com/');
+  final Uri uri = Uri.parse('https://github.com/rutvikkumbhar/Get-Pass.git');
 
   Widget build(BuildContext context) {
     return Scaffold(
