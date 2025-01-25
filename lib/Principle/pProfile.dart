@@ -5,10 +5,10 @@ import '../About.dart';
 import '../Help.dart';
 import '../Login/LoginOption.dart';
 
-class HODsProfile extends StatelessWidget {
+class pProfile extends StatelessWidget {
 
   FirebaseAuth _auth=FirebaseAuth.instance;
-  CollectionReference ref=FirebaseFirestore.instance.collection('HODs');
+  CollectionReference ref=FirebaseFirestore.instance.collection('Principle');
   Widget build(BuildContext context) {
     return Scaffold(
         body: Padding(
@@ -31,19 +31,22 @@ class HODsProfile extends StatelessWidget {
                           decoration: BoxDecoration(color: Colors.grey.withOpacity(0.1),borderRadius: BorderRadius.circular(10)),
                           child: Column(
                             children: [
-                               SizedBox(height: 30,),
+                              SizedBox(height: 30,),
                               Container(
                                 height: 110,width: 110,
                                 decoration: BoxDecoration(image: DecorationImage(image:data['photoURL']==null? AssetImage("assets/images/teacherpfp.png") :NetworkImage(data['photoURL']),fit: BoxFit.fill),
                                     borderRadius: BorderRadius.circular(60)),
                               ),
-                               SizedBox(height: 15,),
-                              Text("Prof. ${data['name']}",style:  TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.w500),),
-                               SizedBox(height: 30,),
+                              SizedBox(height: 13,),
+                              Padding(
+                                padding: const EdgeInsets.all(5),
+                                child: Text("Prof. ${data['name']}",style:  TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.w500),),
+                              ),
+                              SizedBox(height: 30,),
                             ],
                           ),
                         ),
-                         SizedBox(height: 20,),
+                        SizedBox(height: 20,),
                         Container(
                           decoration: BoxDecoration(color: Colors.grey.withOpacity(0.1),borderRadius: BorderRadius.circular(10)),
                           child: Column(
@@ -51,8 +54,8 @@ class HODsProfile extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ListTile(
-                                title: Text("Department",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 15),),
-                                subtitle: Text("${data['dept']}",style:  TextStyle(color: Colors.black,fontSize: 17),),
+                                title: Text("Principle",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 15),),
+                                subtitle: Text("${data['college']}",style:  TextStyle(color: Colors.black,fontSize: 17),),
                                 leading:  Icon(Icons.photo_size_select_small_rounded,color: Color(0xff3F72AF),),
                               ),
                               Padding(
@@ -62,7 +65,7 @@ class HODsProfile extends StatelessWidget {
                                   decoration: BoxDecoration(color: Colors.black.withOpacity(0.1)),
                                 ),
                               ),
-                               SizedBox(height: 10,),
+                              SizedBox(height: 10,),
                               ListTile(
                                 title: Text("Contact Number",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 15),),
                                 subtitle: Text("+91 ${data['contact']}",style:  TextStyle(color: Colors.black,fontSize: 17),),
@@ -75,7 +78,7 @@ class HODsProfile extends StatelessWidget {
                                   decoration: BoxDecoration(color: Colors.black.withOpacity(0.1)),
                                 ),
                               ),
-                               SizedBox(height: 10,),
+                              SizedBox(height: 10,),
                               ListTile(
                                 title: Text("Email Address",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 15),),
                                 subtitle: Text("${data['email']}",style:  TextStyle(color: Colors.black,fontSize: 17),),
@@ -88,10 +91,10 @@ class HODsProfile extends StatelessWidget {
                                   decoration: BoxDecoration(color: Colors.black.withOpacity(0.1)),
                                 ),
                               ),
-                               SizedBox(height: 10,),
+                              SizedBox(height: 10,),
                               ListTile(
-                                title: Text("Education",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 15),),
-                                subtitle: Text("${data['education']}",style:  TextStyle(color: Colors.black,fontSize: 17),),
+                                title: Text("ID",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 15),),
+                                subtitle: Text("${data['userID']}",style:  TextStyle(color: Colors.black,fontSize: 17),),
                                 leading:  Icon(Icons.school_rounded,color: Color(0xff3F72AF),),
                               ),
                               Padding(
@@ -101,7 +104,7 @@ class HODsProfile extends StatelessWidget {
                                   decoration: BoxDecoration(color: Colors.black.withOpacity(0.1)),
                                 ),
                               ),
-                               SizedBox(height: 20,),
+                              SizedBox(height: 20,),
                             ],
                           ),
                         ),
@@ -110,7 +113,7 @@ class HODsProfile extends StatelessWidget {
                   }
                 },
               ),
-               SizedBox(height: 20,),
+              SizedBox(height: 20,),
               Container(
                 decoration: BoxDecoration(color: Colors.grey.withOpacity(0.1),borderRadius: BorderRadius.circular(10)),
                 child: Column(
@@ -137,7 +140,7 @@ class HODsProfile extends StatelessWidget {
                         decoration: BoxDecoration(color: Colors.black.withOpacity(0.1)),
                       ),
                     ),
-                     SizedBox(height: 10,),
+                    SizedBox(height: 10,),
                     Padding(
                       padding:  EdgeInsets.only(top:10),
                       child: ListTile(
@@ -158,7 +161,7 @@ class HODsProfile extends StatelessWidget {
                         decoration: BoxDecoration(color: Colors.black.withOpacity(0.1)),
                       ),
                     ),
-                     SizedBox(height: 10,),
+                    SizedBox(height: 10,),
                     Padding(
                       padding:  EdgeInsets.only(top:10),
                       child: ListTile(
@@ -201,15 +204,14 @@ class HODsProfile extends StatelessWidget {
                         decoration: BoxDecoration(color: Colors.black.withOpacity(0.1)),
                       ),
                     ),
-                     SizedBox(height: 20,)
+                    SizedBox(height: 20,)
                   ],
                 ),
               ),
-               SizedBox(height: 30,),
+              SizedBox(height: 30,),
             ],
           ),
         )
     );
   }
-
 }

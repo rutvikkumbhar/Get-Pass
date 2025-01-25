@@ -1,27 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'RequestLeave.dart';
 
-class TeacherLeaves extends StatelessWidget {
+class HODLeaves extends StatefulWidget {
+  @override
+  State<HODLeaves> createState() => _HODLeavesState();
+}
+
+class _HODLeavesState extends State<HODLeaves> {
 
   final FirebaseAuth _auth=FirebaseAuth.instance;
-  CollectionReference ref=FirebaseFirestore.instance.collection('Campus Leaves');
-
+  CollectionReference ref=FirebaseFirestore.instance.collection('HOD Leaves');
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      floatingActionButton: Container(
-        height: 70,width: 70,
-        decoration: BoxDecoration(color:  Color(0xff3F72AF),borderRadius: BorderRadius.circular(25)),
-        child: IconButton(
-          icon:  Icon(Icons.add_rounded,color: Colors.white,size: 40,),
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (builder){
-              return RequestLeave();
-            }));
-          },
-        ),
+      appBar: AppBar(
+        title: Text("Your leaves"),
+        centerTitle: true,
       ),
       body: Padding(
         padding:  EdgeInsets.fromLTRB(15, 10, 15, 0),
@@ -68,7 +62,7 @@ class TeacherLeaves extends StatelessWidget {
                                     subtitle: Padding(
                                       padding:  EdgeInsets.only(top: 3),
                                       child: Row(children: [
-                                         Icon(Icons.calendar_today_rounded,color: Color(0xff006BFF),size: 18,),
+                                        Icon(Icons.calendar_today_rounded,color: Color(0xff006BFF),size: 18,),
                                         Text(" ${data['date']} | ${data['time']}",style:  TextStyle(fontSize: 17,color: Colors.black,fontWeight: FontWeight.w400),),
                                       ],),
                                     ),
@@ -76,33 +70,33 @@ class TeacherLeaves extends StatelessWidget {
                                 ),
                               ],
                             ),
-                             SizedBox(height: 15,),
+                            SizedBox(height: 15,),
                             Padding(
                               padding:  EdgeInsets.only(left: 15),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("HOD",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 17,fontWeight: FontWeight.w600),),
+                                  Text("Principle",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 17,fontWeight: FontWeight.w600),),
                                   Container(
                                       child: Row(
                                         children: [
                                           Container(
-                                            child: data['hodApproval']=="Approved"? Icon(Icons.check_circle_rounded,color: Color(0xff16C47F),size: 20,)
-                                                :data['hodApproval']=="Rejected"? Icon(Icons.cancel_rounded,color: Color(0xffD91656),size: 20,)
+                                            child: data['principleApproval']=="Approved"? Icon(Icons.check_circle_rounded,color: Color(0xff16C47F),size: 20,)
+                                                :data['principleApproval']=="Rejected"? Icon(Icons.cancel_rounded,color: Color(0xffD91656),size: 20,)
                                                 : Icon(Icons.access_time_filled_rounded,color: Color(0xffF39E60),size: 20,),
                                           ),
-                                           SizedBox(width: 5,),
+                                          SizedBox(width: 5,),
                                           Container(
-                                            child: data['hodApproval']=="Approved"? Text("Approved",style: TextStyle(color: Color(0xff16C47F),fontSize: 17,fontWeight: FontWeight.w500),)
-                                                :data['hodApproval']=="Rejected"? Text("Rejected",style: TextStyle(color: Color(0xffD91656),fontSize: 17,fontWeight: FontWeight.w500),)
+                                            child: data['principleApproval']=="Approved"? Text("Approved",style: TextStyle(color: Color(0xff16C47F),fontSize: 17,fontWeight: FontWeight.w500),)
+                                                :data['principleApproval']=="Rejected"? Text("Rejected",style: TextStyle(color: Color(0xffD91656),fontSize: 17,fontWeight: FontWeight.w500),)
                                                 : Text("Pending",style: TextStyle(color: Color(0xffF39E60),fontSize: 17,fontWeight: FontWeight.w500),),),
-                                           SizedBox(width: 10,)
+                                          SizedBox(width: 10,)
                                         ],
                                       ))
                                 ],
                               ),
                             ),
-                             SizedBox(height: 15,),
+                            SizedBox(height: 15,),
                             Padding(
                               padding:  EdgeInsets.fromLTRB(15, 17, 10, 15),
                               child: Container(
@@ -117,25 +111,25 @@ class TeacherLeaves extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Icon(Icons.format_quote_rounded,color: Colors.black.withOpacity(0.5),size: 26,),
-                                   SizedBox(width: 5,),
+                                  SizedBox(width: 5,),
                                   Expanded(
                                       child: Text(data['reason'].length>40?data['reason'].substring(0,40)+"...":data['reason'],style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 18,fontWeight: FontWeight.w500))),
                                 ],
                               ),
                             ),
-                             SizedBox(height: 12,),
+                            SizedBox(height: 12,),
                             Padding(
                               padding:  EdgeInsets.only(left: 15),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Icon(Icons.access_time_rounded,color: Colors.black.withOpacity(0.5),size: 20,),
-                                   SizedBox(width: 5,),
+                                  SizedBox(width: 5,),
                                   Text("Submitted on ${data['appliedAt']}",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 16,fontWeight: FontWeight.w400)),
                                 ],
                               ),
                             ),
-                             SizedBox(height: 5,),
+                            SizedBox(height: 5,),
                           ],
                         ),
                       ),

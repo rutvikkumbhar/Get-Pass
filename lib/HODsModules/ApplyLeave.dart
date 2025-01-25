@@ -1,16 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:getpass/HODsModules/HODsHome.dart';
 import 'package:getpass/TeacherModules/TeacherrLeaves.dart';
 import '../SendLeaveNotificastion.dart';
 import '../Success.dart';
 
-class RequestLeave extends StatefulWidget {
+class ApplyLeave extends StatefulWidget {
   @override
-  State<RequestLeave> createState() => _RequestLeaveState();
+  State<ApplyLeave> createState() => _ApplyLeaveState();
 }
 
-class _RequestLeaveState extends State<RequestLeave> {
+class _ApplyLeaveState extends State<ApplyLeave> {
 
   bool load=false;
   DateTime? pickedDate;
@@ -21,7 +22,7 @@ class _RequestLeaveState extends State<RequestLeave> {
   final timeController=TextEditingController();
 
   final FirebaseAuth _auth=FirebaseAuth.instance;
-  CollectionReference ref=FirebaseFirestore.instance.collection('Teachers');
+  CollectionReference ref=FirebaseFirestore.instance.collection('HODs');
 
   String currentDateTime(){
     String date=DateTime.now().toString().split(" ")[0];
@@ -39,9 +40,9 @@ class _RequestLeaveState extends State<RequestLeave> {
         padding:  EdgeInsets.only(left: 20,right: 20),
         child: ListView(
           children: [
-             SizedBox(height: 10,),
+            SizedBox(height: 10,),
             Text("Your Details",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.6)),),
-             SizedBox(height: 10,),
+            SizedBox(height: 10,),
 
             Container(
               width: MediaQuery.of(context).size.width,
@@ -62,8 +63,8 @@ class _RequestLeaveState extends State<RequestLeave> {
                           subtitle: Text("Prof. ${data['name']}",style:  TextStyle(fontSize: 16,fontWeight: FontWeight.w400)),
                         ),
                         ListTile(
-                          title: Text("Class",style: TextStyle(fontSize: 15,color: Colors.black.withOpacity(0.4),fontWeight: FontWeight.w400),),
-                          subtitle: Text("${data['class']}",style:  TextStyle(fontSize: 16,fontWeight: FontWeight.w400)),
+                          title: Text("Department",style: TextStyle(fontSize: 15,color: Colors.black.withOpacity(0.4),fontWeight: FontWeight.w400),),
+                          subtitle: Text("${data['dept']}",style:  TextStyle(fontSize: 16,fontWeight: FontWeight.w400)),
                         ),
                         ListTile(
                           title: Text("ID",style: TextStyle(fontSize: 15,color: Colors.black.withOpacity(0.4),fontWeight: FontWeight.w400),),
@@ -81,11 +82,11 @@ class _RequestLeaveState extends State<RequestLeave> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                   SizedBox(height: 25,),
+                  SizedBox(height: 25,),
                   Text("Leave Details",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.6)),),
-                   SizedBox(height: 10,),
-                   Text("Reason",style: TextStyle(fontSize: 16),),
-                   SizedBox(height: 4,),
+                  SizedBox(height: 10,),
+                  Text("Reason",style: TextStyle(fontSize: 16),),
+                  SizedBox(height: 4,),
                   TextFormField(
                     keyboardType: TextInputType.text,
                     maxLines: 4,
@@ -103,9 +104,9 @@ class _RequestLeaveState extends State<RequestLeave> {
                       }
                     },
                   ),
-                   SizedBox(height: 15,),
-                   Text("Date",style: TextStyle(fontSize: 16),),
-                   SizedBox(height: 4,),
+                  SizedBox(height: 15,),
+                  Text("Date",style: TextStyle(fontSize: 16),),
+                  SizedBox(height: 4,),
                   TextFormField(
                     decoration: InputDecoration(
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1))),
@@ -137,9 +138,9 @@ class _RequestLeaveState extends State<RequestLeave> {
                       }
                     },
                   ),
-                   SizedBox(height: 15,),
-                   Text("Time",style: TextStyle(fontSize: 16),),
-                   SizedBox(height: 4,),
+                  SizedBox(height: 15,),
+                  Text("Time",style: TextStyle(fontSize: 16),),
+                  SizedBox(height: 4,),
                   TextFormField(
                     decoration: InputDecoration(
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1))),
@@ -173,7 +174,7 @@ class _RequestLeaveState extends State<RequestLeave> {
                 ],
               ),
             ),
-             SizedBox(height: 20,),
+            SizedBox(height: 20,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -187,28 +188,26 @@ class _RequestLeaveState extends State<RequestLeave> {
                         load=true;
                       });
                       if(_key.currentState!.validate()){
-                        DocumentSnapshot docData=await FirebaseFirestore.instance.collection('Teachers').doc(_auth.currentUser!.uid).get();
-                        CollectionReference ref=FirebaseFirestore.instance.collection('Campus Leaves');
+                        DocumentSnapshot docData=await FirebaseFirestore.instance.collection('HODs').doc(_auth.currentUser!.uid).get();
+                        CollectionReference ref=FirebaseFirestore.instance.collection('HOD Leaves');
                         final String unique=DateTime.now().millisecondsSinceEpoch.toString();
                         await ref.doc(unique).set({
                           'name':docData['name'],
                           'dept':docData['dept'],
-                          'class':docData['class'],
                           'photoURL':docData['photoURL'],
-                          'hodID':docData['hodID'],
                           'reason':reasonController.text.toString(),
                           'date':dateController.text.toString(),
                           'time':timeController.text.toString(),
                           'userID':docData['userID'],
-                          'hodApproval':"Pending",
+                          'principleApproval':"Pending",
                           'appliedAt':currentDateTime().toString()
                         }).then((onValue) async {
                           Success().toastMessage("Request Submitted Successfully");
                           Navigator.pop(context, MaterialPageRoute(builder: (builder){
-                            return TeacherLeaves();
+                            return HODsHome();
                           }));
                           FirebaseFirestore firestore = FirebaseFirestore.instance;
-                          String? hodToken = (await firestore.collection('HODs').doc(docData['hodID']).get()).data()?['fcmToken'];
+                          String? hodToken = (await firestore.collection('Principle').doc(docData['principleID']).get()).data()?['fcmToken'];
                           await sendNotification(
                             title: "New Leave Request",
                             body: "Prof. ${docData['name']} has requested leave for: "
@@ -225,7 +224,7 @@ class _RequestLeaveState extends State<RequestLeave> {
                     },
                   ),
                 ),
-                 SizedBox(width: 15,),
+                SizedBox(width: 15,),
                 Container(
                   height: 45,width: 150,
                   decoration: BoxDecoration(color:  Color(0xffDBE2EF),borderRadius: BorderRadius.circular(5)),
@@ -233,14 +232,14 @@ class _RequestLeaveState extends State<RequestLeave> {
                     child: Text("Cancel",style: TextStyle(color:  Color(0xff112D4E).withOpacity(0.7),fontSize: 18,fontWeight: FontWeight.w500),),
                     onPressed: (){
                       Navigator.pop(context, MaterialPageRoute(builder: (builder){
-                        return TeacherLeaves();
+                        return HODsHome();
                       }));
                     },
                   ),
                 )
               ],
             ),
-             SizedBox(height: 30,),
+            SizedBox(height: 30,),
           ],
         ),
       ),

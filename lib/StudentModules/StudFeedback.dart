@@ -27,18 +27,18 @@ class _StudFeedbackState extends State<StudFeedback> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Feedback"),
+        title:  Text("Feedback"),
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 20,right: 20,),
+        padding:  EdgeInsets.only(left: 20,right: 20,),
         child: Form(
           key: _key,
           child: ListView(
             children: [
-              const SizedBox(height: 15,),
+               SizedBox(height: 15,),
               Text("Title",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 17,fontWeight: FontWeight.w500),),
-              const SizedBox(height: 10,),
+               SizedBox(height: 10,),
               TextFormField(
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(labelText: "Title ",border: OutlineInputBorder(
@@ -53,9 +53,9 @@ class _StudFeedbackState extends State<StudFeedback> {
                   }
                 },
               ),
-              const SizedBox(height: 20,),
+               SizedBox(height: 20,),
               Text("Description",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 17,fontWeight: FontWeight.w500),),
-              const SizedBox(height: 10,),
+               SizedBox(height: 10,),
               TextFormField(
                 keyboardType: TextInputType.text,
                 maxLines: 5,
@@ -71,17 +71,17 @@ class _StudFeedbackState extends State<StudFeedback> {
                   }
                 },
               ),
-              const SizedBox(height: 20,),
+               SizedBox(height: 20,),
               Text("Your feedback matters! Please share your suggestions or report any issues in your department. Rest assured, your identity will remain anonymous and will not be disclosed to your HOD or CC.",
               style: TextStyle(color: Colors.black87.withOpacity(0.6)),),
-              const SizedBox(height: 20,),
+               SizedBox(height: 20,),
               Padding(
-                padding: const EdgeInsets.only(left: 50,right: 50),
+                padding:  EdgeInsets.only(left: 50,right: 50),
                 child: Container(
                   height: 55,width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(color: const Color(0xff4F7A94),borderRadius: BorderRadius.circular(5)),
+                  decoration: BoxDecoration(color:  Color(0xff4F7A94),borderRadius: BorderRadius.circular(5)),
                   child: TextButton(
-                    child:load?const CircularProgressIndicator(color: Colors.white,) :const Text("Send Feedback",style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w500),),
+                    child:load? CircularProgressIndicator(color: Colors.white,) : Text("Send Feedback",style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w500),),
                     onPressed: () async {
                       setState(() {
                         load=true;

@@ -23,7 +23,7 @@ class _FlashState extends State<Flash> {
 
   void initState(){
     super.initState();
-    Timer(const Duration(seconds: 3),() async {
+    Timer( Duration(seconds: 3),() async {
       if(_auth.currentUser!=null){
           DocumentSnapshot studDoc=await student.doc(_auth.currentUser!.uid).get();
           Map<String, dynamic>? studData=studDoc.exists?studDoc.data() as Map<String, dynamic>:null;
@@ -60,10 +60,10 @@ class _FlashState extends State<Flash> {
           children: [
             Container(
               height: 100,width: 100,
-              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/vvplogo.jpg"),fit: BoxFit.fill)),
+              decoration:  BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/vvplogo.jpg"),fit: BoxFit.fill)),
             ),
             Text("VVP Polytechnic",style: GoogleFonts.acme(fontSize: 23),),
-            const SizedBox(
+             SizedBox(
               height: 20,width: 20,
                 child: CircularProgressIndicator(color: Color(0xffF26B0F)))
           ],

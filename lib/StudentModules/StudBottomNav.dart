@@ -23,7 +23,7 @@ class _StudBottomNavState extends State<StudBottomNav> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Get Pass"),
+        title:  Text("Get Pass"),
         centerTitle: true,
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -33,11 +33,11 @@ class _StudBottomNavState extends State<StudBottomNav> {
             selectedPage=index;
           });
         },
-        selectedItemColor: const Color(0xFF074799),
-        unselectedItemColor: const Color(0xFF074799),
+        selectedItemColor:  Color(0xFF074799),
+        unselectedItemColor:  Color(0xFF074799),
         showSelectedLabels: true,
         showUnselectedLabels: false,
-        items: const [
+        items:  [
           BottomNavigationBarItem(
             label: "Home",
             icon: Icon(Icons.home_filled)

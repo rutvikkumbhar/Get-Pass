@@ -29,23 +29,23 @@ class _StudentLoginState extends State<StudentLogin> {
          key: _key,
          child: Column(
            children: [
-             const SizedBox(height: 160,),
+              SizedBox(height: 160,),
              Padding(
-               padding: const EdgeInsets.all(5),
+               padding:  EdgeInsets.all(5),
                child: Container(
                  height: 100,width: 100,
-                 decoration: BoxDecoration(image: const DecorationImage(image: AssetImage("assets/images/studentpfp.png"),fit: BoxFit.fill),
+                 decoration: BoxDecoration(image:  DecorationImage(image: AssetImage("assets/images/studentpfp.png"),fit: BoxFit.fill),
                      borderRadius: BorderRadius.circular(60)),
                ),
              ),
-             const SizedBox(height: 3,),
+              SizedBox(height: 3,),
              Text("Student Login",style: GoogleFonts.albertSans(fontSize: 22, fontWeight: FontWeight.w600),),
-             const SizedBox(height: 30,),
+              SizedBox(height: 30,),
              Padding(
-               padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+               padding:  EdgeInsets.fromLTRB(30, 0, 30, 0),
                child: TextFormField(
                  keyboardType: TextInputType.emailAddress,
-                 decoration: InputDecoration(contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),hintText: "Email ID",border: OutlineInputBorder(borderRadius: BorderRadius.circular(30),
+                 decoration: InputDecoration(contentPadding:  EdgeInsets.symmetric(horizontal: 20, vertical: 15),hintText: "Email ID",border: OutlineInputBorder(borderRadius: BorderRadius.circular(30),
                  borderSide: BorderSide.none),filled: true,fillColor: Colors.grey.withOpacity(0.2),
                      hintStyle: TextStyle(fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.5))),
                  controller: emailController,
@@ -58,19 +58,19 @@ class _StudentLoginState extends State<StudentLogin> {
                  },
                ),
              ),
-             const SizedBox(height: 15,),
+              SizedBox(height: 15,),
              Padding(
-               padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+               padding:  EdgeInsets.fromLTRB(30, 0, 30, 0),
                child: TextFormField(
                  keyboardType: TextInputType.visiblePassword,
                  obscureText: pass?true:false,
-                 decoration: InputDecoration(contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),hintText: "Password",border: OutlineInputBorder(borderRadius: BorderRadius.circular(30),
+                 decoration: InputDecoration(contentPadding:  EdgeInsets.symmetric(horizontal: 20, vertical: 15),hintText: "Password",border: OutlineInputBorder(borderRadius: BorderRadius.circular(30),
                      borderSide: BorderSide.none),filled: true,fillColor: Colors.grey.withOpacity(0.2),
                      hintStyle: TextStyle(fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.5)),
                  suffixIcon:Padding(
-                   padding: const EdgeInsets.only(right: 10),
+                   padding:  EdgeInsets.only(right: 10),
                    child: IconButton(
-                     icon: pass?const Icon(Icons.lock_outline_rounded):const Icon(Icons.lock_open_outlined),
+                     icon: pass? Icon(Icons.lock_outline_rounded): Icon(Icons.lock_open_outlined),
                      onPressed: (){
                        setState(() {
                          pass=pass?false:true;
@@ -88,12 +88,12 @@ class _StudentLoginState extends State<StudentLogin> {
                  },
                ),
              ),
-             const SizedBox(height: 25,),
+              SizedBox(height: 25,),
              Container(
                height: 50,width: 200,
-               decoration: BoxDecoration(color: const Color(0xffF26B0F),borderRadius: BorderRadius.circular(30)),
+               decoration: BoxDecoration(color:  Color(0xffF26B0F),borderRadius: BorderRadius.circular(30)),
                child: TextButton(
-                 child: load?const CircularProgressIndicator(color: Colors.white,)
+                 child: load? CircularProgressIndicator(color: Colors.white,)
                             :Text("Login",style: GoogleFonts.albertSans(color: Colors.white,fontSize: 17,fontWeight: FontWeight.w700),),
                  onPressed: () async {
                    setState(() {

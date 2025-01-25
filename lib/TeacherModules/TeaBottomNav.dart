@@ -22,7 +22,7 @@ class _TeaBottomNavState extends State<TeaBottomNav> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Teachers Dashboard"),
+        title:  Text("Teachers Dashboard"),
         centerTitle: true,
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -32,9 +32,9 @@ class _TeaBottomNavState extends State<TeaBottomNav> {
             selectedPage=index;
           });
         },
-        selectedItemColor: const Color(0xFF074799),
-        unselectedItemColor: const Color(0xFF074799),
-        items: const [
+        selectedItemColor:  Color(0xFF074799),
+        unselectedItemColor:  Color(0xFF074799),
+        items:  [
           BottomNavigationBarItem(
             label: "Requests",
             icon: Icon(Icons.watch_later_rounded)

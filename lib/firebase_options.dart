@@ -40,7 +40,7 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
+  static  FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyDvhV2sisHE4kHtXp2OFijaqkAintNYylM',
     appId: '1:111511852499:web:85d29b8081fc8d334f8b26',
     messagingSenderId: '111511852499',
@@ -50,7 +50,7 @@ class DefaultFirebaseOptions {
     measurementId: 'G-FP05P6VXMY',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
+  static  FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCL-4eewuwjLCYzZbSCpJ16aJ3aopxlpa0',
     appId: '1:111511852499:android:4f51b30fc66927eb4f8b26',
     messagingSenderId: '111511852499',
@@ -58,7 +58,7 @@ class DefaultFirebaseOptions {
     storageBucket: 'get-pass-e77e5.firebasestorage.app',
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
+  static  FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyANOth9bGTLDtWnp8f-hMkBgZrTN8DxUSs',
     appId: '1:111511852499:ios:3b69d43e4a04dea44f8b26',
     messagingSenderId: '111511852499',
@@ -67,7 +67,7 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.getpass.getpass',
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
+  static  FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyANOth9bGTLDtWnp8f-hMkBgZrTN8DxUSs',
     appId: '1:111511852499:ios:3b69d43e4a04dea44f8b26',
     messagingSenderId: '111511852499',
@@ -76,7 +76,7 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.getpass.getpass',
   );
 
-  static const FirebaseOptions windows = FirebaseOptions(
+  static  FirebaseOptions windows = FirebaseOptions(
     apiKey: 'AIzaSyDvhV2sisHE4kHtXp2OFijaqkAintNYylM',
     appId: '1:111511852499:web:40639c4ed37078dc4f8b26',
     messagingSenderId: '111511852499',

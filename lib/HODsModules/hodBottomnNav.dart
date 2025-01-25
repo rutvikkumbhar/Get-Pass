@@ -25,7 +25,7 @@ class _hodBottomNavState extends State<hodBottomNav> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("HODs Dashboard"),
+        title:  Text("HODs Dashboard"),
         centerTitle: true,
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -36,9 +36,9 @@ class _hodBottomNavState extends State<hodBottomNav> {
           });
         },
         showUnselectedLabels: false,
-        selectedItemColor: const Color(0xFF074799),
-        unselectedItemColor: const Color(0xFF074799),
-        items: const [
+        selectedItemColor:  Color(0xFF074799),
+        unselectedItemColor:  Color(0xFF074799),
+        items:  [
           BottomNavigationBarItem(
               label: "Requests",
               icon: Icon(Icons.watch_later_rounded)

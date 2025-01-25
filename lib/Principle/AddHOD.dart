@@ -1,48 +1,50 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:getpass/HODsModules/DeptTeacher.dart';
+import 'package:getpass/Principle/allHODs.dart';
 import 'package:getpass/Errro.dart';
 import 'package:getpass/Success.dart';
 
-class AddTeacher extends StatefulWidget {
+class AddHOD extends StatefulWidget {
+
   @override
-  State<AddTeacher> createState() => _AddTeacherState();
+  State<AddHOD> createState() => _AddHODState();
 }
 
-class _AddTeacherState extends State<AddTeacher> {
+class _AddHODState extends State<AddHOD> {
+  FirebaseAuth _auth=FirebaseAuth.instance;
+  CollectionReference ref=FirebaseFirestore.instance.collection('HODs');
 
-  bool pass=true;
-  bool load=false;
   final _key=GlobalKey<FormState>();
   final nameController=TextEditingController();
   final contactController=TextEditingController();
   final emailController=TextEditingController();
   final passwordController=TextEditingController();
-  final classController=TextEditingController();
+  final departmentController=TextEditingController();
   final educationController=TextEditingController();
-
-  FirebaseAuth _auth=FirebaseAuth.instance;
+  bool pass=true;
+  bool load=false;
 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text("Add Teacher"),
+        title: Text("Add HOD"),
         centerTitle: true,
       ),
       body: Padding(
-        padding:  EdgeInsets.only(left: 20,right: 20),
+        padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
         child: Form(
-          key: _key,
+          key: _key ,
           child: ListView(
             children: [
+              SizedBox(height: 10,),
               Text("Teacher Details",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.6))),
-               SizedBox(height: 20,),
+              SizedBox(height: 20,),
               TextFormField(
                 keyboardType: TextInputType.name,
                 decoration: InputDecoration(labelText: "Name", hintText: "eg. John R.K",
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                prefixIcon:  Icon(Icons.person_outline_rounded,size: 22,color: Color(0xff3F72AF),)),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+                    prefixIcon:  Icon(Icons.person_outline_rounded,size: 22,color: Color(0xff3F72AF),)),
                 controller: nameController,
                 validator: (value){
                   if(value==null || value.isEmpty){
@@ -52,12 +54,12 @@ class _AddTeacherState extends State<AddTeacher> {
                   }
                 },
               ),
-               SizedBox(height: 15,),
+              SizedBox(height: 15,),
               TextFormField(
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(labelText: "Contact",
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                  prefixIcon:  Icon(Icons.call_outlined,size: 22,color: Color(0xff3F72AF))),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+                    prefixIcon:  Icon(Icons.call_outlined,size: 22,color: Color(0xff3F72AF),)),
                 controller: contactController,
                 validator: (value){
                   if(value==null || value.isEmpty || value.length!=10){
@@ -67,12 +69,12 @@ class _AddTeacherState extends State<AddTeacher> {
                   }
                 },
               ),
-               SizedBox(height: 15,),
+              SizedBox(height: 15,),
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(labelText: "Email",
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                    prefixIcon:  Icon(Icons.alternate_email_rounded,size: 22,color: Color(0xff3F72AF))),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+                    prefixIcon:  Icon(Icons.alternate_email_outlined,size: 22,color: Color(0xff3F72AF),)),
                 controller: emailController,
                 validator: (value){
                   if(value==null || value.isEmpty){
@@ -82,13 +84,13 @@ class _AddTeacherState extends State<AddTeacher> {
                   }
                 },
               ),
-               SizedBox(height: 15,),
+              SizedBox(height: 15,),
               TextFormField(
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: pass?true:false,
                 decoration: InputDecoration(labelText: "Password",
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                    prefixIcon:  Icon(Icons.security_outlined,size: 22,color: Color(0xff3F72AF)),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+                    prefixIcon:  Icon(Icons.security,size: 22,color: Color(0xff3F72AF),),
                 suffixIcon: IconButton(
                   icon: pass? Icon(Icons.lock_outline,color: Color(0xff1DB954),size: 22,): Icon(Icons.lock_open_outlined,color: Color(0xffDC3545),size: 22,),
                   onPressed: (){
@@ -106,69 +108,41 @@ class _AddTeacherState extends State<AddTeacher> {
                   }
                 },
               ),
-               SizedBox(height: 20,),
+              SizedBox(height: 25,),
               Text("Other Details",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.6))),
-               SizedBox(height: 20,),
-              StreamBuilder(
-                stream: FirebaseFirestore.instance.collection('HODs').doc(_auth.currentUser!.uid).snapshots(),
-                builder: (context, AsyncSnapshot<DocumentSnapshot> streamSnapshot){
-                  if(streamSnapshot.connectionState == ConnectionState.waiting){
-                    return  Center(child: CircularProgressIndicator(),);
-                  } else if(streamSnapshot.hasError){
-                    return  Center(child: Text("Something went wrong"),);
+              SizedBox(height: 20,),
+              TextFormField(
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(labelText: "Department",hintText: "eg. Computer Engineering",
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+                    prefixIcon:  Icon(Icons.school_outlined,size: 22,color: Color(0xff3F72AF),)),
+                controller: departmentController,
+                validator: (value){
+                  if(value==null || value.isEmpty){
+                    return "Enter valid department";
                   } else {
-                    Map<String, dynamic> data=streamSnapshot.data!.data() as Map<String, dynamic>;
-                    return TextField(
-                      keyboardType: TextInputType.name,
-                      readOnly: true,
-                      decoration: InputDecoration(hintText: "${data['dept']}",
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                          prefixIcon:  Icon(Icons.school_outlined,size: 22,color: Color(0xff3F72AF),)),
-                    );
+                    return null;
                   }
                 },
               ),
-               SizedBox(height: 15,),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      keyboardType: TextInputType.name,
-                      decoration: InputDecoration(hintText: "eg. TYCO-A",labelText: "Class",
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                          prefixIcon:  Icon(Icons.class_outlined,size: 22,color: Color(0xff3F72AF),)),
-                      controller: classController,
-                      validator: (value){
-                        if(value==null || value.isEmpty){
-                          return "Enter valid class";
-                        } else {
-                          return null;
-                        }
-                      },
-                    ),
-                  ),
-                   SizedBox(width: 15,),
-                  Expanded(
-                    child: TextFormField(
-                      keyboardType: TextInputType.name,
-                      decoration: InputDecoration(labelText: "Education",
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                          prefixIcon:  Icon(Icons.school_outlined,size: 22,color: Color(0xff3F72AF),)),
-                      controller: educationController,
-                      validator: (value){
-                        if(value==null || value.isEmpty){
-                          return "Enter valid education";
-                        } else {
-                          return null;
-                        }
-                      },
-                    ),
-                  ),
-                ],
+              SizedBox(height: 15,),
+              TextFormField(
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(labelText: "Education",
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+                    prefixIcon:  Icon(Icons.school_outlined,size: 22,color: Color(0xff3F72AF),)),
+                controller: educationController,
+                validator: (value){
+                  if(value==null || value.isEmpty){
+                    return "Enter valid education";
+                  } else {
+                    return null;
+                  }
+                },
               ),
-               SizedBox(height: 25,),
+              SizedBox(height: 25,),
               Text("Profile Picture",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.6)),),
-               SizedBox(height: 15,),
+              SizedBox(height: 15,),
               Container(
                   height: 150,
                   width: MediaQuery.of(context).size.width,
@@ -178,17 +152,17 @@ class _AddTeacherState extends State<AddTeacher> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                         Icon(Icons.cloud_upload_outlined,size: 50,color: Color(0xffA6E3E9),),
+                        Icon(Icons.cloud_upload_outlined,size: 50,color: Color(0xffA6E3E9),),
                         Text("Upload image",style: TextStyle(fontSize: 13,color: Colors.black.withOpacity(0.7),fontWeight: FontWeight.w500),),
                       ],
                     ),
                     onTap: (){
-                       final msg=SnackBar(content: Text("Currently not available"));
+                      final msg=SnackBar(content: Text("Currently not available"));
                       ScaffoldMessenger.of(context).showSnackBar(msg);
                     },
                   )
               ),
-               SizedBox(height: 30,),
+              SizedBox(height: 30,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -196,50 +170,45 @@ class _AddTeacherState extends State<AddTeacher> {
                     height: 45,width: 150,
                     decoration: BoxDecoration(color:  Color(0xff112D4E),borderRadius: BorderRadius.circular(5)),
                     child: TextButton(
-                      child: load? CircularProgressIndicator():Text("Add",style: TextStyle(color: Colors.white.withOpacity(0.8),fontSize: 18,fontWeight: FontWeight.w500)),
+                      child:load?CircularProgressIndicator() :Text("Add",style: TextStyle(color: Colors.white.withOpacity(0.8),fontSize: 18,fontWeight: FontWeight.w500)),
                       onPressed: () async {
                         setState(() {
                           load=true;
                         });
                         if(_key.currentState!.validate()){
-                          final String hodID = _auth.currentUser!.uid;
-                          DocumentSnapshot docData=await FirebaseFirestore.instance.collection('HODs').doc(_auth.currentUser!.uid).get();
-                          CollectionReference ref=FirebaseFirestore.instance.collection('Teachers');
-                          FirebaseAuth tea=FirebaseAuth.instance;
-                          await tea.createUserWithEmailAndPassword(
+                          DocumentSnapshot docData=await FirebaseFirestore.instance.collection('Principle').doc(_auth.currentUser!.uid).get();
+                          String pEmail=docData['email'].toString();
+                          String pPass=docData['password'].toString();
+                          String pID=docData['userID'].toString();
+                          FirebaseAuth hod=FirebaseAuth.instance;
+                          await hod.createUserWithEmailAndPassword(
                             email: emailController.text.toString(),
-                            password: passwordController.text.toString()
-                          ).then((onValue) async {
-                            await ref.doc(tea.currentUser!.uid).set({
-                              'class':classController.text.toUpperCase().toString(),
+                            password: passwordController.text.toString(),
+                          ).then((onValue){
+                            ref.doc(hod.currentUser!.uid).set({
                               'contact':contactController.text.toString(),
-                              'dept':docData['dept'].toString(),
-                              'hodName':docData['name'].toString(),
+                              'dept':departmentController.text.toString(),
                               'education':educationController.text.toString(),
                               'email':emailController.text.toString(),
                               'name':nameController.text.toString(),
                               'password':passwordController.text.toString(),
                               'photoURL':null,
-                              'hodID':hodID,
-                              'userID':tea.currentUser!.uid.toString(),
-                              'userType':"Teacher"
+                              'principleID':pID,
+                              'userID':hod.currentUser!.uid.toString(),
+                              'userType':"HOD"
                             }).then((onValue) async {
-                              tea.signOut();
+                              hod.signOut();
                               await _auth.signInWithEmailAndPassword(
-                                email: docData['email'],
-                                password: docData['password']
+                                email: pEmail,password: pPass,
                               ).then((onValue){
-                                Success().toastMessage("Teacher Added Successfully");
+                                Success().toastMessage("HOD Added Successfully");
                                 Navigator.pop(context, MaterialPageRoute(builder: (builder){
-                                  return DeptTeacher();
+                                  return allHODs();
                                 }));
                               });
                             });
-                          }).onError((error, stackTrace){
+                          }).onError((stackTrace, error){
                             Error().toastMessage(error.toString());
-                            setState(() {
-                              load=false;
-                            });
                           });
                         } else {
                           setState(() {
@@ -249,22 +218,22 @@ class _AddTeacherState extends State<AddTeacher> {
                       },
                     ),
                   ),
-                   SizedBox(width: 15,),
+                  SizedBox(width: 15,),
                   Container(
                     height: 45,width: 150,
                     decoration: BoxDecoration(color:  Color(0xffDBE2EF),borderRadius: BorderRadius.circular(5)),
                     child: TextButton(
-                      child:  Text("Cancel"),
+                      child: Text("Cancel",style: TextStyle(fontSize: 18),),
                       onPressed: (){
                         Navigator.pop(context, MaterialPageRoute(builder: (builder){
-                          return DeptTeacher();
+                          return allHODs();
                         }));
                       },
                     ),
-                  ),
+                  )
                 ],
               ),
-               SizedBox(height: 25,),
+              SizedBox(height: 30,),
             ],
           ),
         ),

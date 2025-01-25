@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget{
     return MaterialApp(
       title: "Get Pass",
       home: Flash(),
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
     );
   }
 }

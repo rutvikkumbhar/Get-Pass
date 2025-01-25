@@ -10,7 +10,7 @@ class NotificationService {
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin=FlutterLocalNotificationsPlugin();
 
   void initLocalNotification(BuildContext context, RemoteMessage message) async {
-    var androidInitSetting= const AndroidInitializationSettings("@mipmap/ic_launcher");
+    var androidInitSetting=  AndroidInitializationSettings("@mipmap/ic_launcher");
     var iosInitSetting= DarwinInitializationSettings();
     var initializationSettings=InitializationSettings(
       android: androidInitSetting,
@@ -39,7 +39,7 @@ class NotificationService {
   }
 
   Future<void> showNotification(RemoteMessage message) async {
-    const AndroidNotificationChannel channel = AndroidNotificationChannel(
+     AndroidNotificationChannel channel = AndroidNotificationChannel(
       'high_importance_channel',
       'High Importance Notifications',
       description: "This channel is used for important notifications.",
