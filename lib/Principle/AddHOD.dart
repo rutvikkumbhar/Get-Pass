@@ -140,34 +140,12 @@ class _AddHODState extends State<AddHOD> {
                   }
                 },
               ),
-              SizedBox(height: 25,),
-              Text("Profile Picture",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.6)),),
-              SizedBox(height: 15,),
-              Container(
-                  height: 150,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),border: Border.all(color: Colors.black.withOpacity(0.1))),
-                  child: GestureDetector(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(Icons.cloud_upload_outlined,size: 50,color: Color(0xffA6E3E9),),
-                        Text("Upload image",style: TextStyle(fontSize: 13,color: Colors.black.withOpacity(0.7),fontWeight: FontWeight.w500),),
-                      ],
-                    ),
-                    onTap: (){
-                      final msg=SnackBar(content: Text("Currently not available"));
-                      ScaffoldMessenger.of(context).showSnackBar(msg);
-                    },
-                  )
-              ),
               SizedBox(height: 30,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    height: 45,width: 150,
+                    height: 50,width: 150,
                     decoration: BoxDecoration(color:  Color(0xff112D4E),borderRadius: BorderRadius.circular(5)),
                     child: TextButton(
                       child:load?CircularProgressIndicator() :Text("Add",style: TextStyle(color: Colors.white.withOpacity(0.8),fontSize: 18,fontWeight: FontWeight.w500)),
@@ -220,7 +198,7 @@ class _AddHODState extends State<AddHOD> {
                   ),
                   SizedBox(width: 15,),
                   Container(
-                    height: 45,width: 150,
+                    height: 50,width: 150,
                     decoration: BoxDecoration(color:  Color(0xffDBE2EF),borderRadius: BorderRadius.circular(5)),
                     child: TextButton(
                       child: Text("Cancel",style: TextStyle(fontSize: 18),),

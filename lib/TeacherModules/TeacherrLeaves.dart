@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../Success.dart';
 import 'RequestLeave.dart';
 
 class TeacherLeaves extends StatelessWidget {
@@ -10,6 +11,9 @@ class TeacherLeaves extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Your Leaves"),
+      ),
       backgroundColor: Colors.white,
       floatingActionButton: Container(
         height: 70,width: 70,
@@ -52,7 +56,7 @@ class TeacherLeaves extends StatelessWidget {
                   return Padding(
                     padding:  EdgeInsets.only(top: 7,bottom: 7),
                     child: Container(
-                      decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(15)),
+                      decoration: BoxDecoration(color: Colors.grey.withOpacity(0.1),borderRadius: BorderRadius.circular(15)),
                       child: Padding(
                         padding:  EdgeInsets.all(5),
                         child: Column(
@@ -74,9 +78,70 @@ class TeacherLeaves extends StatelessWidget {
                                     ),
                                   ),
                                 ),
+                                data['hodApproval']=="Pending"?
+                                IconButton(
+                                  icon: Icon(Icons.delete_rounded,color: Color(0xffD91656),),
+                                  onPressed: (){
+                                    showDialog(
+                                        context: context,
+                                        builder: (context)=>AlertDialog(
+                                          title: Text("Confirm Deletion"),
+                                          content: Text("Are you sure you want to delete this pass? This action cannot be undone."),
+                                          actions: [
+                                            ElevatedButton(
+                                              child: Text("Delete"),
+                                              onPressed: () async {
+                                                CollectionReference deleteLeave=FirebaseFirestore.instance.collection('Campus Leaves');
+                                                deleteLeave.doc(data.id).delete();
+                                                Success().toastMessage("Leave request deleted successfully!");
+                                                Navigator.pop(context);
+                                                CollectionReference updateLimit=FirebaseFirestore.instance.collection('Teachers');
+                                                DocumentSnapshot count=await updateLimit.doc(_auth.currentUser!.uid).get();
+                                                updateLimit.doc(_auth.currentUser!.uid).update({
+                                                  'totalLeave':(int.parse(count['totalLeave'].toString())-1).toString(),
+                                                });
+                                              },
+                                            ),
+                                            ElevatedButton(
+                                              child: Text("Cancel"),
+                                              onPressed: (){
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          ],
+                                        )
+                                    );
+                                  },
+                                ):SizedBox(),
                               ],
                             ),
                              SizedBox(height: 15,),
+                            Padding(
+                              padding:  EdgeInsets.only(left: 15),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Principle",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 17,fontWeight: FontWeight.w600),),
+                                  Container(
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            child: data['prinApproval']=="Approved"? Icon(Icons.check_circle_rounded,color: Color(0xff16C47F),size: 20,)
+                                                :data['prinApproval']=="Rejected"? Icon(Icons.cancel_rounded,color: Color(0xffD91656),size: 20,)
+                                                : Icon(Icons.access_time_filled_rounded,color: Color(0xffF39E60),size: 20,),
+                                          ),
+                                           SizedBox(width: 5,),
+                                          Container(
+                                            child: data['prinApproval']=="Approved"? Text("Approved",style: TextStyle(color: Color(0xff16C47F),fontSize: 17,fontWeight: FontWeight.w500),)
+                                                :data['prinApproval']=="Rejected"? Text("Rejected",style: TextStyle(color: Color(0xffD91656),fontSize: 17,fontWeight: FontWeight.w500),)
+                                                : Text("Pending",style: TextStyle(color: Color(0xffF39E60),fontSize: 17,fontWeight: FontWeight.w500),),),
+                                           SizedBox(width: 10,)
+                                        ],
+                                      )),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 15,),
                             Padding(
                               padding:  EdgeInsets.only(left: 15),
                               child: Row(
@@ -91,18 +156,44 @@ class TeacherLeaves extends StatelessWidget {
                                                 :data['hodApproval']=="Rejected"? Icon(Icons.cancel_rounded,color: Color(0xffD91656),size: 20,)
                                                 : Icon(Icons.access_time_filled_rounded,color: Color(0xffF39E60),size: 20,),
                                           ),
-                                           SizedBox(width: 5,),
+                                          SizedBox(width: 5,),
                                           Container(
                                             child: data['hodApproval']=="Approved"? Text("Approved",style: TextStyle(color: Color(0xff16C47F),fontSize: 17,fontWeight: FontWeight.w500),)
                                                 :data['hodApproval']=="Rejected"? Text("Rejected",style: TextStyle(color: Color(0xffD91656),fontSize: 17,fontWeight: FontWeight.w500),)
                                                 : Text("Pending",style: TextStyle(color: Color(0xffF39E60),fontSize: 17,fontWeight: FontWeight.w500),),),
-                                           SizedBox(width: 10,)
+                                          SizedBox(width: 10,)
                                         ],
-                                      ))
+                                      )),
                                 ],
                               ),
                             ),
-                             SizedBox(height: 15,),
+                            SizedBox(height: 15,),
+                            Padding(
+                              padding:  EdgeInsets.only(left: 15),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Final Status",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 17,fontWeight: FontWeight.w600),),
+                                  Container(
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            child: data['finalStatus']=="Approved"? Icon(Icons.check_circle_rounded,color: Color(0xff16C47F),size: 20,)
+                                                :data['finalStatus']=="Rejected"? Icon(Icons.cancel_rounded,color: Color(0xffD91656),size: 20,)
+                                                : Icon(Icons.access_time_filled_rounded,color: Color(0xffF39E60),size: 20,),
+                                          ),
+                                          SizedBox(width: 5,),
+                                          Container(
+                                            child: data['finalStatus']=="Approved"? Text("Approved",style: TextStyle(color: Color(0xff16C47F),fontSize: 17,fontWeight: FontWeight.w500),)
+                                                :data['finalStatus']=="Rejected"? Text("Rejected",style: TextStyle(color: Color(0xffD91656),fontSize: 17,fontWeight: FontWeight.w500),)
+                                                : Text("Pending",style: TextStyle(color: Color(0xffF39E60),fontSize: 17,fontWeight: FontWeight.w500),),),
+                                          SizedBox(width: 10,)
+                                        ],
+                                      )),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 15,),
                             Padding(
                               padding:  EdgeInsets.fromLTRB(15, 17, 10, 15),
                               child: Container(

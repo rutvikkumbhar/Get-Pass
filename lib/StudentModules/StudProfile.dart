@@ -167,7 +167,7 @@ class Studprofile extends StatelessWidget {
                         title:  Text("Log out"),
                         subtitle:  Text("Account should not be deleted.",style: TextStyle(color: Color(0xff4F7A94)),),
                         leading:  Icon(Icons.logout_rounded,color: Color(0xff006BFF)),
-                        trailing:  Icon(Icons.keyboard_arrow_right_rounded),
+                        trailing:  const Icon(Icons.keyboard_arrow_right_rounded),
                         onTap: (){
                           showDialog(
                             context: context,

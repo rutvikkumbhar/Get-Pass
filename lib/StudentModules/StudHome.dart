@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:getpass/StudentModules/LeaveRequest.dart';
+import 'package:getpass/Success.dart';
 import 'StudFeedback.dart';
 
 class StudHome extends StatelessWidget {
@@ -11,6 +12,10 @@ class StudHome extends StatelessWidget {
   Future<String> studDept() async {
     DocumentSnapshot studDoc=await FirebaseFirestore.instance.collection('Students').doc(_auth.currentUser!.uid).get();
     return studDoc['dept'].toString();
+  }
+  Future<int> studTotalLeaves() async {
+    DocumentSnapshot studDoc=await FirebaseFirestore.instance.collection('Students').doc(_auth.currentUser!.uid).get();
+    return int.parse(studDoc['totalLeave'].toString());
   }
 
   Widget build(BuildContext context) {
@@ -25,14 +30,32 @@ class StudHome extends StatelessWidget {
               height: 100,
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(5),color: Colors.grey.withOpacity(0.1)),
               child: ListTile(
-                title:  Text("Submit a leave request",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w600),),
+                title:  Text("Apply for leave request",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w600),),
                 subtitle:  Text("You can submit a leave request for the gate pass.",style: TextStyle(fontSize: 16,
                 fontWeight: FontWeight.w500,color: Color(0xff4F7A94)),),
                 trailing:  Icon(Icons.edit_rounded,color: Color(0xff4F7A94),),
                 onTap: () async {
-                  Navigator.push(context, MaterialPageRoute(builder: (builder){
-                    return LeaveRequest();
-                  }));
+                  if(await studTotalLeaves()>=3){
+                    showDialog(
+                      context: context,
+                      builder: (context)=>AlertDialog(
+                        title: Text("Leave Limit Reached"),
+                        content: Text("Monthly leave limit (3) reached. Please get a physical pass."),
+                        actions: [
+                          ElevatedButton(
+                            child: Text("Ok"),
+                            onPressed: (){
+                              Navigator.pop(context);
+                            },
+                          )
+                        ],
+                      )
+                    );
+                  } else {
+                    Navigator.push(context, MaterialPageRoute(builder: (builder){
+                      return LeaveRequest();
+                    }));
+                  }
                 },
               ),
             ),
@@ -116,9 +139,44 @@ class StudHome extends StatelessWidget {
                                                 ),
                                               ),
                                             ),
+                                            data['finalStatus']=="Pending"?
+                                            IconButton(
+                                              icon: Icon(Icons.delete_rounded,color: Color(0xffD91656),),
+                                              onPressed: (){
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context)=>AlertDialog(
+                                                    title: Text("Confirm Deletion"),
+                                                    content: Text("Are you sure you want to delete this pass? This action cannot be undone, and your monthly leave count will be reset accordingly."),
+                                                    actions: [
+                                                      ElevatedButton(
+                                                        child: Text("Delete"),
+                                                        onPressed: () async {
+                                                          CollectionReference deleteLeave=FirebaseFirestore.instance.collection('Leaves_$department');
+                                                          deleteLeave.doc(data.id).delete();
+                                                          Success().toastMessage("Leave request deleted successfully! Monthly limit restored.");
+                                                          Navigator.pop(context);
+                                                          CollectionReference updateLimit=FirebaseFirestore.instance.collection('Students');
+                                                          DocumentSnapshot count=await updateLimit.doc(_auth.currentUser!.uid).get();
+                                                          updateLimit.doc(_auth.currentUser!.uid).update({
+                                                            'totalLeave':(int.parse(count['totalLeave'].toString())-1).toString(),
+                                                          });
+                                                        },
+                                                      ),
+                                                      ElevatedButton(
+                                                        child: Text("Cancel"),
+                                                        onPressed: (){
+                                                          Navigator.pop(context);
+                                                        },
+                                                      ),
+                                                    ],
+                                                  )
+                                                );
+                                              },
+                                            ):SizedBox(),
                                           ],
                                         ),
-                                         SizedBox(height: 10,),
+                                        SizedBox(height: 10,),
                                         Padding(
                                           padding:  EdgeInsets.only(left: 15),
                                           child: Row(
@@ -248,5 +306,4 @@ class StudHome extends StatelessWidget {
       )
     );
   }
-
 }

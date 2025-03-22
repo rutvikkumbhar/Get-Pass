@@ -34,20 +34,20 @@ class _TeacherloginState extends State<Teacherlogin> {
             key: _key,
             child: Column(
               children: [
-                 SizedBox(height: 160,),
+                 const SizedBox(height: 160,),
                 Padding(
-                  padding:  EdgeInsets.all(5),
+                  padding:  const EdgeInsets.all(5),
                   child: Container(
                     height: 100,width: 100,
-                    decoration: BoxDecoration(image:  DecorationImage(image: AssetImage("assets/images/teacherpfp.png"),fit: BoxFit.fill),
+                    decoration: BoxDecoration(image:  const DecorationImage(image: AssetImage("assets/images/teacherpfp.png"),fit: BoxFit.fill),
                         borderRadius: BorderRadius.circular(60)),
                   ),
                 ),
-                 SizedBox(height: 3,),
-                Text("Teacher Login",style: GoogleFonts.albertSans(fontSize: 22, fontWeight: FontWeight.w600),),
-                 SizedBox(height: 30,),
+                 const SizedBox(height: 3,),
+                Text("Admin/Teacher Login",style: GoogleFonts.albertSans(fontSize: 22, fontWeight: FontWeight.w600),),
+                 const SizedBox(height: 30,),
                 Padding(
-                  padding:  EdgeInsets.fromLTRB(30, 0, 30, 0),
+                  padding:  const EdgeInsets.fromLTRB(30, 0, 30, 0),
                   child: TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(hintText: "Email ID",border: OutlineInputBorder(borderRadius: BorderRadius.circular(30),
@@ -63,9 +63,9 @@ class _TeacherloginState extends State<Teacherlogin> {
                     },
                   ),
                 ),
-                 SizedBox(height: 15,),
+                 const SizedBox(height: 15,),
                 Padding(
-                  padding:  EdgeInsets.fromLTRB(30, 0, 30, 0),
+                  padding:  const EdgeInsets.fromLTRB(30, 0, 30, 0),
                   child: TextFormField(
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: pass?true:false,
@@ -73,9 +73,9 @@ class _TeacherloginState extends State<Teacherlogin> {
                         borderSide: BorderSide.none),filled: true,fillColor: Colors.grey.withOpacity(0.2),
                         hintStyle: TextStyle(fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.5)),
                         suffixIcon:Padding(
-                          padding:  EdgeInsets.only(right: 10),
+                          padding:  const EdgeInsets.only(right: 10),
                           child: IconButton(
-                            icon: pass? Icon(Icons.lock_outline_rounded): Icon(Icons.lock_open_outlined),
+                            icon: pass? const Icon(Icons.lock_outline_rounded): const Icon(Icons.lock_open_outlined),
                             onPressed: (){
                               setState(() {
                                 pass=pass?false:true;
@@ -93,12 +93,12 @@ class _TeacherloginState extends State<Teacherlogin> {
                     },
                   ),
                 ),
-                 SizedBox(height: 25,),
+                 const SizedBox(height: 25,),
                 Container(
                   height: 50,width: 200,
-                  decoration: BoxDecoration(color:  Color(0xff80C4E9),borderRadius: BorderRadius.circular(30)),
+                  decoration: BoxDecoration(color:  const Color(0xff6A9C89),borderRadius: BorderRadius.circular(30)),
                   child: TextButton(
-                    child: load? CircularProgressIndicator(color: Colors.white,):Text("Login",style: GoogleFonts.albertSans(color: Colors.white,fontSize: 17,fontWeight: FontWeight.w700),),
+                    child: load? const CircularProgressIndicator(color: Colors.white,):Text("Login",style: GoogleFonts.albertSans(color: Colors.white,fontSize: 17,fontWeight: FontWeight.w700),),
                     onPressed: (){
                       setState(() {
                         load=true;
@@ -108,7 +108,7 @@ class _TeacherloginState extends State<Teacherlogin> {
                           email: emailController.text.toString(),
                           password: passController.text.toString()
                         ).then((onValue) async {
-                          //Check staf
+                            //Check staf
                             DocumentSnapshot docData=await ref.doc(_auth.currentUser!.uid.toString()).get();
                             Map<String, dynamic>? data=docData.exists?docData.data() as Map<String, dynamic>:null;
                             //Check HODs
@@ -118,7 +118,7 @@ class _TeacherloginState extends State<Teacherlogin> {
                             DocumentSnapshot pDoc=await principle.doc(_auth.currentUser!.uid).get();
                             Map<String, dynamic>? pData=pDoc.exists?pDoc.data() as Map<String, dynamic>:null;
 
-                            if(emailController.text.toString()==data?['email'] && passController.text.toString()==data?['password']){
+                            if(data?['userType']=="Teacher"){
                               String? token=await FirebaseMessaging.instance.getToken();
                               await ref.doc(_auth.currentUser!.uid).update({
                                 'fcmToken':token.toString()
@@ -126,7 +126,7 @@ class _TeacherloginState extends State<Teacherlogin> {
                                 Navigator.of(context).pushAndRemoveUntil( MaterialPageRoute(builder: (context) => TeaBottomNav()),
                                       (Route<dynamic> route) => false,);
                               });
-                            } else if(emailController.text.toString()==hodData?['email'] && passController.text.toString()==hodData?['password']){
+                            } else if(hodData?['userType']=="HOD"){
                               String? token=await FirebaseMessaging.instance.getToken();
                               await collectionReference.doc(_auth.currentUser!.uid).update({
                                 'fcmToken':token.toString()
@@ -134,7 +134,7 @@ class _TeacherloginState extends State<Teacherlogin> {
                                 Navigator.of(context).pushAndRemoveUntil( MaterialPageRoute(builder: (context) => hodBottomNav()),
                                       (Route<dynamic> route) => false,);
                               });
-                            } else if(emailController.text.toString()==pData?['email'] && passController.text.toString()==pData?['password']){
+                            } else if(pData?['userType']=="Principle"){
                               String? token=await FirebaseMessaging.instance.getToken();
                               await principle.doc(_auth.currentUser!.uid).update({
                                 'fcmToken':token.toString()

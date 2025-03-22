@@ -23,7 +23,7 @@ class _FlashState extends State<Flash> {
 
   void initState(){
     super.initState();
-    Timer( Duration(seconds: 3),() async {
+    Timer( const Duration(seconds: 3),() async {
       if(_auth.currentUser!=null){
           DocumentSnapshot studDoc=await student.doc(_auth.currentUser!.uid).get();
           Map<String, dynamic>? studData=studDoc.exists?studDoc.data() as Map<String, dynamic>:null;
@@ -32,13 +32,13 @@ class _FlashState extends State<Flash> {
           DocumentSnapshot hodDoc=await hod.doc(_auth.currentUser!.uid).get();
           Map<String, dynamic>? hodData=hodDoc.exists?hodDoc.data() as Map<String, dynamic>:null;
 
-          if(studData!=null && studData['userType']=="Student"){
+          if(studData?['userType']=="Student"){
             Navigator.of(context).pushAndRemoveUntil( MaterialPageRoute(builder: (context) => StudBottomNav()),
                   (Route<dynamic> route) => false,);
-          } else if(teaData!=null && teaData['userType']=="Teacher"){
+          } else if(teaData?['userType']=="Teacher"){
             Navigator.of(context).pushAndRemoveUntil( MaterialPageRoute(builder: (context) => TeaBottomNav()),
                   (Route<dynamic> route) => false,);
-          } else if(hodData!=null && hodData['userType']=="HOD"){
+          } else if(hodData?['userType']=="HOD"){
             Navigator.of(context).pushAndRemoveUntil( MaterialPageRoute(builder: (context) => hodBottomNav()),
                   (Route<dynamic> route) => false,);
           }
@@ -59,11 +59,12 @@ class _FlashState extends State<Flash> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              height: 100,width: 100,
-              decoration:  BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/vvplogo.jpg"),fit: BoxFit.fill)),
+              height: 150,width: 150,
+              decoration:  const BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/vvplogo1.jpg"),fit: BoxFit.fill)),
             ),
-            Text("VVP Polytechnic",style: GoogleFonts.acme(fontSize: 23),),
-             SizedBox(
+            Text("Vidya Vikas Pratishthan Polytechnic",style: GoogleFonts.acme(fontSize: 23),),
+            Text("Solapur.",style: GoogleFonts.acme(fontSize: 23),),
+             const SizedBox(
               height: 20,width: 20,
                 child: CircularProgressIndicator(color: Color(0xffF26B0F)))
           ],

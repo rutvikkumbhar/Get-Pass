@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:getpass/TeacherModules/StudentInfo.dart';
 import 'AddStudent.dart';
 
 class AllStudents extends StatelessWidget {
@@ -64,12 +65,12 @@ class AllStudents extends StatelessWidget {
                                    :NetworkImage(data['photoURL']),fit: BoxFit.contain),
                                    borderRadius: BorderRadius.circular(60)),
                              ),
-                             trailing: IconButton(
-                               icon:  Icon(Icons.edit,color: Color(0xff3F72AF),),
-                               onPressed: (){
-     
-                               },
-                             ),
+                             trailing:Icon(Icons.keyboard_arrow_right_rounded,color: Color(0xff3F72AF),),
+                             onTap: (){
+                               Navigator.push(context, MaterialPageRoute(builder: (builder){
+                                 return StudentInformation(document: data.id);
+                               }));
+                             },
                            ),
                          ),
                        );

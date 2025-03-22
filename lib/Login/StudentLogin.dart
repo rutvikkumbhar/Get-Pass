@@ -29,23 +29,23 @@ class _StudentLoginState extends State<StudentLogin> {
          key: _key,
          child: Column(
            children: [
-              SizedBox(height: 160,),
+              const SizedBox(height: 160,),
              Padding(
-               padding:  EdgeInsets.all(5),
+               padding:  const EdgeInsets.all(5),
                child: Container(
                  height: 100,width: 100,
-                 decoration: BoxDecoration(image:  DecorationImage(image: AssetImage("assets/images/studentpfp.png"),fit: BoxFit.fill),
+                 decoration: BoxDecoration(image:  const DecorationImage(image: AssetImage("assets/images/studentpfp.png"),fit: BoxFit.fill),
                      borderRadius: BorderRadius.circular(60)),
                ),
              ),
-              SizedBox(height: 3,),
+              const SizedBox(height: 3,),
              Text("Student Login",style: GoogleFonts.albertSans(fontSize: 22, fontWeight: FontWeight.w600),),
-              SizedBox(height: 30,),
+              const SizedBox(height: 30,),
              Padding(
-               padding:  EdgeInsets.fromLTRB(30, 0, 30, 0),
+               padding:  const EdgeInsets.fromLTRB(30, 0, 30, 0),
                child: TextFormField(
                  keyboardType: TextInputType.emailAddress,
-                 decoration: InputDecoration(contentPadding:  EdgeInsets.symmetric(horizontal: 20, vertical: 15),hintText: "Email ID",border: OutlineInputBorder(borderRadius: BorderRadius.circular(30),
+                 decoration: InputDecoration(contentPadding:  const EdgeInsets.symmetric(horizontal: 20, vertical: 15),hintText: "Email ID",border: OutlineInputBorder(borderRadius: BorderRadius.circular(30),
                  borderSide: BorderSide.none),filled: true,fillColor: Colors.grey.withOpacity(0.2),
                      hintStyle: TextStyle(fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.5))),
                  controller: emailController,
@@ -58,19 +58,19 @@ class _StudentLoginState extends State<StudentLogin> {
                  },
                ),
              ),
-              SizedBox(height: 15,),
+              const SizedBox(height: 15,),
              Padding(
-               padding:  EdgeInsets.fromLTRB(30, 0, 30, 0),
+               padding:  const EdgeInsets.fromLTRB(30, 0, 30, 0),
                child: TextFormField(
                  keyboardType: TextInputType.visiblePassword,
                  obscureText: pass?true:false,
-                 decoration: InputDecoration(contentPadding:  EdgeInsets.symmetric(horizontal: 20, vertical: 15),hintText: "Password",border: OutlineInputBorder(borderRadius: BorderRadius.circular(30),
+                 decoration: InputDecoration(contentPadding:  const EdgeInsets.symmetric(horizontal: 20, vertical: 15),hintText: "Password",border: OutlineInputBorder(borderRadius: BorderRadius.circular(30),
                      borderSide: BorderSide.none),filled: true,fillColor: Colors.grey.withOpacity(0.2),
                      hintStyle: TextStyle(fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.5)),
                  suffixIcon:Padding(
-                   padding:  EdgeInsets.only(right: 10),
+                   padding:  const EdgeInsets.only(right: 10),
                    child: IconButton(
-                     icon: pass? Icon(Icons.lock_outline_rounded): Icon(Icons.lock_open_outlined),
+                     icon: pass? const Icon(Icons.lock_outline_rounded): const Icon(Icons.lock_open_outlined),
                      onPressed: (){
                        setState(() {
                          pass=pass?false:true;
@@ -88,12 +88,12 @@ class _StudentLoginState extends State<StudentLogin> {
                  },
                ),
              ),
-              SizedBox(height: 25,),
+              const SizedBox(height: 25,),
              Container(
                height: 50,width: 200,
-               decoration: BoxDecoration(color:  Color(0xffF26B0F),borderRadius: BorderRadius.circular(30)),
+               decoration: BoxDecoration(color:  Color(0xff80C4E9),borderRadius: BorderRadius.circular(30)),
                child: TextButton(
-                 child: load? CircularProgressIndicator(color: Colors.white,)
+                 child: load? const CircularProgressIndicator(color: Colors.white,)
                             :Text("Login",style: GoogleFonts.albertSans(color: Colors.white,fontSize: 17,fontWeight: FontWeight.w700),),
                  onPressed: () async {
                    setState(() {
@@ -106,7 +106,7 @@ class _StudentLoginState extends State<StudentLogin> {
                      ).then((onValue) async {
                        DocumentSnapshot docData=await ref.doc(_auth.currentUser!.uid.toString()).get();
                        Map<String, dynamic> data=docData.data() as Map<String, dynamic>;
-                       if(emailController.text.toString()==data['email'] && passController.text.toString() ==data['password']) {
+                       if(data['userType']=="Student") {
                          String? token=await FirebaseMessaging.instance.getToken();
                          await ref.doc(_auth.currentUser!.uid).update({
                            'fcmToken':token.toString()

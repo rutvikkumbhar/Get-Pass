@@ -21,7 +21,7 @@ Future<void> main() async {
 class MyApp extends StatelessWidget{
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Get Pass",
+      title: "Get Way",
       home: Flash(),
       debugShowCheckedModeBanner: true,
     );

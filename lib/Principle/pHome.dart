@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:getpass/Principle/TeaLeaveRequest.dart';
 import 'StafLeaveRequest.dart';
 
 class pHome extends StatelessWidget {
@@ -18,6 +19,21 @@ class pHome extends StatelessWidget {
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (builder){
                     return StafLeaverequest();
+                  }));
+                },
+              ),
+            ),
+            SizedBox(height: 15,),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(color:  Color(0xffDBE2EF),borderRadius: BorderRadius.circular(5)),
+              child: ListTile(
+                title:  Text("Admin/Staff Leaves Application",style: TextStyle(color: Colors.black,fontSize: 17),),
+                subtitle:  Text("View staff recent leave application"),
+                trailing:  Icon(Icons.keyboard_arrow_right_outlined),
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (builder){
+                    return TeaLeaveRequest();
                   }));
                 },
               ),

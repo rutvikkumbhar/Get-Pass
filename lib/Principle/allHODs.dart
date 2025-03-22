@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:getpass/Principle/hodInformation.dart';
 import 'AddHOD.dart';
 
 class allHODs extends StatelessWidget {
@@ -43,13 +44,12 @@ class allHODs extends StatelessWidget {
                         decoration: BoxDecoration(image: DecorationImage(image:data['photoURL']==null? AssetImage("assets/images/teacherpfp.png") :NetworkImage(data['photoURL']),fit: BoxFit.fill),
                             borderRadius: BorderRadius.circular(60)),
                       ),
-                      trailing: IconButton(
-                        icon:  Icon(Icons.edit,color: Color(0xff3F72AF),),
-                        onPressed: (){
-                          final msg=SnackBar(content: Text("Currently not available"));
-                          ScaffoldMessenger.of(context).showSnackBar(msg);
-                        },
-                      ),
+                      trailing: Icon(Icons.keyboard_arrow_right_rounded,color: Color(0xff3F72AF),),
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (builder){
+                          return hodInformation(document: data.id);
+                        }));
+                      },
                     ),
                   ),
                 );

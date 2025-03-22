@@ -23,26 +23,30 @@ class _AddTeacherState extends State<AddTeacher> {
   final educationController=TextEditingController();
 
   FirebaseAuth _auth=FirebaseAuth.instance;
+  String getCurrentYearMonth() {
+    DateTime now = DateTime.now();
+    return "${now.year}-${now.month.toString().padLeft(2, '0')}";
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text("Add Teacher"),
+        title:  const Text("Add Teacher"),
         centerTitle: true,
       ),
       body: Padding(
-        padding:  EdgeInsets.only(left: 20,right: 20),
+        padding:  const EdgeInsets.only(left: 20,right: 20),
         child: Form(
           key: _key,
           child: ListView(
             children: [
               Text("Teacher Details",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.6))),
-               SizedBox(height: 20,),
+               const SizedBox(height: 20,),
               TextFormField(
                 keyboardType: TextInputType.name,
                 decoration: InputDecoration(labelText: "Name", hintText: "eg. John R.K",
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                prefixIcon:  Icon(Icons.person_outline_rounded,size: 22,color: Color(0xff3F72AF),)),
+                prefixIcon:  const Icon(Icons.person_outline_rounded,size: 22,color: Color(0xff3F72AF),)),
                 controller: nameController,
                 validator: (value){
                   if(value==null || value.isEmpty){
@@ -52,12 +56,12 @@ class _AddTeacherState extends State<AddTeacher> {
                   }
                 },
               ),
-               SizedBox(height: 15,),
+               const SizedBox(height: 15,),
               TextFormField(
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(labelText: "Contact",
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                  prefixIcon:  Icon(Icons.call_outlined,size: 22,color: Color(0xff3F72AF))),
+                  prefixIcon:  const Icon(Icons.call_outlined,size: 22,color: Color(0xff3F72AF))),
                 controller: contactController,
                 validator: (value){
                   if(value==null || value.isEmpty || value.length!=10){
@@ -67,12 +71,12 @@ class _AddTeacherState extends State<AddTeacher> {
                   }
                 },
               ),
-               SizedBox(height: 15,),
+               const SizedBox(height: 15,),
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(labelText: "Email",
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                    prefixIcon:  Icon(Icons.alternate_email_rounded,size: 22,color: Color(0xff3F72AF))),
+                    prefixIcon:  const Icon(Icons.alternate_email_rounded,size: 22,color: Color(0xff3F72AF))),
                 controller: emailController,
                 validator: (value){
                   if(value==null || value.isEmpty){
@@ -82,15 +86,15 @@ class _AddTeacherState extends State<AddTeacher> {
                   }
                 },
               ),
-               SizedBox(height: 15,),
+               const SizedBox(height: 15,),
               TextFormField(
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: pass?true:false,
                 decoration: InputDecoration(labelText: "Password",
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                    prefixIcon:  Icon(Icons.security_outlined,size: 22,color: Color(0xff3F72AF)),
+                    prefixIcon:  const Icon(Icons.security_outlined,size: 22,color: Color(0xff3F72AF)),
                 suffixIcon: IconButton(
-                  icon: pass? Icon(Icons.lock_outline,color: Color(0xff1DB954),size: 22,): Icon(Icons.lock_open_outlined,color: Color(0xffDC3545),size: 22,),
+                  icon: pass? const Icon(Icons.lock_outline,color: Color(0xff1DB954),size: 22,): const Icon(Icons.lock_open_outlined,color: Color(0xffDC3545),size: 22,),
                   onPressed: (){
                     setState(() {
                       pass=pass?false:true;
@@ -106,16 +110,16 @@ class _AddTeacherState extends State<AddTeacher> {
                   }
                 },
               ),
-               SizedBox(height: 20,),
+               const SizedBox(height: 20,),
               Text("Other Details",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.6))),
-               SizedBox(height: 20,),
+               const SizedBox(height: 20,),
               StreamBuilder(
                 stream: FirebaseFirestore.instance.collection('HODs').doc(_auth.currentUser!.uid).snapshots(),
                 builder: (context, AsyncSnapshot<DocumentSnapshot> streamSnapshot){
                   if(streamSnapshot.connectionState == ConnectionState.waiting){
-                    return  Center(child: CircularProgressIndicator(),);
+                    return  const Center(child: CircularProgressIndicator(),);
                   } else if(streamSnapshot.hasError){
-                    return  Center(child: Text("Something went wrong"),);
+                    return  const Center(child: Text("Something went wrong"),);
                   } else {
                     Map<String, dynamic> data=streamSnapshot.data!.data() as Map<String, dynamic>;
                     return TextField(
@@ -123,12 +127,12 @@ class _AddTeacherState extends State<AddTeacher> {
                       readOnly: true,
                       decoration: InputDecoration(hintText: "${data['dept']}",
                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                          prefixIcon:  Icon(Icons.school_outlined,size: 22,color: Color(0xff3F72AF),)),
+                          prefixIcon:  const Icon(Icons.school_outlined,size: 22,color: Color(0xff3F72AF),)),
                     );
                   }
                 },
               ),
-               SizedBox(height: 15,),
+               const SizedBox(height: 15,),
               Row(
                 children: [
                   Expanded(
@@ -136,7 +140,7 @@ class _AddTeacherState extends State<AddTeacher> {
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(hintText: "eg. TYCO-A",labelText: "Class",
                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                          prefixIcon:  Icon(Icons.class_outlined,size: 22,color: Color(0xff3F72AF),)),
+                          prefixIcon:  const Icon(Icons.class_outlined,size: 22,color: Color(0xff3F72AF),)),
                       controller: classController,
                       validator: (value){
                         if(value==null || value.isEmpty){
@@ -147,13 +151,13 @@ class _AddTeacherState extends State<AddTeacher> {
                       },
                     ),
                   ),
-                   SizedBox(width: 15,),
+                   const SizedBox(width: 15,),
                   Expanded(
                     child: TextFormField(
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(labelText: "Education",
                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                          prefixIcon:  Icon(Icons.school_outlined,size: 22,color: Color(0xff3F72AF),)),
+                          prefixIcon:  const Icon(Icons.school_outlined,size: 22,color: Color(0xff3F72AF),)),
                       controller: educationController,
                       validator: (value){
                         if(value==null || value.isEmpty){
@@ -166,37 +170,15 @@ class _AddTeacherState extends State<AddTeacher> {
                   ),
                 ],
               ),
-               SizedBox(height: 25,),
-              Text("Profile Picture",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.6)),),
-               SizedBox(height: 15,),
-              Container(
-                  height: 150,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),border: Border.all(color: Colors.black.withOpacity(0.1))),
-                  child: GestureDetector(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                         Icon(Icons.cloud_upload_outlined,size: 50,color: Color(0xffA6E3E9),),
-                        Text("Upload image",style: TextStyle(fontSize: 13,color: Colors.black.withOpacity(0.7),fontWeight: FontWeight.w500),),
-                      ],
-                    ),
-                    onTap: (){
-                       final msg=SnackBar(content: Text("Currently not available"));
-                      ScaffoldMessenger.of(context).showSnackBar(msg);
-                    },
-                  )
-              ),
-               SizedBox(height: 30,),
+               const SizedBox(height: 25,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     height: 45,width: 150,
-                    decoration: BoxDecoration(color:  Color(0xff112D4E),borderRadius: BorderRadius.circular(5)),
+                    decoration: BoxDecoration(color:  const Color(0xff112D4E),borderRadius: BorderRadius.circular(5)),
                     child: TextButton(
-                      child: load? CircularProgressIndicator():Text("Add",style: TextStyle(color: Colors.white.withOpacity(0.8),fontSize: 18,fontWeight: FontWeight.w500)),
+                      child: load? const CircularProgressIndicator():Text("Add",style: TextStyle(color: Colors.white.withOpacity(0.8),fontSize: 18,fontWeight: FontWeight.w500)),
                       onPressed: () async {
                         setState(() {
                           load=true;
@@ -220,6 +202,8 @@ class _AddTeacherState extends State<AddTeacher> {
                               'name':nameController.text.toString(),
                               'password':passwordController.text.toString(),
                               'photoURL':null,
+                              'totalLeave':"0",
+                              'lastReset':getCurrentYearMonth().toString(),
                               'hodID':hodID,
                               'userID':tea.currentUser!.uid.toString(),
                               'userType':"Teacher"
@@ -249,12 +233,12 @@ class _AddTeacherState extends State<AddTeacher> {
                       },
                     ),
                   ),
-                   SizedBox(width: 15,),
+                   const SizedBox(width: 15,),
                   Container(
                     height: 45,width: 150,
-                    decoration: BoxDecoration(color:  Color(0xffDBE2EF),borderRadius: BorderRadius.circular(5)),
+                    decoration: BoxDecoration(color:  const Color(0xffDBE2EF),borderRadius: BorderRadius.circular(5)),
                     child: TextButton(
-                      child:  Text("Cancel"),
+                      child:  const Text("Cancel"),
                       onPressed: (){
                         Navigator.pop(context, MaterialPageRoute(builder: (builder){
                           return DeptTeacher();
@@ -264,7 +248,7 @@ class _AddTeacherState extends State<AddTeacher> {
                   ),
                 ],
               ),
-               SizedBox(height: 25,),
+               const SizedBox(height: 25,),
             ],
           ),
         ),

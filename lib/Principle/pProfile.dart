@@ -40,7 +40,7 @@ class pProfile extends StatelessWidget {
                               SizedBox(height: 13,),
                               Padding(
                                 padding: const EdgeInsets.all(5),
-                                child: Text("Prof. ${data['name']}",style:  TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.w500),),
+                                child: Text("${data['name']}",style:  TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.w500),),
                               ),
                               SizedBox(height: 30,),
                             ],

@@ -16,7 +16,7 @@ class TeacherRequest extends StatelessWidget {
       body: Padding(
         padding:  EdgeInsets.only(left: 15,right: 15),
         child: StreamBuilder(
-          stream: ref1.orderBy('appliedAt', descending: true).snapshots(),
+          stream: ref1.orderBy('appliedAt', descending: true).where('hodID', isEqualTo: _auth.currentUser!.uid).snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot){
             if(streamSnapshot.connectionState == ConnectionState.waiting){
               return  Center(child: CircularProgressIndicator(),);
@@ -150,7 +150,7 @@ class TeacherRequest extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                 SizedBox(width: 10,),
+                                SizedBox(width: 10,),
                                 Expanded(
                                   child: Container(
                                     height: 45,

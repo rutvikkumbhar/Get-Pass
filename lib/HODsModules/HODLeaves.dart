@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../Success.dart';
 
 class HODLeaves extends StatefulWidget {
   @override
@@ -14,18 +15,18 @@ class _HODLeavesState extends State<HODLeaves> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Your leaves"),
+        title: const Text("Your leaves"),
         centerTitle: true,
       ),
       body: Padding(
-        padding:  EdgeInsets.fromLTRB(15, 10, 15, 0),
+        padding:  const EdgeInsets.fromLTRB(15, 10, 15, 0),
         child: StreamBuilder(
           stream: ref.where('userID', isEqualTo: _auth.currentUser!.uid).orderBy('appliedAt', descending: true).snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot){
             if(streamSnapshot.connectionState== ConnectionState.waiting){
-              return  Center(child: CircularProgressIndicator(),);
+              return  const Center(child: CircularProgressIndicator(),);
             } else if(streamSnapshot.hasError){
-              return  Center(child: Text("Something went wrong"),);
+              return  const Center(child: Text("Something went wrong"),);
             } else if(streamSnapshot.hasData==false || streamSnapshot.data!.docs.isEmpty){
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -33,7 +34,7 @@ class _HODLeavesState extends State<HODLeaves> {
                 children: [
                   Container(
                     height: 200,width: MediaQuery.of(context).size.width>350?350:MediaQuery.of(context).size.width,
-                    decoration:  BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/cart.png"),fit: BoxFit.fill)),
+                    decoration:  const BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/cart.png"),fit: BoxFit.fill)),
                   ),
                   Text("No any request, all looks good",style: TextStyle(fontWeight: FontWeight.w500,color: Colors.black87.withOpacity(0.4)),),
                 ],
@@ -44,11 +45,11 @@ class _HODLeavesState extends State<HODLeaves> {
                 itemBuilder: (itemBuilder, index){
                   DocumentSnapshot data=streamSnapshot.data!.docs[index];
                   return Padding(
-                    padding:  EdgeInsets.only(top: 7,bottom: 7),
+                    padding:  const EdgeInsets.only(top: 7,bottom: 7),
                     child: Container(
                       decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(15)),
                       child: Padding(
-                        padding:  EdgeInsets.all(5),
+                        padding:  const EdgeInsets.all(5),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,19 +61,49 @@ class _HODLeavesState extends State<HODLeaves> {
                                   child: ListTile(
                                     title: Text("Leave Date & Time",style: TextStyle(fontSize: 17,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.w600),),
                                     subtitle: Padding(
-                                      padding:  EdgeInsets.only(top: 3),
+                                      padding:  const EdgeInsets.only(top: 3),
                                       child: Row(children: [
-                                        Icon(Icons.calendar_today_rounded,color: Color(0xff006BFF),size: 18,),
-                                        Text(" ${data['date']} | ${data['time']}",style:  TextStyle(fontSize: 17,color: Colors.black,fontWeight: FontWeight.w400),),
+                                        const Icon(Icons.calendar_today_rounded,color: Color(0xff006BFF),size: 18,),
+                                        Text(" ${data['date']} | ${data['time']}",style:  const TextStyle(fontSize: 17,color: Colors.black,fontWeight: FontWeight.w400),),
                                       ],),
                                     ),
                                   ),
                                 ),
+                                data['principleApproval']=="Pending"?
+                                IconButton(
+                                  icon: const Icon(Icons.delete_rounded,color: Color(0xffD91656),),
+                                  onPressed: (){
+                                    showDialog(
+                                        context: context,
+                                        builder: (context)=>AlertDialog(
+                                          title: const Text("Confirm Deletion"),
+                                          content: const Text("Are you sure you want to delete this pass? This action cannot be undone."),
+                                          actions: [
+                                            ElevatedButton(
+                                              child: const Text("Delete"),
+                                              onPressed: () async {
+                                                CollectionReference deleteLeave=FirebaseFirestore.instance.collection('HOD Leaves');
+                                                deleteLeave.doc(data.id).delete();
+                                                Success().toastMessage("Leave request deleted successfully! Monthly limit restored.");
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                            ElevatedButton(
+                                              child: const Text("Cancel"),
+                                              onPressed: (){
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          ],
+                                        )
+                                    );
+                                  },
+                                ):const SizedBox(),
                               ],
                             ),
-                            SizedBox(height: 15,),
+                            const SizedBox(height: 15,),
                             Padding(
-                              padding:  EdgeInsets.only(left: 15),
+                              padding:  const EdgeInsets.only(left: 15),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -81,55 +112,55 @@ class _HODLeavesState extends State<HODLeaves> {
                                       child: Row(
                                         children: [
                                           Container(
-                                            child: data['principleApproval']=="Approved"? Icon(Icons.check_circle_rounded,color: Color(0xff16C47F),size: 20,)
-                                                :data['principleApproval']=="Rejected"? Icon(Icons.cancel_rounded,color: Color(0xffD91656),size: 20,)
-                                                : Icon(Icons.access_time_filled_rounded,color: Color(0xffF39E60),size: 20,),
+                                            child: data['principleApproval']=="Approved"? const Icon(Icons.check_circle_rounded,color: Color(0xff16C47F),size: 20,)
+                                                :data['principleApproval']=="Rejected"? const Icon(Icons.cancel_rounded,color: Color(0xffD91656),size: 20,)
+                                                : const Icon(Icons.access_time_filled_rounded,color: Color(0xffF39E60),size: 20,),
                                           ),
-                                          SizedBox(width: 5,),
+                                          const SizedBox(width: 5,),
                                           Container(
-                                            child: data['principleApproval']=="Approved"? Text("Approved",style: TextStyle(color: Color(0xff16C47F),fontSize: 17,fontWeight: FontWeight.w500),)
-                                                :data['principleApproval']=="Rejected"? Text("Rejected",style: TextStyle(color: Color(0xffD91656),fontSize: 17,fontWeight: FontWeight.w500),)
-                                                : Text("Pending",style: TextStyle(color: Color(0xffF39E60),fontSize: 17,fontWeight: FontWeight.w500),),),
-                                          SizedBox(width: 10,)
+                                            child: data['principleApproval']=="Approved"? const Text("Approved",style: TextStyle(color: Color(0xff16C47F),fontSize: 17,fontWeight: FontWeight.w500),)
+                                                :data['principleApproval']=="Rejected"? const Text("Rejected",style: TextStyle(color: Color(0xffD91656),fontSize: 17,fontWeight: FontWeight.w500),)
+                                                : const Text("Pending",style: TextStyle(color: Color(0xffF39E60),fontSize: 17,fontWeight: FontWeight.w500),),),
+                                          const SizedBox(width: 10,)
                                         ],
                                       ))
                                 ],
                               ),
                             ),
-                            SizedBox(height: 15,),
+                            const SizedBox(height: 15,),
                             Padding(
-                              padding:  EdgeInsets.fromLTRB(15, 17, 10, 15),
+                              padding:  const EdgeInsets.fromLTRB(15, 17, 10, 15),
                               child: Container(
                                 height: 1,width: MediaQuery.of(context).size.width,
                                 decoration: BoxDecoration(color: Colors.black.withOpacity(0.1)),
                               ),
                             ),
                             Padding(
-                              padding:  EdgeInsets.only(left: 15),
+                              padding:  const EdgeInsets.only(left: 15),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Icon(Icons.format_quote_rounded,color: Colors.black.withOpacity(0.5),size: 26,),
-                                  SizedBox(width: 5,),
+                                  const SizedBox(width: 5,),
                                   Expanded(
                                       child: Text(data['reason'].length>40?data['reason'].substring(0,40)+"...":data['reason'],style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 18,fontWeight: FontWeight.w500))),
                                 ],
                               ),
                             ),
-                            SizedBox(height: 12,),
+                            const SizedBox(height: 12,),
                             Padding(
-                              padding:  EdgeInsets.only(left: 15),
+                              padding:  const EdgeInsets.only(left: 15),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Icon(Icons.access_time_rounded,color: Colors.black.withOpacity(0.5),size: 20,),
-                                  SizedBox(width: 5,),
+                                  const SizedBox(width: 5,),
                                   Text("Submitted on ${data['appliedAt']}",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 16,fontWeight: FontWeight.w400)),
                                 ],
                               ),
                             ),
-                            SizedBox(height: 5,),
+                            const SizedBox(height: 5,),
                           ],
                         ),
                       ),

@@ -101,6 +101,19 @@ class TeaProfile extends StatelessWidget {
                                 decoration: BoxDecoration(color: Colors.black.withOpacity(0.1)),
                               ),
                             ),
+                            SizedBox(height: 10,),
+                            ListTile(
+                              title: Text("Total Leaves",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 15),),
+                              subtitle: Text("${data['totalLeave']}/5",style:  TextStyle(color: Colors.black,fontSize: 17),),
+                              leading:  Icon(Icons.school_rounded,color: Color(0xff3F72AF),),
+                            ),
+                            Padding(
+                              padding:  EdgeInsets.only(left: 10,right: 10),
+                              child: Container(
+                                height: 1,width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(color: Colors.black.withOpacity(0.1)),
+                              ),
+                            ),
                              SizedBox(height: 20,),
                           ],
                         ),

@@ -7,7 +7,6 @@ import 'package:getpass/Errro.dart';
 import 'package:getpass/Success.dart';
 import '../SendLeaveNotificastion.dart';
 
-
 class LeaveRequest extends StatefulWidget {
   @override
   State<LeaveRequest> createState() => _LeaveRequestState();
@@ -20,7 +19,9 @@ class _LeaveRequestState extends State<LeaveRequest> {
 
   bool load=false;
   final _key=GlobalKey<FormState>();
-  String? studClass;
+  final TimeOfDay minTime = TimeOfDay(hour: 8, minute: 35);
+  final TimeOfDay maxTime = TimeOfDay(hour: 15, minute: 45);
+  late int totalLeave;
   DateTime? pickedDate;
   TimeOfDay? pickedTime;
   bool isAgree=false;
@@ -36,6 +37,11 @@ class _LeaveRequestState extends State<LeaveRequest> {
     String time="${currentTime.hour.toString().split(" ")[0]}:${currentTime.minute.toString().split(" ")[0]} ${currentTime.period.name.toUpperCase()}";
     return "$date $time";
   }
+  bool _isTimeInRange(TimeOfDay time) {
+    return (time.hour>minTime.hour|| (time.hour==minTime.hour &&time.minute>=minTime.minute))&&
+        (time.hour<maxTime.hour||(time.hour==maxTime.hour&&time.minute<=maxTime.minute));
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -78,7 +84,6 @@ class _LeaveRequestState extends State<LeaveRequest> {
                             return  Center(child: Text("Something went wrong"));
                           } else {
                             Map<String, dynamic> data=streamSnapshot.data!.data() as Map<String, dynamic>;
-                            studClass=data['class'];
                             return Column(
                               children: [
                                 Container(
@@ -183,11 +188,26 @@ class _LeaveRequestState extends State<LeaveRequest> {
                                     pickedTime=await showTimePicker(
                                       context: context,
                                       initialTime: TimeOfDay.now(),
+
                                     );
-                                    if(pickedTime!=null){
+                                    if(pickedTime!=null && _isTimeInRange(pickedTime!)){
                                       setState(() {
                                         timeController.text="${pickedTime!.hour}:${pickedTime!.minute} ${pickedTime!.period.name.toUpperCase()}";
                                       });
+                                    } else if(_isTimeInRange(pickedTime!)==false) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context)=>AlertDialog(
+                                          title: Text("Invalid Time"),
+                                          content: Text("Please select a time between 8:35 AM and 3:45 PM."),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(context),
+                                              child: Text("OK"),
+                                            ),
+                                          ],
+                                        )
+                                      );
                                     }
                                   },
                                 )),
@@ -267,7 +287,7 @@ class _LeaveRequestState extends State<LeaveRequest> {
                                     Map<String, dynamic> studData=studDoc.data() as Map<String, dynamic>;
                                     final String unique=DateTime.now().millisecondsSinceEpoch.toString();
                                     CollectionReference leaveDept=FirebaseFirestore.instance.collection('Leaves_${studData['dept']}');
-                                    
+                                    final int totalLeave=int.parse(studData['totalLeave'].toString())+1;
                                     await leaveDept.doc(unique).set({
                                       'name':studData['name'].toString(),
                                       'enroll':studData['enroll'],
@@ -292,6 +312,10 @@ class _LeaveRequestState extends State<LeaveRequest> {
                                       Navigator.pop(context, MaterialPageRoute(builder: (builder){
                                         return StudBottomNav();
                                       }));
+                                      CollectionReference updateleave=FirebaseFirestore.instance.collection('Students');
+                                      updateleave.doc(_auth.currentUser!.uid).update({
+                                        'totalLeave':totalLeave.toString(),
+                                      });
                                       FirebaseFirestore firestore = FirebaseFirestore.instance;
                                       String? teacherToken = (await firestore.collection('Teachers').doc(studData['teaID']).get()).data()?['fcmToken'];
                                       String? hodToken = (await firestore.collection('HODs').doc(studData['hodID']).get()).data()?['fcmToken'];

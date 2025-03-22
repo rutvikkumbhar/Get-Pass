@@ -15,6 +15,8 @@ class _RequestLeaveState extends State<RequestLeave> {
   bool load=false;
   DateTime? pickedDate;
   TimeOfDay? pickedTime;
+  final TimeOfDay minTime = TimeOfDay(hour: 8, minute: 35);
+  final TimeOfDay maxTime = TimeOfDay(hour: 15, minute: 45);
   final _key=GlobalKey<FormState>();
   final reasonController=TextEditingController();
   final dateController=TextEditingController();
@@ -28,6 +30,10 @@ class _RequestLeaveState extends State<RequestLeave> {
     TimeOfDay currentTime=TimeOfDay.now();
     String time="${currentTime.hour.toString().split(" ")[0]}:${currentTime.minute.toString().split(" ")[0]} ${currentTime.period.name.toUpperCase()}";
     return "$date $time";
+  }
+  bool _isTimeInRange(TimeOfDay time) {
+    return (time.hour>minTime.hour|| (time.hour==minTime.hour &&time.minute>=minTime.minute))&&
+        (time.hour<maxTime.hour||(time.hour==maxTime.hour&&time.minute<=maxTime.minute));
   }
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +55,7 @@ class _RequestLeaveState extends State<RequestLeave> {
               child: StreamBuilder(
                 stream: ref.doc(_auth.currentUser!.uid).snapshots(),
                 builder: (context, AsyncSnapshot<DocumentSnapshot> streamSnapshot){
-                  if(streamSnapshot.connectionState ==ConnectionState.waiting){
+                  if(false){
                     return  Center(child: CircularProgressIndicator(),);
                   } else if(streamSnapshot.hasError){
                     return  Center(child: Text("Something went wrong"),);
@@ -153,10 +159,24 @@ class _RequestLeaveState extends State<RequestLeave> {
                               context: context,
                               initialTime: TimeOfDay.now(),
                             );
-                            if(pickedTime!=null){
+                            if(pickedTime!=null && _isTimeInRange(pickedTime!)){
                               setState(() {
                                 timeController.text="${pickedTime!.hour}:${pickedTime!.minute} ${pickedTime!.period.name.toUpperCase()}";
                               });
+                            } else if(_isTimeInRange(pickedTime!)==false) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context)=>AlertDialog(
+                                    title: Text("Invalid Time"),
+                                    content: Text("Please select a time between 8:35 AM and 3:45 PM."),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: Text("OK"),
+                                      ),
+                                    ],
+                                  )
+                              );
                             }
                           },
                         )),
@@ -178,7 +198,7 @@ class _RequestLeaveState extends State<RequestLeave> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: 45,width: 150,
+                  height: 50,width: 150,
                   decoration: BoxDecoration(color:  Color(0xff112D4E),borderRadius: BorderRadius.circular(5)),
                   child: TextButton(
                     child:load?  CircularProgressIndicator():Text("Apply Leave",style: TextStyle(color: Colors.white.withOpacity(0.8),fontSize: 18,fontWeight: FontWeight.w500)),
@@ -190,6 +210,7 @@ class _RequestLeaveState extends State<RequestLeave> {
                         DocumentSnapshot docData=await FirebaseFirestore.instance.collection('Teachers').doc(_auth.currentUser!.uid).get();
                         CollectionReference ref=FirebaseFirestore.instance.collection('Campus Leaves');
                         final String unique=DateTime.now().millisecondsSinceEpoch.toString();
+                        final int totalLeave=int.parse(docData['totalLeave'].toString())+1;
                         await ref.doc(unique).set({
                           'name':docData['name'],
                           'dept':docData['dept'],
@@ -201,21 +222,30 @@ class _RequestLeaveState extends State<RequestLeave> {
                           'time':timeController.text.toString(),
                           'userID':docData['userID'],
                           'hodApproval':"Pending",
+                          'finalStatus':"Pending",
+                          'prinApproval':"Pending",
                           'appliedAt':currentDateTime().toString()
                         }).then((onValue) async {
                           Success().toastMessage("Request Submitted Successfully");
-                          Navigator.pop(context, MaterialPageRoute(builder: (builder){
-                            return TeacherLeaves();
-                          }));
+                          Navigator.pop(context);
+                          CollectionReference updateleave=FirebaseFirestore.instance.collection('Teachers');
+                          updateleave.doc(_auth.currentUser!.uid).update({
+                            'totalLeave':totalLeave.toString(),
+                          });
                           FirebaseFirestore firestore = FirebaseFirestore.instance;
                           String? hodToken = (await firestore.collection('HODs').doc(docData['hodID']).get()).data()?['fcmToken'];
-                          await sendNotification(
-                            title: "New Leave Request",
-                            body: "Prof. ${docData['name']} has requested leave for: "
-                                "${reasonController.text.length>25?"${reasonController.text.substring(0,25)}..."
-                                :reasonController.text.toString()}",
-                            fcmToken: hodToken.toString(),
-                          );
+                          String? prinID = (await firestore.collection('HODs').doc(docData['hodID']).get()).data()?['principleID'];
+                          String? prinToken = (await firestore.collection("Principle").doc(prinID).get()).data()?['fcmToken'];
+                          List<String> fcmTokens = [if (hodToken != null) hodToken, if (prinToken != null) prinToken];
+                          for (String token in fcmTokens) {
+                            await sendNotification(
+                              title: "New Leave Request",
+                              body: "${docData['name']} has requested leave for: "
+                                  "${reasonController.text.length>25?"${reasonController.text.substring(0,25)}..."
+                                  :reasonController.text.toString()}",
+                              fcmToken: token,
+                            );
+                          }
                         });
                       } else {
                         setState(() {
@@ -227,7 +257,7 @@ class _RequestLeaveState extends State<RequestLeave> {
                 ),
                  SizedBox(width: 15,),
                 Container(
-                  height: 45,width: 150,
+                  height: 50,width: 150,
                   decoration: BoxDecoration(color:  Color(0xffDBE2EF),borderRadius: BorderRadius.circular(5)),
                   child: TextButton(
                     child: Text("Cancel",style: TextStyle(color:  Color(0xff112D4E).withOpacity(0.7),fontSize: 18,fontWeight: FontWeight.w500),),

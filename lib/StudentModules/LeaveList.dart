@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../Success.dart';
 
 class LeaveList extends StatelessWidget {
 
@@ -12,6 +13,7 @@ class LeaveList extends StatelessWidget {
   }
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.white,
       body: Padding(
         padding:  EdgeInsets.fromLTRB(20, 5, 20, 0),
         child: FutureBuilder(
@@ -32,7 +34,7 @@ class LeaveList extends StatelessWidget {
                     return  Center(child: CircularProgressIndicator(),);
                   } else if(streamSnapshot.hasError){
                     return  Center(child: Text("Something went wrong"),);
-                  } if(streamSnapshot.hasData==false){
+                  } if(streamSnapshot.hasData==false || streamSnapshot.data!.docs.isEmpty){
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -74,6 +76,41 @@ class LeaveList extends StatelessWidget {
                                           ),
                                         ),
                                       ),
+                                      data['finalStatus']=="Pending"?
+                                      IconButton(
+                                        icon: Icon(Icons.delete_rounded,color: Color(0xffD91656),),
+                                        onPressed: (){
+                                          showDialog(
+                                              context: context,
+                                              builder: (context)=>AlertDialog(
+                                                title: Text("Confirm Deletion"),
+                                                content: Text("Are you sure you want to delete this pass? This action cannot be undone, and your monthly leave count will be reset accordingly."),
+                                                actions: [
+                                                  ElevatedButton(
+                                                    child: Text("Delete"),
+                                                    onPressed: () async {
+                                                      CollectionReference deleteLeave=FirebaseFirestore.instance.collection('Leaves_$department');
+                                                      deleteLeave.doc(data.id).delete();
+                                                      Success().toastMessage("Leave request deleted successfully! Monthly limit restored.");
+                                                      Navigator.pop(context);
+                                                      CollectionReference updateLimit=FirebaseFirestore.instance.collection('Students');
+                                                      DocumentSnapshot count=await updateLimit.doc(_auth.currentUser!.uid).get();
+                                                      updateLimit.doc(_auth.currentUser!.uid).update({
+                                                        'totalLeave':(int.parse(count['totalLeave'].toString())-1).toString(),
+                                                      });
+                                                    },
+                                                  ),
+                                                  ElevatedButton(
+                                                    child: Text("Cancel"),
+                                                    onPressed: (){
+                                                      Navigator.pop(context);
+                                                    },
+                                                  ),
+                                                ],
+                                              )
+                                          );
+                                        },
+                                      ):SizedBox(),
                                     ],
                                   ),
                                    SizedBox(height: 10,),

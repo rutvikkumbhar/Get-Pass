@@ -5,7 +5,6 @@ import '../SendLeaveNotificastion.dart';
 
 class StafLeaverequest extends StatelessWidget {
 
-  FirebaseAuth _auth=FirebaseAuth.instance;
   CollectionReference ref1=FirebaseFirestore.instance.collection('HOD Leaves');
 
   Widget build(BuildContext context) {
@@ -45,7 +44,7 @@ class StafLeaverequest extends StatelessWidget {
                                 children: [
                                   Container(
                                     height: 75,width: 75,
-                                    decoration: BoxDecoration(image: DecorationImage(image: data['photoURL']!=null? AssetImage("assets/images/studentpfp.png"):NetworkImage(data['photoURL']),fit: BoxFit.fill),
+                                    decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/studentpfp.png"),fit: BoxFit.fill),
                                         borderRadius: BorderRadius.circular(50)),
                                   ),
                                   Expanded(

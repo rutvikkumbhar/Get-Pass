@@ -28,6 +28,11 @@ class _AddStudentState extends State<AddStudent> {
   final ccController=TextEditingController();
   final hodNameController=TextEditingController();
 
+  String getCurrentYearMonth() {
+    DateTime now = DateTime.now();
+    return "${now.year}-${now.month.toString().padLeft(2, '0')}";
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -198,28 +203,6 @@ class _AddStudentState extends State<AddStudent> {
               ),
 
                SizedBox(height: 25,),
-              Text("Profile Picture",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.6)),),
-               SizedBox(height: 15,),
-              Container(
-                height: 150,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),border: Border.all(color: Colors.black.withOpacity(0.1))),
-                child: GestureDetector(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                       Icon(Icons.cloud_upload_outlined,size: 50,color: Color(0xffA6E3E9),),
-                      Text("Upload image",style: TextStyle(fontSize: 13,color: Colors.black.withOpacity(0.7),fontWeight: FontWeight.w500),),
-                    ],
-                  ),
-                  onTap: (){
-                     final msg=SnackBar(content: Text("Currently not available"));
-                    ScaffoldMessenger.of(context).showSnackBar(msg);
-                  },
-                )
-              ),
-               SizedBox(height: 25,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -255,6 +238,7 @@ class _AddStudentState extends State<AddStudent> {
                               'photoURL':null,
                               'teaID':docData['userID'],
                               'totalLeave':"0",
+                              'lastReset':getCurrentYearMonth().toString(),
                               'userID':stud.currentUser!.uid.toString(),
                               'userType':"Student"
                             }).then((onValue) async {
