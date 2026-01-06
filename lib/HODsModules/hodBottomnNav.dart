@@ -118,7 +118,7 @@ class _hodBottomNavState extends State<hodBottomNav> {
                 color: Colors.black.withValues(alpha: 0.1),
               ),
               ListTile(
-                  title: const Text("Admin Leaves"),
+                  title: const Text("Teacher Leaves"),
                   trailing: teaTab?const Icon(Icons.keyboard_arrow_up_rounded):const Icon(Icons.keyboard_arrow_down_rounded),
                   onTap: (){
                     teaTab=teaTab?false:true;

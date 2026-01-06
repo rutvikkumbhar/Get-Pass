@@ -55,7 +55,7 @@ class LeaveList extends StatelessWidget {
                         return Padding(
                           padding:  const EdgeInsets.only(top: 7,bottom: 7),
                           child: Container(
-                            decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(15)),
+                            decoration: BoxDecoration(color: Colors.grey.withValues(alpha: 0.1),borderRadius: BorderRadius.circular(10)),
                             child: Padding(
                               padding:  const EdgeInsets.all(5),
                               child: Column(
