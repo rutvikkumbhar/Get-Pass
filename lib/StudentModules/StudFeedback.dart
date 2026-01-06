@@ -6,6 +6,8 @@ import 'package:getpass/StudentModules/StudBottomNav.dart';
 import 'package:getpass/Success.dart';
 
 class StudFeedback extends StatefulWidget {
+  const StudFeedback({super.key});
+
   @override
   State<StudFeedback> createState() => _StudFeedbackState();
 }
@@ -24,21 +26,22 @@ class _StudFeedbackState extends State<StudFeedback> {
     String time="${currentTime.hour.toString().split(" ")[0]}:${currentTime.minute.toString().split(" ")[0]} ${currentTime.period.name.toUpperCase()}";
     return "$date $time";
   }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text("Feedback"),
+        title:  const Text("Feedback"),
         centerTitle: true,
       ),
       body: Padding(
-        padding:  EdgeInsets.only(left: 20,right: 20,),
+        padding:  const EdgeInsets.only(left: 20,right: 20,),
         child: Form(
           key: _key,
           child: ListView(
             children: [
-               SizedBox(height: 15,),
-              Text("Title",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 17,fontWeight: FontWeight.w500),),
-               SizedBox(height: 10,),
+               const SizedBox(height: 15,),
+              Text("Title",style: TextStyle(color: Colors.black.withValues(alpha: 0.6),fontSize: 17,fontWeight: FontWeight.w500),),
+               const SizedBox(height: 10,),
               TextFormField(
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(labelText: "Title ",border: OutlineInputBorder(
@@ -53,9 +56,9 @@ class _StudFeedbackState extends State<StudFeedback> {
                   }
                 },
               ),
-               SizedBox(height: 20,),
-              Text("Description",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 17,fontWeight: FontWeight.w500),),
-               SizedBox(height: 10,),
+               const SizedBox(height: 20,),
+              Text("Description",style: TextStyle(color: Colors.black.withValues(alpha: 0.6),fontSize: 17,fontWeight: FontWeight.w500),),
+               const SizedBox(height: 10,),
               TextFormField(
                 keyboardType: TextInputType.text,
                 maxLines: 5,
@@ -71,17 +74,17 @@ class _StudFeedbackState extends State<StudFeedback> {
                   }
                 },
               ),
-               SizedBox(height: 20,),
+               const SizedBox(height: 20,),
               Text("Your feedback matters! Please share your suggestions or report any issues in your department. Rest assured, your identity will remain anonymous and will not be disclosed to your HOD or CC.",
-              style: TextStyle(color: Colors.black87.withOpacity(0.6)),),
-               SizedBox(height: 20,),
+              style: TextStyle(color: Colors.black87.withValues(alpha: 0.6)),),
+               const SizedBox(height: 20,),
               Padding(
-                padding:  EdgeInsets.only(left: 50,right: 50),
+                padding:  const EdgeInsets.only(left: 50,right: 50),
                 child: Container(
                   height: 55,width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(color:  Color(0xff4F7A94),borderRadius: BorderRadius.circular(5)),
+                  decoration: BoxDecoration(color:  const Color(0xff4F7A94),borderRadius: BorderRadius.circular(5)),
                   child: TextButton(
-                    child:load? CircularProgressIndicator(color: Colors.white,) : Text("Send Feedback",style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w500),),
+                    child:load? const CircularProgressIndicator(color: Colors.white,) : const Text("Send Feedback",style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w500),),
                     onPressed: () async {
                       setState(() {
                         load=true;
@@ -97,7 +100,7 @@ class _StudFeedbackState extends State<StudFeedback> {
                         }).then((onValue){
                           Success().toastMessage("Feedback Sent Successfully");
                           Navigator.pop(context, MaterialPageRoute(builder: (builder){
-                            return StudBottomNav();
+                            return const StudBottomNav();
                           }));
                         }).onError((stackTrace, error){
                           setState(() {

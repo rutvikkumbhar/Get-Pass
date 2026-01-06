@@ -5,6 +5,8 @@ import 'package:getpass/HODsModules/TeacherInformation.dart';
 import 'AddTeacher.dart';
 
 class DeptTeacher extends StatefulWidget {
+  const DeptTeacher({super.key});
+
   @override
   State<DeptTeacher> createState() => _DeptTeacherState();
 }
@@ -17,6 +19,7 @@ class _DeptTeacherState extends State<DeptTeacher> {
     return docData['dept'].toString();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: Container(
@@ -26,7 +29,7 @@ class _DeptTeacherState extends State<DeptTeacher> {
           icon:  const Icon(Icons.add_rounded,color: Colors.white,size: 40,),
           onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (builder){
-              return AddTeacher();
+              return const AddTeacher();
             }));
           },
         ),
@@ -57,7 +60,7 @@ class _DeptTeacherState extends State<DeptTeacher> {
                       return  Padding(
                         padding:  const EdgeInsets.fromLTRB(15, 5, 15, 5),
                         child: Container(
-                          decoration: BoxDecoration(color: Colors.grey.withOpacity(0.1),borderRadius: BorderRadius.circular(5)),
+                          decoration: BoxDecoration(color: Colors.grey.withValues(alpha: 0.1),borderRadius: BorderRadius.circular(5)),
                           child: ListTile(
                             title: Text("Prof. ${data['name']}",style:  const TextStyle(color: Colors.black,fontWeight: FontWeight.w500),),
                             subtitle: Text("Class: ${data['class']}",style:  const TextStyle(fontWeight: FontWeight.w500)),

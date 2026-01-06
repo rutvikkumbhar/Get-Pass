@@ -6,13 +6,13 @@ import 'package:getpass/Errro.dart';
 import 'package:getpass/Success.dart';
 
 class AddHOD extends StatefulWidget {
-
+  const AddHOD({super.key});
   @override
   State<AddHOD> createState() => _AddHODState();
 }
 
 class _AddHODState extends State<AddHOD> {
-  FirebaseAuth _auth=FirebaseAuth.instance;
+  final FirebaseAuth _auth=FirebaseAuth.instance;
   CollectionReference ref=FirebaseFirestore.instance.collection('HODs');
 
   final _key=GlobalKey<FormState>();
@@ -25,10 +25,11 @@ class _AddHODState extends State<AddHOD> {
   bool pass=true;
   bool load=false;
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add HOD"),
+        title: const Text("Add HOD"),
         centerTitle: true,
       ),
       body: Padding(
@@ -37,14 +38,14 @@ class _AddHODState extends State<AddHOD> {
           key: _key ,
           child: ListView(
             children: [
-              SizedBox(height: 10,),
-              Text("Teacher Details",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.6))),
-              SizedBox(height: 20,),
+              const SizedBox(height: 10,),
+              Text("Teacher Details",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black.withValues(alpha: 0.6))),
+              const SizedBox(height: 20,),
               TextFormField(
                 keyboardType: TextInputType.name,
                 decoration: InputDecoration(labelText: "Name", hintText: "eg. John R.K",
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
-                    prefixIcon:  Icon(Icons.person_outline_rounded,size: 22,color: Color(0xff3F72AF),)),
+                    prefixIcon:  const Icon(Icons.person_outline_rounded,size: 22,color: Color(0xff3F72AF),)),
                 controller: nameController,
                 validator: (value){
                   if(value==null || value.isEmpty){
@@ -54,12 +55,12 @@ class _AddHODState extends State<AddHOD> {
                   }
                 },
               ),
-              SizedBox(height: 15,),
+              const SizedBox(height: 15,),
               TextFormField(
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(labelText: "Contact",
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
-                    prefixIcon:  Icon(Icons.call_outlined,size: 22,color: Color(0xff3F72AF),)),
+                    prefixIcon:  const Icon(Icons.call_outlined,size: 22,color: Color(0xff3F72AF),)),
                 controller: contactController,
                 validator: (value){
                   if(value==null || value.isEmpty || value.length!=10){
@@ -69,12 +70,12 @@ class _AddHODState extends State<AddHOD> {
                   }
                 },
               ),
-              SizedBox(height: 15,),
+              const SizedBox(height: 15,),
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(labelText: "Email",
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
-                    prefixIcon:  Icon(Icons.alternate_email_outlined,size: 22,color: Color(0xff3F72AF),)),
+                    prefixIcon:  const Icon(Icons.alternate_email_outlined,size: 22,color: Color(0xff3F72AF),)),
                 controller: emailController,
                 validator: (value){
                   if(value==null || value.isEmpty){
@@ -84,15 +85,15 @@ class _AddHODState extends State<AddHOD> {
                   }
                 },
               ),
-              SizedBox(height: 15,),
+              const SizedBox(height: 15,),
               TextFormField(
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: pass?true:false,
                 decoration: InputDecoration(labelText: "Password",
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
-                    prefixIcon:  Icon(Icons.security,size: 22,color: Color(0xff3F72AF),),
+                    prefixIcon:  const Icon(Icons.security,size: 22,color: Color(0xff3F72AF),),
                 suffixIcon: IconButton(
-                  icon: pass? Icon(Icons.lock_outline,color: Color(0xff1DB954),size: 22,): Icon(Icons.lock_open_outlined,color: Color(0xffDC3545),size: 22,),
+                  icon: pass? const Icon(Icons.lock_outline,color: Color(0xff1DB954),size: 22,): const Icon(Icons.lock_open_outlined,color: Color(0xffDC3545),size: 22,),
                   onPressed: (){
                     setState(() {
                       pass=pass?false:true;
@@ -108,14 +109,14 @@ class _AddHODState extends State<AddHOD> {
                   }
                 },
               ),
-              SizedBox(height: 25,),
-              Text("Other Details",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.6))),
-              SizedBox(height: 20,),
+              const SizedBox(height: 25,),
+              Text("Other Details",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black.withValues(alpha: 0.6))),
+              const SizedBox(height: 20,),
               TextFormField(
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(labelText: "Department",hintText: "eg. Computer Engineering",
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
-                    prefixIcon:  Icon(Icons.school_outlined,size: 22,color: Color(0xff3F72AF),)),
+                    prefixIcon:  const Icon(Icons.school_outlined,size: 22,color: Color(0xff3F72AF),)),
                 controller: departmentController,
                 validator: (value){
                   if(value==null || value.isEmpty){
@@ -125,12 +126,12 @@ class _AddHODState extends State<AddHOD> {
                   }
                 },
               ),
-              SizedBox(height: 15,),
+              const SizedBox(height: 15,),
               TextFormField(
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(labelText: "Education",
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
-                    prefixIcon:  Icon(Icons.school_outlined,size: 22,color: Color(0xff3F72AF),)),
+                    prefixIcon:  const Icon(Icons.school_outlined,size: 22,color: Color(0xff3F72AF),)),
                 controller: educationController,
                 validator: (value){
                   if(value==null || value.isEmpty){
@@ -140,15 +141,15 @@ class _AddHODState extends State<AddHOD> {
                   }
                 },
               ),
-              SizedBox(height: 30,),
+              const SizedBox(height: 30,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     height: 50,width: 150,
-                    decoration: BoxDecoration(color:  Color(0xff112D4E),borderRadius: BorderRadius.circular(5)),
+                    decoration: BoxDecoration(color:  const Color(0xff112D4E),borderRadius: BorderRadius.circular(5)),
                     child: TextButton(
-                      child:load?CircularProgressIndicator() :Text("Add",style: TextStyle(color: Colors.white.withOpacity(0.8),fontSize: 18,fontWeight: FontWeight.w500)),
+                      child:load?const CircularProgressIndicator() :Text("Add",style: TextStyle(color: Colors.white.withValues(alpha: 0.8),fontSize: 18,fontWeight: FontWeight.w500)),
                       onPressed: () async {
                         setState(() {
                           load=true;
@@ -196,12 +197,12 @@ class _AddHODState extends State<AddHOD> {
                       },
                     ),
                   ),
-                  SizedBox(width: 15,),
+                  const SizedBox(width: 15,),
                   Container(
                     height: 50,width: 150,
-                    decoration: BoxDecoration(color:  Color(0xffDBE2EF),borderRadius: BorderRadius.circular(5)),
+                    decoration: BoxDecoration(color:  const Color(0xffDBE2EF),borderRadius: BorderRadius.circular(5)),
                     child: TextButton(
-                      child: Text("Cancel",style: TextStyle(fontSize: 18),),
+                      child: const Text("Cancel",style: TextStyle(fontSize: 18),),
                       onPressed: (){
                         Navigator.pop(context, MaterialPageRoute(builder: (builder){
                           return allHODs();
@@ -211,7 +212,7 @@ class _AddHODState extends State<AddHOD> {
                   )
                 ],
               ),
-              SizedBox(height: 30,),
+              const SizedBox(height: 30,),
             ],
           ),
         ),

@@ -7,14 +7,15 @@ import 'package:getpass/TeacherModules/TeacherHome.dart';
 import 'package:intl/intl.dart';
 import 'TeaApprovedLeaves.dart';
 import 'TeaRejectedLeaves.dart';
-import 'TeacherrLeaves.dart';
 
 class TeaBottomNav extends StatefulWidget {
+  const TeaBottomNav({super.key});
   @override
   State<TeaBottomNav> createState() => _TeaBottomNavState();
 }
 
 class _TeaBottomNavState extends State<TeaBottomNav> {
+  @override
   void initState() {
     super.initState();
     resetLeaveIfNewMonth();
@@ -28,11 +29,11 @@ class _TeaBottomNavState extends State<TeaBottomNav> {
   ];
 
   void resetLeaveIfNewMonth() async {
-    FirebaseAuth _auth=FirebaseAuth.instance;
-    FirebaseFirestore _firestore=FirebaseFirestore.instance;
+    FirebaseAuth auth=FirebaseAuth.instance;
+    FirebaseFirestore firestore=FirebaseFirestore.instance;
 
-    User? user = _auth.currentUser;
-    DocumentReference teaRef=_firestore.collection('Students').doc(user!.uid);
+    User? user = auth.currentUser;
+    DocumentReference teaRef=firestore.collection('Students').doc(user!.uid);
     DocumentSnapshot teaDoc=await teaRef.get();
 
     Map<String, dynamic> studentData=teaDoc.data() as Map<String, dynamic>;
@@ -46,10 +47,11 @@ class _TeaBottomNavState extends State<TeaBottomNav> {
       });
     }
   }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text("Teachers Dashboard"),
+        title:  const Text("Teachers Dashboard"),
         centerTitle: true,
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -59,9 +61,9 @@ class _TeaBottomNavState extends State<TeaBottomNav> {
             selectedPage=index;
           });
         },
-        selectedItemColor:  Color(0xFF074799),
-        unselectedItemColor:  Color(0xFF074799),
-        items:  [
+        selectedItemColor:  const Color(0xFF074799),
+        unselectedItemColor:  const Color(0xFF074799),
+        items:  const [
           BottomNavigationBarItem(
             label: "Requests",
             icon: Icon(Icons.watch_later_rounded)
@@ -80,13 +82,13 @@ class _TeaBottomNavState extends State<TeaBottomNav> {
       drawer: Drawer(
           child: ListView(
             children: [
-              DrawerHeader(
+              const DrawerHeader(
                   decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/VVP.jpg"),fit: BoxFit.fill)),
                   child: null
               ),
               ListTile(
-                  title: Text("View Leaves"),
-                  trailing: studTab?Icon(Icons.keyboard_arrow_up_rounded):Icon(Icons.keyboard_arrow_down_rounded),
+                  title: const Text("View Leaves"),
+                  trailing: studTab?const Icon(Icons.keyboard_arrow_up_rounded):const Icon(Icons.keyboard_arrow_down_rounded),
                   onTap: (){
                     studTab=studTab?false:true;
                     setState(() {
@@ -94,39 +96,37 @@ class _TeaBottomNavState extends State<TeaBottomNav> {
                   }
               ),
               studTab?
-              Container(
-                child: Column(
-                  children: [
-                    ListTile(
-                      title: const Text("Approved Leaves"),
-                      trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-                      leading: const Icon(Icons.check_rounded,size: 20,color: Color(0xff1DB954),),
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (builder){
-                          return TeaApprovedLeaves();
-                        }));
-                      },
-                    ),
-                    Container(
-                      height: 1,width: MediaQuery.of(context).size.width,
-                      color: Colors.black.withOpacity(0.1),
-                    ),
-                    ListTile(
-                      title: const Text("Rejected Leaves"),
-                      trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-                      leading: const Icon(Icons.close_rounded,size: 20,color: Color(0xffDC3545)),
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (builder){
-                          return TeaRejectedLeaves();
-                        }));
-                      },
-                    ),
-                  ],
-                ),
-              ):SizedBox(),
+              Column(
+                children: [
+                  ListTile(
+                    title: const Text("Approved Leaves"),
+                    trailing: const Icon(Icons.keyboard_arrow_right_rounded),
+                    leading: const Icon(Icons.check_rounded,size: 20,color: Color(0xff1DB954),),
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (builder){
+                        return const TeaApprovedLeaves();
+                      }));
+                    },
+                  ),
+                  Container(
+                    height: 1,width: MediaQuery.of(context).size.width,
+                    color: Colors.black.withValues(alpha: 0.1),
+                  ),
+                  ListTile(
+                    title: const Text("Rejected Leaves"),
+                    trailing: const Icon(Icons.keyboard_arrow_right_rounded),
+                    leading: const Icon(Icons.close_rounded,size: 20,color: Color(0xffDC3545)),
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (builder){
+                        return TeaRejectedLeaves();
+                      }));
+                    },
+                  ),
+                ],
+              ):const SizedBox(),
               Container(
                 height: 1,width: MediaQuery.of(context).size.width,
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
               ),
             ],
           )

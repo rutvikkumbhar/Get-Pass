@@ -9,7 +9,7 @@ import 'package:getpass/TeacherModules/TeaBottomNav.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Flash extends StatefulWidget {
-
+  const Flash({super.key});
   @override
   State<Flash> createState() => _FlashState();
 }
@@ -21,6 +21,7 @@ class _FlashState extends State<Flash> {
   CollectionReference hod=FirebaseFirestore.instance.collection('HODs');
   final FirebaseAuth _auth=FirebaseAuth.instance;
 
+  @override
   void initState(){
     super.initState();
     Timer( const Duration(seconds: 3),() async {
@@ -33,23 +34,24 @@ class _FlashState extends State<Flash> {
           Map<String, dynamic>? hodData=hodDoc.exists?hodDoc.data() as Map<String, dynamic>:null;
 
           if(studData?['userType']=="Student"){
-            Navigator.of(context).pushAndRemoveUntil( MaterialPageRoute(builder: (context) => StudBottomNav()),
+            Navigator.of(context).pushAndRemoveUntil( MaterialPageRoute(builder: (context) => const StudBottomNav()),
                   (Route<dynamic> route) => false,);
           } else if(teaData?['userType']=="Teacher"){
-            Navigator.of(context).pushAndRemoveUntil( MaterialPageRoute(builder: (context) => TeaBottomNav()),
+            Navigator.of(context).pushAndRemoveUntil( MaterialPageRoute(builder: (context) => const TeaBottomNav()),
                   (Route<dynamic> route) => false,);
           } else if(hodData?['userType']=="HOD"){
-            Navigator.of(context).pushAndRemoveUntil( MaterialPageRoute(builder: (context) => hodBottomNav()),
+            Navigator.of(context).pushAndRemoveUntil( MaterialPageRoute(builder: (context) => const hodBottomNav()),
                   (Route<dynamic> route) => false,);
           }
       } else {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (builder){
-          return LoginOption();
+          return const LoginOption();
         }));
       }
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,

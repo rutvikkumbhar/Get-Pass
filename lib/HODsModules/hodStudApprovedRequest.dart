@@ -66,7 +66,7 @@ class hodStudApprovedRequest extends StatelessWidget {
                                               padding:  EdgeInsets.only(bottom: 5),
                                               child: Text("${data['name']}",style:  TextStyle(color: Colors.black,fontWeight: FontWeight.w500,fontSize: 19),),
                                             ),
-                                            subtitle: Text("En No. ${data['enroll']}",style: TextStyle(color: Colors.black.withOpacity(0.6),fontWeight: FontWeight.w500,fontSize: 17),),
+                                            subtitle: Text("En No. ${data['enroll']}",style: TextStyle(color: Colors.black.withValues(0.6),fontWeight: FontWeight.w500,fontSize: 17),),
                                           ),
                                         )
                                       ],
@@ -80,7 +80,7 @@ class hodStudApprovedRequest extends StatelessWidget {
                                     SizedBox(height: 17,),
                                     Container(
                                       height: 1,width: MediaQuery.of(context).size.width,
-                                      decoration: BoxDecoration(color: Colors.black.withOpacity(0.1)),
+                                      decoration: BoxDecoration(color: Colors.black.withValues(0.1)),
                                     ),
                                     SizedBox(height: 20,),
                                     Row(
@@ -115,15 +115,15 @@ class hodStudApprovedRequest extends StatelessWidget {
                                     SizedBox(height: 15,),
                                     Row(
                                       children: [
-                                        Icon(Icons.access_time_rounded,size: 20,color: Colors.black.withOpacity(0.6),),
+                                        Icon(Icons.access_time_rounded,size: 20,color: Colors.black.withValues(0.6),),
                                         SizedBox(width: 10,),
-                                        Text("Applied on: ${data['appliedAt']}",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 15,fontWeight: FontWeight.w500),)
+                                        Text("Applied on: ${data['appliedAt']}",style: TextStyle(color: Colors.black.withValues(0.6),fontSize: 15,fontWeight: FontWeight.w500),)
                                       ],
                                     ),
                                     SizedBox(height: 20,),
                                     Container(
                                       height: 1,width: MediaQuery.of(context).size.width,
-                                      decoration: BoxDecoration(color: Colors.black.withOpacity(0.1)),
+                                      decoration: BoxDecoration(color: Colors.black.withValues(0.1)),
                                     ),
                                     SizedBox(height: 15,),
                                     Row(

@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:getpass/TeacherModules/RequestLeave.dart';
 import 'package:getpass/TeacherModules/StudentAllRequest.dart';
 import 'package:getpass/TeacherModules/TeacherrLeaves.dart';
-import '../SendLeaveNotificastion.dart';
 
 class TeacherHome extends StatefulWidget {
+  const TeacherHome({super.key});
   @override
   State<TeacherHome> createState() => _TeacherHomeState();
 }
@@ -22,6 +22,7 @@ class _TeacherHomeState extends State<TeacherHome> {
     DocumentSnapshot studDoc=await FirebaseFirestore.instance.collection('Teachers').doc(_auth.currentUser!.uid).get();
     return int.parse(studDoc['totalLeave'].toString());
   }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
@@ -30,11 +31,11 @@ class _TeacherHomeState extends State<TeacherHome> {
           children: [
             Container(
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(color:  Color(0xffDBE2EF),borderRadius: BorderRadius.circular(5)),
+              decoration: BoxDecoration(color:  const Color(0xffDBE2EF),borderRadius: BorderRadius.circular(5)),
               child: ListTile(
-                title:  Text("Student Request",style: TextStyle(color: Colors.black,fontSize: 17),),
-                subtitle:  Text("View students recent leave request"),
-                trailing:  Icon(Icons.keyboard_arrow_right_outlined),
+                title:  const Text("Student Request",style: TextStyle(color: Colors.black,fontSize: 17),),
+                subtitle:  const Text("View students recent leave request"),
+                trailing:  const Icon(Icons.keyboard_arrow_right_outlined),
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (builder){
                     return StudentAllRequest();
@@ -42,24 +43,24 @@ class _TeacherHomeState extends State<TeacherHome> {
                 },
               ),
             ),
-            SizedBox(height: 15,),
+            const SizedBox(height: 15,),
             Container(
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(color:  Color(0xffDBE2EF),borderRadius: BorderRadius.circular(5)),
+              decoration: BoxDecoration(color:  const Color(0xffDBE2EF),borderRadius: BorderRadius.circular(5)),
               child: ListTile(
-                title:  Text("Apply for leave",style: TextStyle(color: Colors.black,fontSize: 17),),
-                subtitle:  Text("The leave application will be sent to principle and HOD"),
-                trailing:  Icon(Icons.keyboard_arrow_right_outlined),
+                title:  const Text("Apply for leave",style: TextStyle(color: Colors.black,fontSize: 17),),
+                subtitle:  const Text("The leave application will be sent to principle and HOD"),
+                trailing:  const Icon(Icons.keyboard_arrow_right_outlined),
                 onTap: () async {
                   if(await studTotalLeaves()>=5){
                     showDialog(
                         context: context,
                         builder: (context)=>AlertDialog(
-                          title: Text("Leave Limit Reached"),
-                          content: Text("Monthly leave limit (5) reached. Please get a physical pass."),
+                          title: const Text("Leave Limit Reached"),
+                          content: const Text("Monthly leave limit (5) reached. Please get a physical pass."),
                           actions: [
                             ElevatedButton(
-                              child: Text("Ok"),
+                              child: const Text("Ok"),
                               onPressed: (){
                                 Navigator.pop(context);
                               },
@@ -69,20 +70,20 @@ class _TeacherHomeState extends State<TeacherHome> {
                     );
                   } else {
                     Navigator.push(context, MaterialPageRoute(builder: (builder){
-                      return RequestLeave();
+                      return const RequestLeave();
                     }));
                   }
                 },
               ),
             ),
-            SizedBox(height: 15,),
+            const SizedBox(height: 15,),
             Container(
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(color:  Color(0xffDBE2EF),borderRadius: BorderRadius.circular(5)),
+              decoration: BoxDecoration(color:  const Color(0xffDBE2EF),borderRadius: BorderRadius.circular(5)),
               child: ListTile(
-                title:  Text("View your leave",style: TextStyle(color: Colors.black,fontSize: 17),),
-                subtitle:  Text("You can view your all leaves."),
-                trailing:  Icon(Icons.keyboard_arrow_right_outlined),
+                title:  const Text("View your leave",style: TextStyle(color: Colors.black,fontSize: 17),),
+                subtitle:  const Text("You can view your all leaves."),
+                trailing:  const Icon(Icons.keyboard_arrow_right_outlined),
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (builder){
                     return TeacherLeaves();

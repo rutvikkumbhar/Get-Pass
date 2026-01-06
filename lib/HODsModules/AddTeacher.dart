@@ -6,6 +6,8 @@ import 'package:getpass/Errro.dart';
 import 'package:getpass/Success.dart';
 
 class AddTeacher extends StatefulWidget {
+  const AddTeacher({super.key});
+
   @override
   State<AddTeacher> createState() => _AddTeacherState();
 }
@@ -22,12 +24,13 @@ class _AddTeacherState extends State<AddTeacher> {
   final classController=TextEditingController();
   final educationController=TextEditingController();
 
-  FirebaseAuth _auth=FirebaseAuth.instance;
+  final FirebaseAuth _auth=FirebaseAuth.instance;
   String getCurrentYearMonth() {
     DateTime now = DateTime.now();
     return "${now.year}-${now.month.toString().padLeft(2, '0')}";
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -40,7 +43,7 @@ class _AddTeacherState extends State<AddTeacher> {
           key: _key,
           child: ListView(
             children: [
-              Text("Teacher Details",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.6))),
+              Text("Teacher Details",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black.withValues(alpha: 0.6))),
                const SizedBox(height: 20,),
               TextFormField(
                 keyboardType: TextInputType.name,
@@ -111,7 +114,7 @@ class _AddTeacherState extends State<AddTeacher> {
                 },
               ),
                const SizedBox(height: 20,),
-              Text("Other Details",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.6))),
+              Text("Other Details",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black.withValues(alpha: 0.6))),
                const SizedBox(height: 20,),
               StreamBuilder(
                 stream: FirebaseFirestore.instance.collection('HODs').doc(_auth.currentUser!.uid).snapshots(),
@@ -178,7 +181,7 @@ class _AddTeacherState extends State<AddTeacher> {
                     height: 45,width: 150,
                     decoration: BoxDecoration(color:  const Color(0xff112D4E),borderRadius: BorderRadius.circular(5)),
                     child: TextButton(
-                      child: load? const CircularProgressIndicator():Text("Add",style: TextStyle(color: Colors.white.withOpacity(0.8),fontSize: 18,fontWeight: FontWeight.w500)),
+                      child: load? const CircularProgressIndicator():Text("Add",style: TextStyle(color: Colors.white.withValues(alpha:0.8),fontSize: 18,fontWeight: FontWeight.w500)),
                       onPressed: () async {
                         setState(() {
                           load=true;

@@ -8,6 +8,7 @@ import 'package:getpass/Success.dart';
 import '../SendLeaveNotificastion.dart';
 
 class LeaveRequest extends StatefulWidget {
+  const LeaveRequest({super.key});
   @override
   State<LeaveRequest> createState() => _LeaveRequestState();
 }
@@ -19,8 +20,8 @@ class _LeaveRequestState extends State<LeaveRequest> {
 
   bool load=false;
   final _key=GlobalKey<FormState>();
-  final TimeOfDay minTime = TimeOfDay(hour: 8, minute: 35);
-  final TimeOfDay maxTime = TimeOfDay(hour: 15, minute: 45);
+  TimeOfDay minTime = const TimeOfDay(hour: 8, minute: 35);
+  TimeOfDay maxTime = const TimeOfDay(hour: 15, minute: 45);
   late int totalLeave;
   DateTime? pickedDate;
   TimeOfDay? pickedTime;
@@ -47,15 +48,15 @@ class _LeaveRequestState extends State<LeaveRequest> {
       appBar: AppBar(
       ),
       body: Padding(
-        padding:  EdgeInsets.fromLTRB(15, 5, 15, 0),
+        padding:  const EdgeInsets.fromLTRB(15, 5, 15, 0),
         child: Form(
           key: _key,
           child: ListView(
             children: [
               Container(
-                decoration:  BoxDecoration(color: Color(0xff006BFF),
+                decoration:  const BoxDecoration(color: Color(0xff006BFF),
                     borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10))),
-                child:  Padding(
+                child:  const Padding(
                   padding: EdgeInsets.all(10),
                   child: ListTile(
                     title: Text("Leave Request Form",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600,fontSize: 22),),
@@ -67,46 +68,46 @@ class _LeaveRequestState extends State<LeaveRequest> {
                 // height: 300,
                 decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(10)),
                 child: Padding(
-                  padding:  EdgeInsets.fromLTRB(15, 10, 15, 0),
+                  padding:  const EdgeInsets.fromLTRB(15, 10, 15, 0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                       SizedBox(height: 10,),
+                       const SizedBox(height: 10,),
                       Text("Student Details",style: GoogleFonts.arimo(color: Colors.black,fontSize: 19,fontWeight: FontWeight.w600),),
-                       SizedBox(height: 10),
+                       const SizedBox(height: 10),
                       StreamBuilder(
                         stream: ref.doc(_auth.currentUser!.uid).snapshots(),
                         builder: (context, AsyncSnapshot<DocumentSnapshot> streamSnapshot){
                           if(streamSnapshot.connectionState == ConnectionState.waiting){
-                            return  Center(child: CircularProgressIndicator(),);
+                            return  const Center(child: CircularProgressIndicator(),);
                           } else if(streamSnapshot.hasError){
-                            return  Center(child: Text("Something went wrong"));
+                            return  const Center(child: Text("Something went wrong"));
                           } else {
                             Map<String, dynamic> data=streamSnapshot.data!.data() as Map<String, dynamic>;
                             return Column(
                               children: [
                                 Container(
-                                  decoration: BoxDecoration(color:  Color(0xffF4F6FF),borderRadius: BorderRadius.circular(10)),
+                                  decoration: BoxDecoration(color:  const Color(0xffF4F6FF),borderRadius: BorderRadius.circular(10)),
                                   child: ListTile(
-                                    title: Text("Name",style: TextStyle(fontSize: 15,color: Colors.black.withOpacity(0.4),fontWeight: FontWeight.w400),),
-                                    subtitle: Text("${data['name']}",style:  TextStyle(fontSize: 16,fontWeight: FontWeight.w400)),
+                                    title: Text("Name",style: TextStyle(fontSize: 15,color: Colors.black.withValues(alpha: 0.4),fontWeight: FontWeight.w400),),
+                                    subtitle: Text("${data['name']}",style:  const TextStyle(fontSize: 16,fontWeight: FontWeight.w400)),
                                   ),
                                 ),
-                                 SizedBox(height: 10,),
+                                 const SizedBox(height: 10,),
                                 Container(
-                                  decoration: BoxDecoration(color:  Color(0xffF4F6FF),borderRadius: BorderRadius.circular(10)),
+                                  decoration: BoxDecoration(color:  const Color(0xffF4F6FF),borderRadius: BorderRadius.circular(10)),
                                   child: ListTile(
-                                    title: Text("Enrollment No.",style: TextStyle(fontSize: 15,color: Colors.black.withOpacity(0.4),fontWeight: FontWeight.w400),),
-                                    subtitle: Text("${data['enroll']}",style:  TextStyle(fontSize: 16,fontWeight: FontWeight.w400)),
+                                    title: Text("Enrollment No.",style: TextStyle(fontSize: 15,color: Colors.black.withValues(alpha: 0.4),fontWeight: FontWeight.w400),),
+                                    subtitle: Text("${data['enroll']}",style:  const TextStyle(fontSize: 16,fontWeight: FontWeight.w400)),
                                   ),
                                 ),
-                                 SizedBox(height: 10,),
+                                 const SizedBox(height: 10,),
                                 Container(
-                                  decoration: BoxDecoration(color:  Color(0xffF4F6FF),borderRadius: BorderRadius.circular(10)),
+                                  decoration: BoxDecoration(color:  const Color(0xffF4F6FF),borderRadius: BorderRadius.circular(10)),
                                   child: ListTile(
-                                    title: Text("Class",style: TextStyle(fontSize: 15,color: Colors.black.withOpacity(0.4),fontWeight: FontWeight.w400),),
-                                    subtitle: Text("${data['class']}",style:  TextStyle(fontSize: 16,fontWeight: FontWeight.w400)),
+                                    title: Text("Class",style: TextStyle(fontSize: 15,color: Colors.black.withValues(alpha: 0.4),fontWeight: FontWeight.w400),),
+                                    subtitle: Text("${data['class']}",style:  const TextStyle(fontSize: 16,fontWeight: FontWeight.w400)),
                                   ),
                                 ),
                               ],
@@ -117,39 +118,39 @@ class _LeaveRequestState extends State<LeaveRequest> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                           SizedBox(height: 30,),
+                           const SizedBox(height: 30,),
                           Text("Leave Details",style: GoogleFonts.arimo(color: Colors.black,fontSize: 19,fontWeight: FontWeight.w600),),
-                           SizedBox(height: 10),
-                           Text("Reason",style: TextStyle(fontSize: 16),),
-                           SizedBox(height: 4,),
+                           const SizedBox(height: 10),
+                           const Text("Reason",style: TextStyle(fontSize: 16),),
+                           const SizedBox(height: 4,),
                           TextFormField(
                             keyboardType: TextInputType.text,
                             maxLines: 4,
                             decoration: InputDecoration(
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1))),
-                              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1)),),
-                              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1))),
+                              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1)),),
+                              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1
                               )),),),
                             controller: reasonController,
                             validator: (value){
-                              if(value!.isEmpty || value==null){
+                              if(value!.isEmpty){
                                 return "Reason is required";
                               } else {
                                 return null;
                               }
                             },
                           ),
-                           SizedBox(height: 15,),
-                           Text("Date",style: TextStyle(fontSize: 16),),
-                           SizedBox(height: 4,),
+                           const SizedBox(height: 15,),
+                           const Text("Date",style: TextStyle(fontSize: 16),),
+                           const SizedBox(height: 4,),
                           TextFormField(
                             decoration: InputDecoration(
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1))),
-                                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1)),),
-                                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1))),
+                                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1)),),
+                                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1
                                 )),),
                                 suffixIcon: IconButton(
-                                  icon:  Icon(Icons.calendar_today_rounded,size: 20,),
+                                  icon:  const Icon(Icons.calendar_today_rounded,size: 20,),
                                   onPressed: ()async {
                                     pickedDate=await showDatePicker(
                                         context: context,
@@ -166,24 +167,24 @@ class _LeaveRequestState extends State<LeaveRequest> {
                             readOnly: true,
                             controller: dateController,
                             validator: (value){
-                              if(value!.isEmpty || value==null){
+                              if(value!.isEmpty){
                                 return "Date is required";
                               } else {
                                 return null;
                               }
                             },
                           ),
-                           SizedBox(height: 15,),
-                           Text("Time",style: TextStyle(fontSize: 16),),
-                           SizedBox(height: 4,),
+                           const SizedBox(height: 15,),
+                           const Text("Time",style: TextStyle(fontSize: 16),),
+                           const SizedBox(height: 4,),
                           TextFormField(
                             decoration: InputDecoration(
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1))),
-                                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1)),),
-                                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1))),
+                                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1)),),
+                                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1
                                 )),),
                                 suffixIcon: IconButton(
-                                  icon:  Icon(Icons.access_time_filled_rounded,size: 20,),
+                                  icon:  const Icon(Icons.access_time_filled_rounded,size: 20,),
                                   onPressed: () async {
                                     pickedTime=await showTimePicker(
                                       context: context,
@@ -198,12 +199,12 @@ class _LeaveRequestState extends State<LeaveRequest> {
                                       showDialog(
                                         context: context,
                                         builder: (context)=>AlertDialog(
-                                          title: Text("Invalid Time"),
-                                          content: Text("Please select a time between 8:35 AM and 3:45 PM."),
+                                          title: const Text("Invalid Time"),
+                                          content: const Text("Please select a time between 8:35 AM and 3:45 PM."),
                                           actions: [
                                             TextButton(
                                               onPressed: () => Navigator.pop(context),
-                                              child: Text("OK"),
+                                              child: const Text("OK"),
                                             ),
                                           ],
                                         )
@@ -214,42 +215,42 @@ class _LeaveRequestState extends State<LeaveRequest> {
                             controller: timeController,
                             readOnly: true,
                             validator: (value){
-                              if(value!.isEmpty || value==null){
+                              if(value!.isEmpty){
                                 return "Time is required";
                               } else {
                                 return null;
                               }
                             },
                           ),
-                           SizedBox(height: 30,),
+                           const SizedBox(height: 30,),
                           Text("Emergency Contact (optional)",style: GoogleFonts.arimo(color: Colors.black,fontSize: 19,fontWeight: FontWeight.w600),),
-                           SizedBox(height: 10),
-                           Text("Guardian Name",style: TextStyle(fontSize: 16),),
-                           SizedBox(height: 4,),
+                           const SizedBox(height: 10),
+                           const Text("Guardian Name",style: TextStyle(fontSize: 16),),
+                           const SizedBox(height: 4,),
                           TextFormField(
                             decoration: InputDecoration(
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1))),
-                              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1)),),
-                              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1))),
+                              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1)),),
+                              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1
                               )),),),
                             controller: guardianController,
                             keyboardType: TextInputType.text,
                           ),
-                           SizedBox(height: 10),
-                           Text("Contact Number",style: TextStyle(fontSize: 16),),
-                           SizedBox(height: 4,),
+                           const SizedBox(height: 10),
+                           const Text("Contact Number",style: TextStyle(fontSize: 16),),
+                           const SizedBox(height: 4,),
                           TextFormField(
                             decoration: InputDecoration(
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1))),
-                              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1)),),
-                              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1))),
+                              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1)),),
+                              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1
                               )),),),
                             controller: guardianContactController,
                             keyboardType: TextInputType.number,
                           ),
                         ],
                       ),
-                       SizedBox(height: 30),
+                       const SizedBox(height: 30),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -262,21 +263,21 @@ class _LeaveRequestState extends State<LeaveRequest> {
                               });
                             },
                           ),
-                           Expanded(
+                           const Expanded(
                             child: Text("I confirm that i have informed my guardian about this leave request",
                                 style: TextStyle(fontSize: 16,),),
                           )
                         ],
                       ),
-                       SizedBox(height: 30,),
+                       const SizedBox(height: 30,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
                             height: 55,width: 260,
-                            decoration: BoxDecoration(color: isAgree? Color(0xff006BFF): Color(0xffD4EBF8),borderRadius: BorderRadius.circular(5)),
+                            decoration: BoxDecoration(color: isAgree? const Color(0xff006BFF): const Color(0xffD4EBF8),borderRadius: BorderRadius.circular(5)),
                             child: TextButton(
-                              child: load? CircularProgressIndicator(color: Colors.white,): Text("Submit Request",style: TextStyle(color: Colors.white,fontSize: 19,fontWeight: FontWeight.w500),),
+                              child: load? const CircularProgressIndicator(color: Colors.white,): const Text("Submit Request",style: TextStyle(color: Colors.white,fontSize: 19,fontWeight: FontWeight.w500),),
                               onPressed: () async {
                                 setState(() {
                                   load=true;
@@ -347,12 +348,12 @@ class _LeaveRequestState extends State<LeaveRequest> {
                           ),
                         ],
                       ),
-                       SizedBox(height: 30,),
+                       const SizedBox(height: 30,),
                     ],
                   ),
                 ),
               ),
-               SizedBox(height: 20,),
+               const SizedBox(height: 20,),
             ],
           ),
         ),

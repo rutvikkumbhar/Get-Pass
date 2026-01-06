@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Help extends StatelessWidget {
+  const Help({super.key});
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -15,11 +17,11 @@ class Help extends StatelessWidget {
              const SizedBox(height: 10,),
             Text("Welcome to the Get Pass App Help Center!",style: GoogleFonts.alice(fontSize: 22)),
             Text("Here, you'll find answers to common questions and guidance on using the app efficiently.",
-            style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 15),),
+            style: TextStyle(color: Colors.black.withValues(alpha: 0.6),fontSize: 15),),
              const SizedBox(height: 25,),
             Container(
               height: 1,width: MediaQuery.of(context).size.width,
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
             ),
              const SizedBox(height: 25,),
             Text("Frequently Asked Questions (FAQs)",style: GoogleFonts.alegreyaSansSc(fontSize: 20,fontWeight: FontWeight.w400),),
@@ -40,14 +42,14 @@ class Help extends StatelessWidget {
              const SizedBox(height: 25,),
             Container(
               height: 1,width: MediaQuery.of(context).size.width,
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
             ),
              const SizedBox(height: 25,),
             Text("Contact Support",style: GoogleFonts.alegreyaSansSc(fontSize: 20,fontWeight: FontWeight.w400),),
             Text("Still need help? Contact us!",
-              style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 14),),
+              style: TextStyle(color: Colors.black.withValues(alpha: 0.6),fontSize: 14),),
              const ListTile(
-              title: Text("Email: rotsdevelopment@gmail.com"),
+              title: Text("Email: tojoin.workinghub@gmail.com"),
               leading: Icon(Icons.alternate_email_rounded,size: 22,color: Color(0xff3F72AF),),
             ),
              const ListTile(

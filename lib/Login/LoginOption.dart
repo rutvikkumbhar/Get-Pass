@@ -4,6 +4,9 @@ import 'package:getpass/Login/TeacherLogin.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginOption extends StatelessWidget {
+  const LoginOption({super.key});
+
+  @override
   Widget build(BuildContext context) {
    return Scaffold(
      backgroundColor: Colors.white,
@@ -24,8 +27,7 @@ class LoginOption extends StatelessWidget {
              ),
              Text("VVPPS Get Pass",style: GoogleFonts.audiowide(fontSize: 20),),
               const SizedBox(height: 30,),
-             Text("Welcome to the College Get Pass application",style: TextStyle(fontSize: 16,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.w600),),
-             // Text("Select your login type to proceed.",style: TextStyle(fontSize: 16,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.w600),),
+             Text("Welcome to the College Get Pass application",style: TextStyle(fontSize: 16,color: Colors.black.withValues(alpha: 0.5),fontWeight: FontWeight.w600),),
               const SizedBox(height: 30,),
              Container(
                height: 55,width: 190,
@@ -52,20 +54,20 @@ class LoginOption extends StatelessWidget {
                  },
                ),
              ),
-             SizedBox(height: 90,),
-             Text("Note",style: TextStyle(fontSize: 15,color: Colors.red.withOpacity(0.9),fontWeight: FontWeight.w600),),
-             SizedBox(height: 8,),
-             Text("This software is developed for only limited users.",style: TextStyle(fontSize: 14,color: Colors.black.withOpacity(0.4),fontWeight: FontWeight.w600),),
-             SizedBox(height: 5,),
+             const SizedBox(height: 90,),
+             Text("Note",style: TextStyle(fontSize: 15,color: Colors.red.withValues(alpha: 0.9),fontWeight: FontWeight.w600),),
+             const SizedBox(height: 8,),
+             Text("This software is developed for only limited users.",style: TextStyle(fontSize: 14,color: Colors.black.withValues(alpha: 0.4),fontWeight: FontWeight.w600),),
+             const SizedBox(height: 5,),
              Text("Registration phase isn't available, to register your id please contact head of department.",textAlign: TextAlign.center,
-               style: TextStyle(color: Colors.red.withOpacity(0.6),fontSize: 14,fontWeight: FontWeight.w600),),
-             SizedBox(height: 7,),
+               style: TextStyle(color: Colors.red.withValues(alpha: 0.6),fontSize: 14,fontWeight: FontWeight.w600),),
+             const SizedBox(height: 7,),
              Row(
                mainAxisAlignment: MainAxisAlignment.center,
                children: [
-                 Icon(Icons.call,color: Colors.black.withOpacity(0.5),size: 20,),
-                 SizedBox(width: 8,),
-                 Text("9356434349",style: TextStyle(fontSize: 15,color: Colors.blueAccent.withOpacity(0.6),fontWeight: FontWeight.w600),),
+                 Icon(Icons.call,color: Colors.black.withValues(alpha: 0.5),size: 20,),
+                 const SizedBox(width: 8,),
+                 Text("9356434349",style: TextStyle(fontSize: 15,color: Colors.blueAccent.withValues(alpha: 0.6),fontWeight: FontWeight.w600),),
                ],
              )
            ],

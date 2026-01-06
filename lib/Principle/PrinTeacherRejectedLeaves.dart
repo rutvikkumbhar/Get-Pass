@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 class PrinTeacherRejectedLeaves extends StatelessWidget {
   CollectionReference ref1=FirebaseFirestore.instance.collection('Campus Leaves');
 
+  PrinTeacherRejectedLeaves({super.key});
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Staf Rejected Leaves"),
+        title: const Text("Staff Rejected Leaves"),
       ),
       body: Padding(
         padding:  const EdgeInsets.only(left: 15,right: 15),
@@ -50,7 +53,7 @@ class PrinTeacherRejectedLeaves extends StatelessWidget {
                                       padding:  const EdgeInsets.only(bottom: 5),
                                       child: Text("${data['name']}",style:  const TextStyle(color: Colors.black,fontWeight: FontWeight.w500,fontSize: 19),),
                                     ),
-                                    subtitle: Text("Class: ${data['class']}",style: TextStyle(color: Colors.black.withOpacity(0.6),fontWeight: FontWeight.w500,fontSize: 17),),
+                                    subtitle: Text("Class: ${data['class']}",style: TextStyle(color: Colors.black.withValues(alpha: 0.6),fontWeight: FontWeight.w500,fontSize: 17),),
                                   ),
                                 )
                               ],
@@ -64,7 +67,7 @@ class PrinTeacherRejectedLeaves extends StatelessWidget {
                             const SizedBox(height: 17,),
                             Container(
                               height: 1,width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(color: Colors.black.withOpacity(0.1)),
+                              decoration: BoxDecoration(color: Colors.black.withValues(alpha: 0.1)),
                             ),
                             const SizedBox(height: 20,),
                             Row(
@@ -99,24 +102,24 @@ class PrinTeacherRejectedLeaves extends StatelessWidget {
                             const SizedBox(height: 15,),
                             Row(
                               children: [
-                                Icon(Icons.access_time_rounded,size: 20,color: Colors.black.withOpacity(0.6),),
+                                Icon(Icons.access_time_rounded,size: 20,color: Colors.black.withValues(alpha: 0.6),),
                                 const SizedBox(width: 10,),
-                                Text("Applied on: ${data['appliedAt']}",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 15,fontWeight: FontWeight.w500),)
+                                Text("Applied on: ${data['appliedAt']}",style: TextStyle(color: Colors.black.withValues(alpha: 0.6),fontSize: 15,fontWeight: FontWeight.w500),)
                               ],
                             ),
                             const SizedBox(height: 20,),
                             Container(
                               height: 1,width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(color: Colors.black.withOpacity(0.1)),
+                              decoration: BoxDecoration(color: Colors.black.withValues(alpha: 0.1)),
                             ),
                             const SizedBox(height: 15,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
-                                  decoration: BoxDecoration(color: Color(0xffDC3545),borderRadius: BorderRadius.circular(5)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                                  decoration: BoxDecoration(color: const Color(0xffDC3545),borderRadius: BorderRadius.circular(5)),
+                                  child: const Padding(
+                                    padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
                                     child: Text("Rejected",style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.w500)),
                                   ),
                                 )

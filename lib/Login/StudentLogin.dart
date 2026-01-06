@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class StudentLogin extends StatefulWidget {
+  const StudentLogin({super.key});
   @override
   State<StudentLogin> createState() => _StudentLoginState();
 }
@@ -21,6 +22,7 @@ class _StudentLoginState extends State<StudentLogin> {
   bool load=false;
   final _key=GlobalKey<FormState>();
 
+  @override
   Widget build(BuildContext context) {
    return Scaffold(
    body: ListView(
@@ -46,11 +48,11 @@ class _StudentLoginState extends State<StudentLogin> {
                child: TextFormField(
                  keyboardType: TextInputType.emailAddress,
                  decoration: InputDecoration(contentPadding:  const EdgeInsets.symmetric(horizontal: 20, vertical: 15),hintText: "Email ID",border: OutlineInputBorder(borderRadius: BorderRadius.circular(30),
-                 borderSide: BorderSide.none),filled: true,fillColor: Colors.grey.withOpacity(0.2),
-                     hintStyle: TextStyle(fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.5))),
+                 borderSide: BorderSide.none),filled: true,fillColor: Colors.grey.withValues(alpha: 0.2),
+                     hintStyle: TextStyle(fontWeight: FontWeight.w500,color: Colors.black.withValues(alpha: 0.5))),
                  controller: emailController,
                  validator: (value){
-                   if(value!.isEmpty || value==null){
+                   if(value!.isEmpty){
                      return "Enter valid email";
                    } else {
                      return null;
@@ -65,8 +67,8 @@ class _StudentLoginState extends State<StudentLogin> {
                  keyboardType: TextInputType.visiblePassword,
                  obscureText: pass?true:false,
                  decoration: InputDecoration(contentPadding:  const EdgeInsets.symmetric(horizontal: 20, vertical: 15),hintText: "Password",border: OutlineInputBorder(borderRadius: BorderRadius.circular(30),
-                     borderSide: BorderSide.none),filled: true,fillColor: Colors.grey.withOpacity(0.2),
-                     hintStyle: TextStyle(fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.5)),
+                     borderSide: BorderSide.none),filled: true,fillColor: Colors.grey.withValues(alpha: 0.2),
+                     hintStyle: TextStyle(fontWeight: FontWeight.w500,color: Colors.black.withValues(alpha: 0.5)),
                  suffixIcon:Padding(
                    padding:  const EdgeInsets.only(right: 10),
                    child: IconButton(
@@ -80,7 +82,7 @@ class _StudentLoginState extends State<StudentLogin> {
                  )),
                  controller: passController,
                  validator: (value){
-                   if(value!.isEmpty || value==null){
+                   if(value!.isEmpty){
                      return "Enter valid password";
                    } else {
                      return null;
@@ -91,7 +93,7 @@ class _StudentLoginState extends State<StudentLogin> {
               const SizedBox(height: 25,),
              Container(
                height: 50,width: 200,
-               decoration: BoxDecoration(color:  Color(0xff80C4E9),borderRadius: BorderRadius.circular(30)),
+               decoration: BoxDecoration(color:  const Color(0xff80C4E9),borderRadius: BorderRadius.circular(30)),
                child: TextButton(
                  child: load? const CircularProgressIndicator(color: Colors.white,)
                             :Text("Login",style: GoogleFonts.albertSans(color: Colors.white,fontSize: 17,fontWeight: FontWeight.w700),),

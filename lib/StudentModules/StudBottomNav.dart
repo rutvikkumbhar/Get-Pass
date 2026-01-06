@@ -9,10 +9,14 @@ import 'LeaveList.dart';
 import 'StudRejectedLeaves.dart';
 
 class StudBottomNav extends StatefulWidget {
+  const StudBottomNav({super.key});
+
+  @override
   State<StudBottomNav> createState() => _StudBottomNavState();
 }
 
 class _StudBottomNavState extends State<StudBottomNav> {
+  @override
   void initState() {
     super.initState();
     resetLeaveIfNewMonth();
@@ -26,11 +30,11 @@ class _StudBottomNavState extends State<StudBottomNav> {
   ];
 
   void resetLeaveIfNewMonth() async {
-    FirebaseAuth _auth=FirebaseAuth.instance;
-    FirebaseFirestore _firestore=FirebaseFirestore.instance;
+    FirebaseAuth auth=FirebaseAuth.instance;
+    FirebaseFirestore firestore=FirebaseFirestore.instance;
 
-    User? user = _auth.currentUser;
-    DocumentReference studentRef=_firestore.collection('Students').doc(user!.uid);
+    User? user = auth.currentUser;
+    DocumentReference studentRef=firestore.collection('Students').doc(user!.uid);
     DocumentSnapshot studentDoc=await studentRef.get();
 
     Map<String, dynamic> studentData=studentDoc.data() as Map<String, dynamic>;
@@ -44,10 +48,11 @@ class _StudBottomNavState extends State<StudBottomNav> {
       });
     }
   }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text("Get Pass"),
+        title:  const Text("Get Pass"),
         centerTitle: true,
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -57,11 +62,11 @@ class _StudBottomNavState extends State<StudBottomNav> {
             selectedPage=index;
           });
         },
-        selectedItemColor:  Color(0xFF074799),
-        unselectedItemColor:  Color(0xFF074799),
+        selectedItemColor:  const Color(0xFF074799),
+        unselectedItemColor:  const Color(0xFF074799),
         showSelectedLabels: true,
         showUnselectedLabels: false,
-        items:  [
+        items:  const [
           BottomNavigationBarItem(
             label: "Home",
             icon: Icon(Icons.home_filled)
@@ -80,13 +85,13 @@ class _StudBottomNavState extends State<StudBottomNav> {
       drawer: Drawer(
         child: ListView(
           children: [
-            DrawerHeader(
+            const DrawerHeader(
               decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/VVP.jpg"),fit: BoxFit.fill)),
                 child: null
                 ),
             ListTile(
-                title: Text("View Leaves"),
-                trailing: studTab?Icon(Icons.keyboard_arrow_up_rounded):Icon(Icons.keyboard_arrow_down_rounded),
+                title: const Text("View Leaves"),
+                trailing: studTab?const Icon(Icons.keyboard_arrow_up_rounded):const Icon(Icons.keyboard_arrow_down_rounded),
                 onTap: (){
                   studTab=studTab?false:true;
                   setState(() {
@@ -94,39 +99,37 @@ class _StudBottomNavState extends State<StudBottomNav> {
                 }
             ),
             studTab?
-            Container(
-              child: Column(
-                children: [
-                  ListTile(
-                    title: const Text("Approved Leaves"),
-                    trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-                    leading: const Icon(Icons.check_rounded,size: 20,color: Color(0xff1DB954),),
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (builder){
-                        return StudApprovedLeaves();
-                      }));
-                    },
-                  ),
-                  Container(
-                    height: 1,width: MediaQuery.of(context).size.width,
-                    color: Colors.black.withOpacity(0.1),
-                  ),
-                  ListTile(
-                    title: const Text("Rejected Leaves"),
-                    trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-                    leading: const Icon(Icons.close_rounded,size: 20,color: Color(0xffDC3545)),
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (builder){
-                        return StudRejectedLeaves();
-                      }));
-                    },
-                  ),
-                ],
-              ),
-            ):SizedBox(),
+            Column(
+              children: [
+                ListTile(
+                  title: const Text("Approved Leaves"),
+                  trailing: const Icon(Icons.keyboard_arrow_right_rounded),
+                  leading: const Icon(Icons.check_rounded,size: 20,color: Color(0xff1DB954),),
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (builder){
+                      return const StudApprovedLeaves();
+                    }));
+                  },
+                ),
+                Container(
+                  height: 1,width: MediaQuery.of(context).size.width,
+                  color: Colors.black.withValues(alpha: 0.1),
+                ),
+                ListTile(
+                  title: const Text("Rejected Leaves"),
+                  trailing: const Icon(Icons.keyboard_arrow_right_rounded),
+                  leading: const Icon(Icons.close_rounded,size: 20,color: Color(0xffDC3545)),
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (builder){
+                      return StudRejectedLeaves();
+                    }));
+                  },
+                ),
+              ],
+            ):const SizedBox(),
             Container(
               height: 1,width: MediaQuery.of(context).size.width,
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
             ),
           ],
         )

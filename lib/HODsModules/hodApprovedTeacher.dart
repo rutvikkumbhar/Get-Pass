@@ -1,9 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class hodApprovedTeacher extends StatelessWidget {
+class hodApprovedTeacher extends StatefulWidget {
+  const hodApprovedTeacher({super.key});
+  @override
+  State<hodApprovedTeacher> createState() => _hodApprovedTeacherState();
+}
+
+class _hodApprovedTeacherState extends State<hodApprovedTeacher> {
   CollectionReference ref1=FirebaseFirestore.instance.collection('Campus Leaves');
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -50,7 +57,7 @@ class hodApprovedTeacher extends StatelessWidget {
                                       padding:  const EdgeInsets.only(bottom: 5),
                                       child: Text("${data['name']}",style:  const TextStyle(color: Colors.black,fontWeight: FontWeight.w500,fontSize: 19),),
                                     ),
-                                    subtitle: Text("Class: ${data['class']}",style: TextStyle(color: Colors.black.withOpacity(0.6),fontWeight: FontWeight.w500,fontSize: 17),),
+                                    subtitle: Text("Class: ${data['class']}",style: TextStyle(color: Colors.black.withValues(alpha: 0.6),fontWeight: FontWeight.w500,fontSize: 17),),
                                   ),
                                 )
                               ],
@@ -64,7 +71,7 @@ class hodApprovedTeacher extends StatelessWidget {
                             const SizedBox(height: 17,),
                             Container(
                               height: 1,width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(color: Colors.black.withOpacity(0.1)),
+                              decoration: BoxDecoration(color: Colors.black.withValues(alpha: 0.1)),
                             ),
                             const SizedBox(height: 20,),
                             Row(
@@ -99,15 +106,15 @@ class hodApprovedTeacher extends StatelessWidget {
                             const SizedBox(height: 15,),
                             Row(
                               children: [
-                                Icon(Icons.access_time_rounded,size: 20,color: Colors.black.withOpacity(0.6),),
+                                Icon(Icons.access_time_rounded,size: 20,color: Colors.black.withValues(alpha: 0.6),),
                                 const SizedBox(width: 10,),
-                                Text("Applied on: ${data['appliedAt']}",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 15,fontWeight: FontWeight.w500),)
+                                Text("Applied on: ${data['appliedAt']}",style: TextStyle(color: Colors.black.withValues(alpha: 0.6),fontSize: 15,fontWeight: FontWeight.w500),)
                               ],
                             ),
                             const SizedBox(height: 20,),
                             Container(
                               height: 1,width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(color: Colors.black.withOpacity(0.1)),
+                              decoration: BoxDecoration(color: Colors.black.withValues(alpha: 0.1)),
                             ),
                             const SizedBox(height: 15,),
                             Row(
@@ -135,5 +142,4 @@ class hodApprovedTeacher extends StatelessWidget {
       ),
     );
   }
-
 }

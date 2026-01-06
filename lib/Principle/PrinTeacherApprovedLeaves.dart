@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 
 class PrinTeacherApprovedLeaves extends StatelessWidget {
   CollectionReference ref1=FirebaseFirestore.instance.collection('Campus Leaves');
+  PrinTeacherApprovedLeaves({super.key});
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Staf Approved Leaves"),
+        title: const Text("Staff Approved Leaves"),
       ),
       body: Padding(
         padding:  const EdgeInsets.only(left: 15,right: 15),
@@ -50,7 +52,7 @@ class PrinTeacherApprovedLeaves extends StatelessWidget {
                                       padding:  const EdgeInsets.only(bottom: 5),
                                       child: Text("${data['name']}",style:  const TextStyle(color: Colors.black,fontWeight: FontWeight.w500,fontSize: 19),),
                                     ),
-                                    subtitle: Text("Class: ${data['class']}",style: TextStyle(color: Colors.black.withOpacity(0.6),fontWeight: FontWeight.w500,fontSize: 17),),
+                                    subtitle: Text("Class: ${data['class']}",style: TextStyle(color: Colors.black.withValues(alpha: 0.6),fontWeight: FontWeight.w500,fontSize: 17),),
                                   ),
                                 )
                               ],
@@ -64,7 +66,7 @@ class PrinTeacherApprovedLeaves extends StatelessWidget {
                             const SizedBox(height: 17,),
                             Container(
                               height: 1,width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(color: Colors.black.withOpacity(0.1)),
+                              decoration: BoxDecoration(color: Colors.black.withValues(alpha: 0.1)),
                             ),
                             const SizedBox(height: 20,),
                             Row(
@@ -99,15 +101,15 @@ class PrinTeacherApprovedLeaves extends StatelessWidget {
                             const SizedBox(height: 15,),
                             Row(
                               children: [
-                                Icon(Icons.access_time_rounded,size: 20,color: Colors.black.withOpacity(0.6),),
+                                Icon(Icons.access_time_rounded,size: 20,color: Colors.black.withValues(alpha: 0.6),),
                                 const SizedBox(width: 10,),
-                                Text("Applied on: ${data['appliedAt']}",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 15,fontWeight: FontWeight.w500),)
+                                Text("Applied on: ${data['appliedAt']}",style: TextStyle(color: Colors.black.withValues(alpha: 0.6),fontSize: 15,fontWeight: FontWeight.w500),)
                               ],
                             ),
                             const SizedBox(height: 20,),
                             Container(
                               height: 1,width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(color: Colors.black.withOpacity(0.1)),
+                              decoration: BoxDecoration(color: Colors.black.withValues(alpha: 0.1)),
                             ),
                             const SizedBox(height: 15,),
                             Row(

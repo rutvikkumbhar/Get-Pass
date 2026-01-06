@@ -10,7 +10,8 @@ import 'pHome.dart';
 import 'pProfile.dart';
 
 class pBottomNav extends StatefulWidget {
-
+  const pBottomNav({super.key});
+  @override
   State<pBottomNav> createState() => _pBottomNavState();
 }
 
@@ -27,10 +28,11 @@ class _pBottomNavState extends State<pBottomNav> {
     pProfile(),
   ];
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Principle Dashboard"),
+        title: const Text("Principle Dashboard"),
         centerTitle: true,
       ),
         bottomNavigationBar: BottomNavigationBar(
@@ -41,9 +43,9 @@ class _pBottomNavState extends State<pBottomNav> {
             });
           },
           showUnselectedLabels: false,
-          selectedItemColor:  Color(0xFF074799),
-          unselectedItemColor:  Color(0xFF074799),
-          items:  [
+          selectedItemColor:  const Color(0xFF074799),
+          unselectedItemColor:  const Color(0xFF074799),
+          items:  const [
             BottomNavigationBarItem(
                 label: "Home",
                 icon: Icon(Icons.home_filled)
@@ -75,8 +77,8 @@ class _pBottomNavState extends State<pBottomNav> {
                   child: null
               ),
               ListTile(
-                  title: Text("HOD Leaves"),
-                  trailing: studTab?Icon(Icons.keyboard_arrow_up_rounded):Icon(Icons.keyboard_arrow_down_rounded),
+                  title: const Text("HOD Leaves"),
+                  trailing: studTab?const Icon(Icons.keyboard_arrow_up_rounded):const Icon(Icons.keyboard_arrow_down_rounded),
                   onTap: (){
                     studTab=studTab?false:true;
                     setState(() {
@@ -84,43 +86,41 @@ class _pBottomNavState extends State<pBottomNav> {
                   }
               ),
               studTab?
-              Container(
-                child: Column(
-                  children: [
-                    ListTile(
-                      title: const Text("Approved Leaves"),
-                      trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-                      leading: const Icon(Icons.check_rounded,size: 20,color: Color(0xff1DB954),),
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (builder){
-                          return PrinHODApprovedLeaves();
-                        }));
-                      },
-                    ),
-                    Container(
-                      height: 1,width: MediaQuery.of(context).size.width,
-                      color: Colors.black.withOpacity(0.1),
-                    ),
-                    ListTile(
-                      title: const Text("Rejected Leaves"),
-                      trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-                      leading: const Icon(Icons.close_rounded,size: 20,color: Color(0xffDC3545)),
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (builder){
-                          return PrinHODRejectedLeaves();
-                        }));
-                      },
-                    ),
-                  ],
-                ),
-              ):SizedBox(),
+              Column(
+                children: [
+                  ListTile(
+                    title: const Text("Approved Leaves"),
+                    trailing: const Icon(Icons.keyboard_arrow_right_rounded),
+                    leading: const Icon(Icons.check_rounded,size: 20,color: Color(0xff1DB954),),
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (builder){
+                        return PrinHODApprovedLeaves();
+                      }));
+                    },
+                  ),
+                  Container(
+                    height: 1,width: MediaQuery.of(context).size.width,
+                    color: Colors.black.withValues(alpha: 0.1),
+                  ),
+                  ListTile(
+                    title: const Text("Rejected Leaves"),
+                    trailing: const Icon(Icons.keyboard_arrow_right_rounded),
+                    leading: const Icon(Icons.close_rounded,size: 20,color: Color(0xffDC3545)),
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (builder){
+                        return PrinHODRejectedLeaves();
+                      }));
+                    },
+                  ),
+                ],
+              ):const SizedBox(),
               Container(
                 height: 1,width: MediaQuery.of(context).size.width,
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
               ),
               ListTile(
-                  title: Text("Staf Leaves"),
-                  trailing: teaTab?Icon(Icons.keyboard_arrow_up_rounded):Icon(Icons.keyboard_arrow_down_rounded),
+                  title: const Text("Staff Leaves"),
+                  trailing: teaTab?const Icon(Icons.keyboard_arrow_up_rounded):const Icon(Icons.keyboard_arrow_down_rounded),
                   onTap: (){
                     teaTab=teaTab?false:true;
                     setState(() {
@@ -128,39 +128,37 @@ class _pBottomNavState extends State<pBottomNav> {
                   }
               ),
               teaTab?
-              Container(
-                child: Column(
-                  children: [
-                    ListTile(
-                      title: const Text("Approved Leaves"),
-                      trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-                      leading: const Icon(Icons.check_rounded,size: 20,color: Color(0xff1DB954),),
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (builder){
-                          return PrinTeacherApprovedLeaves();
-                        }));
-                      },
-                    ),
-                    Container(
-                      height: 1,width: MediaQuery.of(context).size.width,
-                      color: Colors.black.withOpacity(0.1),
-                    ),
-                    ListTile(
-                      title: const Text("Rejected Leaves"),
-                      trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-                      leading: const Icon(Icons.close_rounded,size: 20,color: Color(0xffDC3545)),
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (builder){
-                          return PrinTeacherRejectedLeaves();
-                        }));
-                      },
-                    ),
-                  ],
-                ),
-              ):SizedBox(),
+              Column(
+                children: [
+                  ListTile(
+                    title: const Text("Approved Leaves"),
+                    trailing: const Icon(Icons.keyboard_arrow_right_rounded),
+                    leading: const Icon(Icons.check_rounded,size: 20,color: Color(0xff1DB954),),
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (builder){
+                        return PrinTeacherApprovedLeaves();
+                      }));
+                    },
+                  ),
+                  Container(
+                    height: 1,width: MediaQuery.of(context).size.width,
+                    color: Colors.black.withValues(alpha: 0.1),
+                  ),
+                  ListTile(
+                    title: const Text("Rejected Leaves"),
+                    trailing: const Icon(Icons.keyboard_arrow_right_rounded),
+                    leading: const Icon(Icons.close_rounded,size: 20,color: Color(0xffDC3545)),
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (builder){
+                        return PrinTeacherRejectedLeaves();
+                      }));
+                    },
+                  ),
+                ],
+              ):const SizedBox(),
               Container(
                 height: 1,width: MediaQuery.of(context).size.width,
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
               ),
             ],
           )

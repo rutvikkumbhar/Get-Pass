@@ -6,6 +6,7 @@ import 'package:getpass/TeacherModules/AllStudents.dart';
 import 'package:getpass/Errro.dart';
 
 class AddStudent extends   StatefulWidget {
+  const AddStudent({super.key});
   @override
   State<AddStudent> createState() => _AddStudentState();
 }
@@ -14,7 +15,7 @@ class _AddStudentState extends State<AddStudent> {
   bool pass=true;
   bool load=false;
 
-  FirebaseAuth _auth=FirebaseAuth.instance;
+  final FirebaseAuth _auth=FirebaseAuth.instance;
   CollectionReference ref=FirebaseFirestore.instance.collection('Teachers');
   CollectionReference collectionReference=FirebaseFirestore.instance.collection('Students');
   final _key=GlobalKey<FormState>();
@@ -33,25 +34,26 @@ class _AddStudentState extends State<AddStudent> {
     return "${now.year}-${now.month.toString().padLeft(2, '0')}";
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text("Add Student"),
+        title:  const Text("Add Student"),
         centerTitle: true,
       ),
       body: Padding(
-        padding:  EdgeInsets.fromLTRB(20, 0, 20, 0),
+        padding:  const EdgeInsets.fromLTRB(20, 0, 20, 0),
         child: Form(
           key: _key,
           child: ListView(
             children: [
-              Text("Student Details",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.6)),),
-               SizedBox(height: 15,),
+              Text("Student Details",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black.withValues(alpha: 0.6)),),
+               const SizedBox(height: 15,),
               TextFormField(
                 keyboardType: TextInputType.name,
                 decoration: InputDecoration(labelText: "Full name",border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10)
-                ),prefixIcon:  Icon(Icons.person_outline_rounded,size: 23,color: Color(0xff3F72AF),)),
+                ),prefixIcon:  const Icon(Icons.person_outline_rounded,size: 23,color: Color(0xff3F72AF),)),
                 controller: nameController,
                 validator: (value){
                   if(value==null || value.isEmpty){
@@ -61,12 +63,12 @@ class _AddStudentState extends State<AddStudent> {
                   }
                 },
               ),
-               SizedBox(height: 10,),
+               const SizedBox(height: 10,),
               TextFormField(
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(labelText: "En. No",border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10)
-                ),prefixIcon:  Icon(Icons.numbers_outlined,size: 23,color: Color(0xff3F72AF),)),
+                ),prefixIcon:  const Icon(Icons.numbers_outlined,size: 23,color: Color(0xff3F72AF),)),
                 controller: enrollController,
                 validator: (value){
                   if(value==null || value.isEmpty){
@@ -76,12 +78,12 @@ class _AddStudentState extends State<AddStudent> {
                   }
                 },
               ),
-               SizedBox(height: 10,),
+               const SizedBox(height: 10,),
               TextFormField(
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(labelText: "Contact ",border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10)
-                ),prefixIcon:  Icon(Icons.call_outlined,size: 23,color: Color(0xff3F72AF),)),
+                ),prefixIcon:  const Icon(Icons.call_outlined,size: 23,color: Color(0xff3F72AF),)),
                 controller: contactController,
                 validator: (value){
                   if(value==null || value.isEmpty || value.length!=10){
@@ -91,12 +93,12 @@ class _AddStudentState extends State<AddStudent> {
                   }
                 },
               ),
-               SizedBox(height: 10,),
+               const SizedBox(height: 10,),
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(labelText: "Email",border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10)
-                ),prefixIcon:  Icon(Icons.alternate_email_rounded,size: 23,color: Color(0xff3F72AF),)),
+                ),prefixIcon:  const Icon(Icons.alternate_email_rounded,size: 23,color: Color(0xff3F72AF),)),
                 controller: emailController,
                 validator: (value){
                   if(value==null || value.isEmpty){
@@ -106,15 +108,15 @@ class _AddStudentState extends State<AddStudent> {
                   }
                 },
               ),
-               SizedBox(height: 10,),
+               const SizedBox(height: 10,),
               TextFormField(
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: pass?true:false,
                 decoration: InputDecoration(labelText: "Password",border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10)
-                ),prefixIcon:  Icon(Icons.security_outlined,size: 23,color: Color(0xff3F72AF),),
+                ),prefixIcon:  const Icon(Icons.security_outlined,size: 23,color: Color(0xff3F72AF),),
                 suffixIcon: IconButton(
-                  icon: pass? Icon(Icons.lock_outline,size: 23,color: Color(0xff1DB954)): Icon(Icons.lock_open_rounded,size: 23,color: Color(0xffDC3545)),
+                  icon: pass? const Icon(Icons.lock_outline,size: 23,color: Color(0xff1DB954)): const Icon(Icons.lock_open_rounded,size: 23,color: Color(0xffDC3545)),
                 onPressed: (){
                     setState(() {
                         pass=pass?false:true;
@@ -129,16 +131,16 @@ class _AddStudentState extends State<AddStudent> {
                   }
                 },
               ),
-               SizedBox(height: 25,),
-              Text("Other Details",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.6)),),
-               SizedBox(height: 15,),
+               const SizedBox(height: 25,),
+              Text("Other Details",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w500,color: Colors.black.withValues(alpha: 0.6)),),
+               const SizedBox(height: 15,),
               StreamBuilder(
                 stream: ref.doc(_auth.currentUser!.uid).snapshots(),
                 builder: (context, AsyncSnapshot<DocumentSnapshot> streamSnapshot){
                   if(streamSnapshot.connectionState == ConnectionState.waiting){
-                    return  Center(child: CircularProgressIndicator(),);
+                    return  const Center(child: CircularProgressIndicator(),);
                   } else if(streamSnapshot.hasError) {
-                    return  Center(child: Text("Something went wrong"),);
+                    return  const Center(child: Text("Something went wrong"),);
                   } else {
                     Map<String, dynamic> data=streamSnapshot.data!.data() as Map<String, dynamic>;
                     return Column(
@@ -147,10 +149,10 @@ class _AddStudentState extends State<AddStudent> {
                           readOnly: true,
                           decoration: InputDecoration(hintText: data['dept'],border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)
-                          ),prefixIcon:  Icon(Icons.school_outlined,size: 23,color: Color(0xff3F72AF),)),
+                          ),prefixIcon:  const Icon(Icons.school_outlined,size: 23,color: Color(0xff3F72AF),)),
                           controller: deptController,
                         ),
-                         SizedBox(height: 10,),
+                         const SizedBox(height: 10,),
                         Row(
                           children: [
                             Expanded(
@@ -158,43 +160,43 @@ class _AddStudentState extends State<AddStudent> {
                                 readOnly: true,
                                 decoration: InputDecoration(hintText: data['class'],border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10)
-                                ),prefixIcon:  Icon(Icons.class_outlined,size: 23,color: Color(0xff3F72AF),)),
+                                ),prefixIcon:  const Icon(Icons.class_outlined,size: 23,color: Color(0xff3F72AF),)),
                               ),
                             ),
-                             SizedBox(width: 10,),
+                             const SizedBox(width: 10,),
                             Expanded(
                               child: TextField(
                                 readOnly: true,
                                 decoration: InputDecoration(hintText: data['name'],border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10)
-                                ),prefixIcon:  Icon(Icons.person_outline_rounded,size: 23,color: Color(0xff3F72AF),)),
+                                ),prefixIcon:  const Icon(Icons.person_outline_rounded,size: 23,color: Color(0xff3F72AF),)),
                               ),
                             ),
                           ],
                         ),
-                         SizedBox(height: 15,),
+                         const SizedBox(height: 15,),
                         TextField(
                           keyboardType: TextInputType.name,
                           readOnly: true,
                           decoration: InputDecoration(hintText: data['userID'],border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)
-                          ),prefixIcon:  Icon(Icons.numbers_outlined,size: 23,color: Color(0xff3F72AF),)),
+                          ),prefixIcon:  const Icon(Icons.numbers_outlined,size: 23,color: Color(0xff3F72AF),)),
                         ),
-                        SizedBox(height: 15,),
+                        const SizedBox(height: 15,),
                         TextField(
                           keyboardType: TextInputType.name,
                         readOnly: true,
                           decoration: InputDecoration(hintText: data['hodName'],border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)
-                          ),prefixIcon:  Icon(Icons.person_outline_rounded,size: 23,color: Color(0xff3F72AF),)),
+                          ),prefixIcon:  const Icon(Icons.person_outline_rounded,size: 23,color: Color(0xff3F72AF),)),
                         ),
-                         SizedBox(height: 15,),
+                         const SizedBox(height: 15,),
                         TextField(
                           keyboardType: TextInputType.text,
                           readOnly: true,
                           decoration: InputDecoration(hintText: data['hodID'],border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)
-                          ),prefixIcon:  Icon(Icons.numbers_outlined,size: 23,color: Color(0xff3F72AF),)),
+                          ),prefixIcon:  const Icon(Icons.numbers_outlined,size: 23,color: Color(0xff3F72AF),)),
                         ),
                       ],
                     );
@@ -202,15 +204,15 @@ class _AddStudentState extends State<AddStudent> {
                 },
               ),
 
-               SizedBox(height: 25,),
+               const SizedBox(height: 25,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     height: 45,width: 150,
-                    decoration: BoxDecoration(color:  Color(0xff112D4E),borderRadius: BorderRadius.circular(5)),
+                    decoration: BoxDecoration(color:  const Color(0xff112D4E),borderRadius: BorderRadius.circular(5)),
                     child: TextButton(
-                      child: load? CircularProgressIndicator():Text("Add",style: TextStyle(color: Colors.white.withOpacity(0.8),fontSize: 18,fontWeight: FontWeight.w500),),
+                      child: load? const CircularProgressIndicator():Text("Add",style: TextStyle(color: Colors.white.withValues(alpha: 0.8),fontSize: 18,fontWeight: FontWeight.w500),),
                       onPressed: () async {
                         setState(() {
                           load=true;
@@ -247,8 +249,6 @@ class _AddStudentState extends State<AddStudent> {
                                 email: docData['email'].toString(),
                                 password: docData['password'].toString(),
                               ).then((onValue){
-                                print(docData['email'].toString());
-                                print(docData['password'].toString());
                                 Success().toastMessage("Student Added To Class Successfully");
                                 Navigator.pop(context, MaterialPageRoute(builder: (builder){
                                   return AllStudents();
@@ -266,12 +266,12 @@ class _AddStudentState extends State<AddStudent> {
                       },
                     ),
                   ),
-                   SizedBox(width: 15,),
+                   const SizedBox(width: 15,),
                   Container(
                     height: 45,width: 150,
-                    decoration: BoxDecoration(color:  Color(0xffDBE2EF),borderRadius: BorderRadius.circular(5)),
+                    decoration: BoxDecoration(color:  const Color(0xffDBE2EF),borderRadius: BorderRadius.circular(5)),
                     child: TextButton(
-                      child: Text("Cancel",style: TextStyle(color:  Color(0xff112D4E).withOpacity(0.7),fontSize: 18,fontWeight: FontWeight.w500),),
+                      child: Text("Cancel",style: TextStyle(color:  const Color(0xff112D4E).withValues(alpha: 0.7),fontSize: 18,fontWeight: FontWeight.w500),),
                       onPressed: (){
                         Navigator.pop(context, MaterialPageRoute(builder: (builder){
                           return AllStudents();
@@ -281,7 +281,7 @@ class _AddStudentState extends State<AddStudent> {
                   )
                 ],
               ),
-               SizedBox(height: 30,),
+               const SizedBox(height: 30,),
             ],
           ),
         ),

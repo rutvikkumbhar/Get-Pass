@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class StudApprovedLeaves extends StatefulWidget {
+  const StudApprovedLeaves({super.key});
+  @override
   State<StudApprovedLeaves> createState() => _StudApprovedLeavesState();
 }
 
@@ -13,20 +15,21 @@ class _StudApprovedLeavesState extends State<StudApprovedLeaves> {
     DocumentSnapshot studDoc=await FirebaseFirestore.instance.collection('Students').doc(_auth.currentUser!.uid).get();
     return studDoc['dept'].toString();
   }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Approved Leaves"),
+        title: const Text("Approved Leaves"),
       ),
       body: Padding(
-        padding:  EdgeInsets.fromLTRB(20, 5, 20, 0),
+        padding:  const EdgeInsets.fromLTRB(20, 5, 20, 0),
         child: FutureBuilder(
           future: studDept(),
           builder: (context, snapshot){
             if(snapshot.connectionState==ConnectionState.waiting){
-              return  Center(child: CircularProgressIndicator(),);
+              return  const Center(child: CircularProgressIndicator(),);
             } else if(snapshot.hasError){
-              return  Center(child: Text("Something went wrong"),);
+              return  const Center(child: Text("Something went wrong"),);
             } else {
               String department=snapshot.data.toString();
               return StreamBuilder(
@@ -35,9 +38,9 @@ class _StudApprovedLeavesState extends State<StudApprovedLeaves> {
                     .orderBy("appliedAt", descending: true).snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot){
                   if(streamSnapshot.connectionState == ConnectionState.waiting){
-                    return  Center(child: CircularProgressIndicator(),);
+                    return  const Center(child: CircularProgressIndicator(),);
                   } else if(streamSnapshot.hasError){
-                    return  Center(child: Text("Something went wrong"),);
+                    return  const Center(child: Text("Something went wrong"),);
                   } if(streamSnapshot.hasData==false){
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -45,9 +48,9 @@ class _StudApprovedLeavesState extends State<StudApprovedLeaves> {
                       children: [
                         Container(
                           height: 200,width: MediaQuery.of(context).size.width>350?350:MediaQuery.of(context).size.width,
-                          decoration:  BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/cart.png"),fit: BoxFit.fill)),
+                          decoration:  const BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/cart.png"),fit: BoxFit.fill)),
                         ),
-                        Text("No any request, all looks good",style: TextStyle(fontWeight: FontWeight.w500,color: Colors.black87.withOpacity(0.4)),),
+                        Text("No any request, all looks good",style: TextStyle(fontWeight: FontWeight.w500,color: Colors.black87.withValues(alpha: 0.4)),),
                       ],
                     );
                   }  else {
@@ -56,11 +59,11 @@ class _StudApprovedLeavesState extends State<StudApprovedLeaves> {
                       itemBuilder: (itemBuilder, index){
                         DocumentSnapshot data=streamSnapshot.data!.docs[index];
                           return data['finalStatus']=="Approved"? Padding(
-                            padding:  EdgeInsets.only(top: 7,bottom: 7),
+                            padding:  const EdgeInsets.only(top: 7,bottom: 7),
                             child: Container(
                               decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(15)),
                               child: Padding(
-                                padding:  EdgeInsets.all(5),
+                                padding:  const EdgeInsets.all(5),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,132 +73,130 @@ class _StudApprovedLeavesState extends State<StudApprovedLeaves> {
                                       children: [
                                         Expanded(
                                           child: ListTile(
-                                            title: Text("Leave Date & Time",style: TextStyle(fontSize: 17,color: Colors.black.withOpacity(0.5),fontWeight: FontWeight.w600),),
+                                            title: Text("Leave Date & Time",style: TextStyle(fontSize: 17,color: Colors.black.withValues(alpha: 0.5),fontWeight: FontWeight.w600),),
                                             subtitle: Padding(
-                                              padding:  EdgeInsets.only(top: 3),
+                                              padding:  const EdgeInsets.only(top: 3),
                                               child: Row(children: [
-                                                Icon(Icons.calendar_today_rounded,color: Color(0xff006BFF),size: 18,),
-                                                Text(" ${data['date']} | ${data['time']}",style:  TextStyle(fontSize: 17,color: Colors.black,fontWeight: FontWeight.w400),),
+                                                const Icon(Icons.calendar_today_rounded,color: Color(0xff006BFF),size: 18,),
+                                                Text(" ${data['date']} | ${data['time']}",style:  const TextStyle(fontSize: 17,color: Colors.black,fontWeight: FontWeight.w400),),
                                               ],),
                                             ),
                                           ),
                                         ),
                                       ],
                                     ),
-                                    SizedBox(height: 10,),
+                                    const SizedBox(height: 10,),
                                     Padding(
-                                      padding:  EdgeInsets.only(left: 15),
+                                      padding:  const EdgeInsets.only(left: 15),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text("Class Teacher",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 17,fontWeight: FontWeight.w600),),
+                                          Text("Class Teacher",style: TextStyle(color: Colors.black.withValues(alpha: 0.6),fontSize: 17,fontWeight: FontWeight.w600),),
                                           Row(
                                             children: [
                                               Container(
-                                                child: data['classTeacherApproval']=="Approved"? Icon(Icons.check_circle_rounded,color: Color(0xff16C47F),size: 20,)
-                                                    :data['classTeacherApproval']=="Rejected"? Icon(Icons.cancel_rounded,color: Color(0xffD91656),size: 20,)
-                                                    : Icon(Icons.access_time_filled_rounded,color: Color(0xffF39E60),size: 20,),
+                                                child: data['classTeacherApproval']=="Approved"? const Icon(Icons.check_circle_rounded,color: Color(0xff16C47F),size: 20,)
+                                                    :data['classTeacherApproval']=="Rejected"? const Icon(Icons.cancel_rounded,color: Color(0xffD91656),size: 20,)
+                                                    : const Icon(Icons.access_time_filled_rounded,color: Color(0xffF39E60),size: 20,),
                                               ),
-                                              SizedBox(width: 5,),
+                                              const SizedBox(width: 5,),
                                               Container(
-                                                child: data['classTeacherApproval']=="Approved"? Text("Approved",style: TextStyle(color: Color(0xff16C47F),fontSize: 17,fontWeight: FontWeight.w500),)
-                                                    :data['classTeacherApproval']=="Rejected"? Text("Rejected",style: TextStyle(color: Color(0xffD91656),fontSize: 17,fontWeight: FontWeight.w500),)
-                                                    : Text("Pending",style: TextStyle(color: Color(0xffF39E60),fontSize: 17,fontWeight: FontWeight.w500),),),
-                                              SizedBox(width: 10,)
+                                                child: data['classTeacherApproval']=="Approved"? const Text("Approved",style: TextStyle(color: Color(0xff16C47F),fontSize: 17,fontWeight: FontWeight.w500),)
+                                                    :data['classTeacherApproval']=="Rejected"? const Text("Rejected",style: TextStyle(color: Color(0xffD91656),fontSize: 17,fontWeight: FontWeight.w500),)
+                                                    : const Text("Pending",style: TextStyle(color: Color(0xffF39E60),fontSize: 17,fontWeight: FontWeight.w500),),),
+                                              const SizedBox(width: 10,)
                                             ],
                                           )
                                         ],
                                       ),
                                     ),
-                                    SizedBox(height: 15,),
+                                    const SizedBox(height: 15,),
                                     Padding(
-                                      padding:  EdgeInsets.only(left: 15),
+                                      padding:  const EdgeInsets.only(left: 15),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text("HOD",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 17,fontWeight: FontWeight.w600),),
-                                          Container(
-                                              child: Row(
-                                                children: [
-                                                  Container(
-                                                    child: data['hodApproval']=="Approved"? Icon(Icons.check_circle_rounded,color: Color(0xff16C47F),size: 20,)
-                                                        :data['hodApproval']=="Rejected"? Icon(Icons.cancel_rounded,color: Color(0xffD91656),size: 20,)
-                                                        : Icon(Icons.access_time_filled_rounded,color: Color(0xffF39E60),size: 20,),
-                                                  ),
-                                                  SizedBox(width: 5,),
-                                                  Container(
-                                                    child: data['hodApproval']=="Approved"? Text("Approved",style: TextStyle(color: Color(0xff16C47F),fontSize: 17,fontWeight: FontWeight.w500),)
-                                                        :data['hodApproval']=="Rejected"? Text("Rejected",style: TextStyle(color: Color(0xffD91656),fontSize: 17,fontWeight: FontWeight.w500),)
-                                                        : Text("Pending",style: TextStyle(color: Color(0xffF39E60),fontSize: 17,fontWeight: FontWeight.w500),),),
-                                                  SizedBox(width: 10,)
-                                                ],
-                                              ))
+                                          Text("HOD",style: TextStyle(color: Colors.black.withValues(alpha: 0.6),fontSize: 17,fontWeight: FontWeight.w600),),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                child: data['hodApproval']=="Approved"? const Icon(Icons.check_circle_rounded,color: Color(0xff16C47F),size: 20,)
+                                                    :data['hodApproval']=="Rejected"? const Icon(Icons.cancel_rounded,color: Color(0xffD91656),size: 20,)
+                                                    : const Icon(Icons.access_time_filled_rounded,color: Color(0xffF39E60),size: 20,),
+                                              ),
+                                              const SizedBox(width: 5,),
+                                              Container(
+                                                child: data['hodApproval']=="Approved"? const Text("Approved",style: TextStyle(color: Color(0xff16C47F),fontSize: 17,fontWeight: FontWeight.w500),)
+                                                    :data['hodApproval']=="Rejected"? const Text("Rejected",style: TextStyle(color: Color(0xffD91656),fontSize: 17,fontWeight: FontWeight.w500),)
+                                                    : const Text("Pending",style: TextStyle(color: Color(0xffF39E60),fontSize: 17,fontWeight: FontWeight.w500),),),
+                                              const SizedBox(width: 10,)
+                                            ],
+                                          )
                                         ],
                                       ),
                                     ),
-                                    SizedBox(height: 15,),
+                                    const SizedBox(height: 15,),
                                     Padding(
-                                      padding:  EdgeInsets.only(left: 15),
+                                      padding:  const EdgeInsets.only(left: 15),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text("Final Status",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 17,fontWeight: FontWeight.w600),),
-                                          Container(
-                                              child: Row(
-                                                children: [
-                                                  Container(
-                                                    child: data['finalStatus']=="Approved"? Icon(Icons.check_circle_rounded,color: Color(0xff16C47F),size: 20,)
-                                                        :data['finalStatus']=="Rejected"? Icon(Icons.cancel_rounded,color: Color(0xffD91656),size: 20,)
-                                                        : Icon(Icons.access_time_filled_rounded,color: Color(0xffF39E60),size: 20,),),
-                                                  SizedBox(width: 5,),
-                                                  Container(
-                                                    child: data['finalStatus']=="Approved"? Text("Approved",style: TextStyle(color: Color(0xff16C47F),fontSize: 17,fontWeight: FontWeight.w500),)
-                                                        :data['finalStatus']=="Rejected"? Text("Rejected",style: TextStyle(color: Color(0xffD91656),fontSize: 17,fontWeight: FontWeight.w500),)
-                                                        : Text("Pending",style: TextStyle(color: Color(0xffF39E60),fontSize: 17,fontWeight: FontWeight.w500),),),
-                                                  SizedBox(width: 10,)
-                                                ],
-                                              ))
+                                          Text("Final Status",style: TextStyle(color: Colors.black.withValues(alpha: 0.6),fontSize: 17,fontWeight: FontWeight.w600),),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                child: data['finalStatus']=="Approved"? const Icon(Icons.check_circle_rounded,color: Color(0xff16C47F),size: 20,)
+                                                    :data['finalStatus']=="Rejected"? const Icon(Icons.cancel_rounded,color: Color(0xffD91656),size: 20,)
+                                                    : const Icon(Icons.access_time_filled_rounded,color: Color(0xffF39E60),size: 20,),),
+                                              const SizedBox(width: 5,),
+                                              Container(
+                                                child: data['finalStatus']=="Approved"? const Text("Approved",style: TextStyle(color: Color(0xff16C47F),fontSize: 17,fontWeight: FontWeight.w500),)
+                                                    :data['finalStatus']=="Rejected"? const Text("Rejected",style: TextStyle(color: Color(0xffD91656),fontSize: 17,fontWeight: FontWeight.w500),)
+                                                    : const Text("Pending",style: TextStyle(color: Color(0xffF39E60),fontSize: 17,fontWeight: FontWeight.w500),),),
+                                              const SizedBox(width: 10,)
+                                            ],
+                                          )
                                         ],
                                       ),
                                     ),
                                     Padding(
-                                      padding:  EdgeInsets.fromLTRB(15, 17, 10, 15),
+                                      padding:  const EdgeInsets.fromLTRB(15, 17, 10, 15),
                                       child: Container(
                                         height: 1,width: MediaQuery.of(context).size.width,
-                                        decoration: BoxDecoration(color: Colors.black.withOpacity(0.1)),
+                                        decoration: BoxDecoration(color: Colors.black.withValues(alpha: 0.1)),
                                       ),
                                     ),
                                     Padding(
-                                      padding:  EdgeInsets.only(left: 15),
+                                      padding:  const EdgeInsets.only(left: 15),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Icon(Icons.format_quote_rounded,color: Colors.black.withOpacity(0.5),size: 26,),
-                                          SizedBox(width: 5,),
+                                          Icon(Icons.format_quote_rounded,color: Colors.black.withValues(alpha: 0.5),size: 26,),
+                                          const SizedBox(width: 5,),
                                           Expanded(
-                                              child: Text(data['reason'].length>40?data['reason'].substring(0,40)+"...":data['reason'],style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 18,fontWeight: FontWeight.w500))),
+                                              child: Text(data['reason'].length>40?data['reason'].substring(0,40)+"...":data['reason'],style: TextStyle(color: Colors.black.withValues(alpha: 0.6),fontSize: 18,fontWeight: FontWeight.w500))),
                                         ],
                                       ),
                                     ),
-                                    SizedBox(height: 12,),
+                                    const SizedBox(height: 12,),
                                     Padding(
-                                      padding:  EdgeInsets.only(left: 15),
+                                      padding:  const EdgeInsets.only(left: 15),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
-                                          Icon(Icons.access_time_rounded,color: Colors.black.withOpacity(0.5),size: 20,),
-                                          SizedBox(width: 5,),
-                                          Text("Submitted on ${data['appliedAt']}",style: TextStyle(color: Colors.black.withOpacity(0.6),fontSize: 16,fontWeight: FontWeight.w400)),
+                                          Icon(Icons.access_time_rounded,color: Colors.black.withValues(alpha: 0.5),size: 20,),
+                                          const SizedBox(width: 5,),
+                                          Text("Submitted on ${data['appliedAt']}",style: TextStyle(color: Colors.black.withValues(alpha: 0.6),fontSize: 16,fontWeight: FontWeight.w400)),
                                         ],
                                       ),
                                     ),
-                                    SizedBox(height: 5,),
+                                    const SizedBox(height: 5,),
                                   ],
                                 ),
                               ),
                             ),
-                          ):SizedBox();
+                          ):const SizedBox();
                         }
                     );
                   }

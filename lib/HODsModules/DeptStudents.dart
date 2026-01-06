@@ -6,6 +6,8 @@ import 'package:getpass/TeacherModules/StudentInfo.dart';
 class DeptStudents extends StatelessWidget {
 
   final FirebaseAuth _auth=FirebaseAuth.instance;
+
+  DeptStudents({super.key});
   Future<String> dept() async {
     DocumentSnapshot docData=await FirebaseFirestore.instance.collection('HODs').doc(_auth.currentUser!.uid).get();
     return docData['dept'].toString();
@@ -38,7 +40,7 @@ class DeptStudents extends StatelessWidget {
                     return Padding(
                       padding:  const EdgeInsets.fromLTRB(15, 5, 15, 5),
                       child: Container(
-                        decoration: BoxDecoration(color: Colors.grey.withOpacity(0.1),borderRadius: BorderRadius.circular(5)),
+                        decoration: BoxDecoration(color: Colors.grey.withValues(alpha: 0.1),borderRadius: BorderRadius.circular(5)),
                         child: ListTile(
                           title: Text("${data['name']}",style:  const TextStyle(color: Colors.black,fontWeight: FontWeight.w500),),
                           subtitle: Text("En No. ${data['enroll']}",style:  const TextStyle(fontWeight: FontWeight.w500)),

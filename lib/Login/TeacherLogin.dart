@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:getpass/Errro.dart';
 
 class Teacherlogin extends StatefulWidget {
+  const Teacherlogin({super.key});
   @override
   State<Teacherlogin> createState() => _TeacherloginState();
 }
@@ -26,6 +27,7 @@ class _TeacherloginState extends State<Teacherlogin> {
   bool load=false;
   final _key=GlobalKey<FormState>();
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
@@ -51,11 +53,11 @@ class _TeacherloginState extends State<Teacherlogin> {
                   child: TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(hintText: "Email ID",border: OutlineInputBorder(borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide.none),filled: true,fillColor: Colors.grey.withOpacity(0.2),
-                        hintStyle: TextStyle(fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.5))),
+                        borderSide: BorderSide.none),filled: true,fillColor: Colors.grey.withValues(alpha: 0.2),
+                        hintStyle: TextStyle(fontWeight: FontWeight.w500,color: Colors.black.withValues(alpha: 0.5))),
                     controller: emailController,
                     validator: (value){
-                      if(value!.isEmpty || value==null){
+                      if(value!.isEmpty){
                         return "Enter valid email";
                       } else {
                         return null;
@@ -70,8 +72,8 @@ class _TeacherloginState extends State<Teacherlogin> {
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: pass?true:false,
                     decoration: InputDecoration(hintText: "Password",border: OutlineInputBorder(borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide.none),filled: true,fillColor: Colors.grey.withOpacity(0.2),
-                        hintStyle: TextStyle(fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.5)),
+                        borderSide: BorderSide.none),filled: true,fillColor: Colors.grey.withValues(alpha: 0.2),
+                        hintStyle: TextStyle(fontWeight: FontWeight.w500,color: Colors.black.withValues(alpha: 0.5)),
                         suffixIcon:Padding(
                           padding:  const EdgeInsets.only(right: 10),
                           child: IconButton(
@@ -85,7 +87,7 @@ class _TeacherloginState extends State<Teacherlogin> {
                         )),
                     controller: passController,
                     validator: (value){
-                      if(value!.isEmpty || value==null){
+                      if(value!.isEmpty){
                         return "Enter valid password";
                       } else {
                         return null;
@@ -131,7 +133,7 @@ class _TeacherloginState extends State<Teacherlogin> {
                               await collectionReference.doc(_auth.currentUser!.uid).update({
                                 'fcmToken':token.toString()
                               }).then((onValue){
-                                Navigator.of(context).pushAndRemoveUntil( MaterialPageRoute(builder: (context) => hodBottomNav()),
+                                Navigator.of(context).pushAndRemoveUntil( MaterialPageRoute(builder: (context) => const hodBottomNav()),
                                       (Route<dynamic> route) => false,);
                               });
                             } else if(pData?['userType']=="Principle"){

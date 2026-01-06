@@ -6,6 +6,8 @@ import '../SendLeaveNotificastion.dart';
 import '../Success.dart';
 
 class ApplyLeave extends StatefulWidget {
+  const ApplyLeave({super.key});
+
   @override
   State<ApplyLeave> createState() => _ApplyLeaveState();
 }
@@ -35,6 +37,7 @@ class _ApplyLeaveState extends State<ApplyLeave> {
     return (time.hour>minTime.hour|| (time.hour==minTime.hour &&time.minute>=minTime.minute))&&
         (time.hour<maxTime.hour||(time.hour==maxTime.hour&&time.minute<=maxTime.minute));
   }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -46,7 +49,7 @@ class _ApplyLeaveState extends State<ApplyLeave> {
         child: ListView(
           children: [
             const SizedBox(height: 10,),
-            Text("Your Details",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.6)),),
+            Text("Your Details",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.black.withValues(alpha: 0.6)),),
             const SizedBox(height: 10,),
             Container(
               width: MediaQuery.of(context).size.width,
@@ -63,15 +66,15 @@ class _ApplyLeaveState extends State<ApplyLeave> {
                     return Column(
                       children: [
                         ListTile(
-                          title: Text("Name",style: TextStyle(fontSize: 15,color: Colors.black.withOpacity(0.4),fontWeight: FontWeight.w400),),
+                          title: Text("Name",style: TextStyle(fontSize: 15,color: Colors.black.withValues(alpha: 0.4),fontWeight: FontWeight.w400),),
                           subtitle: Text("Prof. ${data['name']}",style:  const TextStyle(fontSize: 16,fontWeight: FontWeight.w400)),
                         ),
                         ListTile(
-                          title: Text("Department",style: TextStyle(fontSize: 15,color: Colors.black.withOpacity(0.4),fontWeight: FontWeight.w400),),
+                          title: Text("Department",style: TextStyle(fontSize: 15,color: Colors.black.withValues(alpha: 0.4),fontWeight: FontWeight.w400),),
                           subtitle: Text("${data['dept']}",style:  const TextStyle(fontSize: 16,fontWeight: FontWeight.w400)),
                         ),
                         ListTile(
-                          title: Text("ID",style: TextStyle(fontSize: 15,color: Colors.black.withOpacity(0.4),fontWeight: FontWeight.w400),),
+                          title: Text("ID",style: TextStyle(fontSize: 15,color: Colors.black.withValues(alpha: 0.4),fontWeight: FontWeight.w400),),
                           subtitle: Text("${data['userID']}",style:  const TextStyle(fontSize: 16,fontWeight: FontWeight.w400)),
                         ),
                       ],
@@ -87,7 +90,7 @@ class _ApplyLeaveState extends State<ApplyLeave> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 25,),
-                  Text("Leave Details",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.black.withOpacity(0.6)),),
+                  Text("Leave Details",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.black.withValues(alpha: 0.6)),),
                   const SizedBox(height: 10,),
                   const Text("Reason",style: TextStyle(fontSize: 16),),
                   const SizedBox(height: 4,),
@@ -95,13 +98,13 @@ class _ApplyLeaveState extends State<ApplyLeave> {
                     keyboardType: TextInputType.text,
                     maxLines: 4,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1))),
-                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1)),),
-                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1))),
+                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1)),),
+                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1
                       )),),),
                     controller: reasonController,
                     validator: (value){
-                      if(value!.isEmpty || value==null){
+                      if(value!.isEmpty){
                         return "Reason is required";
                       } else {
                         return null;
@@ -113,9 +116,9 @@ class _ApplyLeaveState extends State<ApplyLeave> {
                   const SizedBox(height: 4,),
                   TextFormField(
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1))),
-                        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1)),),
-                        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1))),
+                        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1)),),
+                        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1
                         )),),
                         suffixIcon: IconButton(
                           icon:  const Icon(Icons.calendar_today_rounded,size: 20,color: Color(0xff3F72AF),),
@@ -135,7 +138,7 @@ class _ApplyLeaveState extends State<ApplyLeave> {
                     readOnly: true,
                     controller: dateController,
                     validator: (value){
-                      if(value!.isEmpty || value==null){
+                      if(value!.isEmpty){
                         return "Date is required";
                       } else {
                         return null;
@@ -147,9 +150,9 @@ class _ApplyLeaveState extends State<ApplyLeave> {
                   const SizedBox(height: 4,),
                   TextFormField(
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1))),
-                        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1)),),
-                        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withOpacity(0.1
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1))),
+                        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1)),),
+                        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.1
                         )),),
                         suffixIcon: IconButton(
                           icon:  const Icon(Icons.access_time_filled_rounded,size: 20,color: Color(0xff3F72AF),),
@@ -182,7 +185,7 @@ class _ApplyLeaveState extends State<ApplyLeave> {
                     controller: timeController,
                     readOnly: true,
                     validator: (value){
-                      if(value!.isEmpty || value==null){
+                      if(value!.isEmpty){
                         return "Time is required";
                       } else {
                         return null;
@@ -200,7 +203,7 @@ class _ApplyLeaveState extends State<ApplyLeave> {
                   height: 50,width: 150,
                   decoration: BoxDecoration(color:  const Color(0xff112D4E),borderRadius: BorderRadius.circular(5)),
                   child: TextButton(
-                    child:load?  const CircularProgressIndicator():Text("Apply Leave",style: TextStyle(color: Colors.white.withOpacity(0.8),fontSize: 18,fontWeight: FontWeight.w500)),
+                    child:load?  const CircularProgressIndicator():Text("Apply Leave",style: TextStyle(color: Colors.white.withValues(alpha: 0.8),fontSize: 18,fontWeight: FontWeight.w500)),
                     onPressed: () async {
                       setState(() {
                         load=true;
@@ -247,7 +250,7 @@ class _ApplyLeaveState extends State<ApplyLeave> {
                   height: 50,width: 150,
                   decoration: BoxDecoration(color:  const Color(0xffDBE2EF),borderRadius: BorderRadius.circular(5)),
                   child: TextButton(
-                    child: Text("Cancel",style: TextStyle(color:  const Color(0xff112D4E).withOpacity(0.7),fontSize: 18,fontWeight: FontWeight.w500),),
+                    child: Text("Cancel",style: TextStyle(color:  const Color(0xff112D4E).withValues(alpha: 0.7),fontSize: 18,fontWeight: FontWeight.w500),),
                     onPressed: (){
                       Navigator.pop(context, MaterialPageRoute(builder: (builder){
                         return HODsHome();

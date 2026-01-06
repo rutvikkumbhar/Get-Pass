@@ -15,15 +15,18 @@ Future<void> main() async {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   FirebaseMessaging.onBackgroundMessage(firebaseBackgroundHandler);
   await messaging.requestPermission();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget{
+  const MyApp({super.key});
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Get Way",
+    return const MaterialApp(
+      title: "Get Pass",
       home: Flash(),
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
     );
   }
 }

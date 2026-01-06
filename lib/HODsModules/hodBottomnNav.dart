@@ -10,6 +10,7 @@ import 'hodStudApprovedRequest.dart';
 import 'hodStudRejectedRequest.dart';
 
 class hodBottomNav extends StatefulWidget {
+  const hodBottomNav({super.key});
   @override
   State<hodBottomNav> createState() => _hodBottomNavState();
 }
@@ -21,7 +22,7 @@ class _hodBottomNavState extends State<hodBottomNav> {
   int selectedPage=0;
   final List<Widget> modules=[
     HODsHome(),
-    DeptTeacher(),
+    const DeptTeacher(),
     DeptStudents(),
     ViewFeedback(),
     HODsProfile(),
@@ -75,8 +76,8 @@ class _hodBottomNavState extends State<hodBottomNav> {
                   child: null
               ),
               ListTile(
-                title: Text("Students Leaves"),
-                trailing: studTab?Icon(Icons.keyboard_arrow_up_rounded):Icon(Icons.keyboard_arrow_down_rounded),
+                title: const Text("Students Leaves"),
+                trailing: studTab?const Icon(Icons.keyboard_arrow_up_rounded):const Icon(Icons.keyboard_arrow_down_rounded),
                 onTap: (){
                   studTab=studTab?false:true;
                   setState(() {
@@ -84,43 +85,41 @@ class _hodBottomNavState extends State<hodBottomNav> {
                 }
               ),
               studTab?
-              Container(
-                child: Column(
-                  children: [
-                    ListTile(
-                      title: const Text("Approved Leaves"),
-                      trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-                      leading: const Icon(Icons.check_rounded,size: 20,color: Color(0xff1DB954),),
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (builder){
-                          return hodStudApprovedRequest();
-                        }));
-                      },
-                    ),
-                    Container(
-                      height: 1,width: MediaQuery.of(context).size.width,
-                      color: Colors.black.withOpacity(0.1),
-                    ),
-                    ListTile(
-                      title: const Text("Rejected Leaves"),
-                      trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-                      leading: const Icon(Icons.close_rounded,size: 20,color: Color(0xffDC3545)),
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (builder){
-                          return hodStudRejectedRequest();
-                        }));
-                      },
-                    ),
-                  ],
-                ),
-              ):SizedBox(),
+              Column(
+                children: [
+                  ListTile(
+                    title: const Text("Approved Leaves"),
+                    trailing: const Icon(Icons.keyboard_arrow_right_rounded),
+                    leading: const Icon(Icons.check_rounded,size: 20,color: Color(0xff1DB954),),
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (builder){
+                        return hodStudApprovedRequest();
+                      }));
+                    },
+                  ),
+                  Container(
+                    height: 1,width: MediaQuery.of(context).size.width,
+                    color: Colors.black.withValues(alpha: 0.1),
+                  ),
+                  ListTile(
+                    title: const Text("Rejected Leaves"),
+                    trailing: const Icon(Icons.keyboard_arrow_right_rounded),
+                    leading: const Icon(Icons.close_rounded,size: 20,color: Color(0xffDC3545)),
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (builder){
+                        return hodStudRejectedRequest();
+                      }));
+                    },
+                  ),
+                ],
+              ):const SizedBox(),
               Container(
                 height: 1,width: MediaQuery.of(context).size.width,
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
               ),
               ListTile(
-                  title: Text("Admin Leaves"),
-                  trailing: teaTab?Icon(Icons.keyboard_arrow_up_rounded):Icon(Icons.keyboard_arrow_down_rounded),
+                  title: const Text("Admin Leaves"),
+                  trailing: teaTab?const Icon(Icons.keyboard_arrow_up_rounded):const Icon(Icons.keyboard_arrow_down_rounded),
                   onTap: (){
                     teaTab=teaTab?false:true;
                     setState(() {
@@ -128,39 +127,37 @@ class _hodBottomNavState extends State<hodBottomNav> {
                   }
               ),
               teaTab?
-                  Container(
-                    child: Column(
-                      children: [
-                        ListTile(
-                          title: const Text("Approved Leaves"),
-                          trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-                          leading: const Icon(Icons.check_rounded,size: 20,color: Color(0xff1DB954),),
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (builder){
-                              return hodApprovedTeacher();
-                            }));
-                          },
-                        ),
-                        Container(
-                          height: 1,width: MediaQuery.of(context).size.width,
-                          color: Colors.black.withOpacity(0.1),
-                        ),
-                        ListTile(
-                          title: const Text("Rejected Leaves"),
-                          trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-                          leading: const Icon(Icons.close_rounded,size: 20,color: Color(0xffDC3545)),
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (builder){
-                              return hodRejectedTeacher();
-                            }));
-                          },
-                        ),
-                      ],
-                    ),
-                  ):SizedBox(),
+                  Column(
+                    children: [
+                      ListTile(
+                        title: const Text("Approved Leaves"),
+                        trailing: const Icon(Icons.keyboard_arrow_right_rounded),
+                        leading: const Icon(Icons.check_rounded,size: 20,color: Color(0xff1DB954),),
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (builder){
+                            return const hodApprovedTeacher();
+                          }));
+                        },
+                      ),
+                      Container(
+                        height: 1,width: MediaQuery.of(context).size.width,
+                        color: Colors.black.withValues(alpha: 0.1),
+                      ),
+                      ListTile(
+                        title: const Text("Rejected Leaves"),
+                        trailing: const Icon(Icons.keyboard_arrow_right_rounded),
+                        leading: const Icon(Icons.close_rounded,size: 20,color: Color(0xffDC3545)),
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (builder){
+                            return hodRejectedTeacher();
+                          }));
+                        },
+                      ),
+                    ],
+                  ):const SizedBox(),
               Container(
                 height: 1,width: MediaQuery.of(context).size.width,
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
               ),
             ],
           )
